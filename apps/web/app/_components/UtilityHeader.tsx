@@ -1,4 +1,4 @@
-//TODO: make krs fetched from sanity and add real links to social media
+//TODO: make krs fetched from sanity and add real links to social media (also fetched from sanity i think?)
 
 export default function UtilityHeader() {
   return (

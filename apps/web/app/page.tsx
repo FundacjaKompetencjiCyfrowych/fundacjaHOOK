@@ -3,7 +3,7 @@ import { sanityFetch } from "@/sanity/live";
 import { SanitySections } from "@/sanity/sections/SanitySections";
 import { notFound } from "next/navigation";
 import UtilityHeader from "@/app/_components/UtilityHeader";
-import RedirectButton from "./_components/Buttons/RedirectButton";
+import UpArrowButton from "./_components/Buttons/UpArrowButton";
 
 export default async function Home() {
   const home = q.star.filterByType("home").slice(0);
