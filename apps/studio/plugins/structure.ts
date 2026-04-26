@@ -1,7 +1,5 @@
 import { StructureToolOptions } from "sanity/structure";
-import { SingleLanguageSingleton as Singleton, TranslationMetadata as Translations } from "./intl";
-import { SingleLanguageList as Collection } from "./intl";
-import { ComposeIcon, HomeIcon, UsersIcon, CogIcon, TranslateIcon } from "@sanity/icons";
+import { ComposeIcon, HomeIcon, UsersIcon, CogIcon } from "@sanity/icons";
 
 /**
  * Structure of the Sanity Studio
@@ -14,13 +12,17 @@ export const structure: StructureToolOptions = {
       .title("Content")
       .items([
         S.divider().title("Strony"),
-        Singleton(S, { type: "home", title: "Strona główna", icon: HomeIcon }),
+        S.listItem()
+          .title("Strona główna")
+          .icon(HomeIcon)
+          .child(S.document().schemaType("home").documentId("home")),
         S.divider().title("Kolekcje"),
-        Collection(S, { type: "post", title: "Wpisy", icon: ComposeIcon }),
-        Collection(S, { type: "author", title: "Autorzy", icon: UsersIcon }),
+        S.documentTypeListItem("post").title("Wpisy").icon(ComposeIcon),
+        S.documentTypeListItem("author").title("Autorzy").icon(UsersIcon),
         S.divider().title("Ustawienia"),
-        Singleton(S, { type: "settings", title: "Ustawienia", icon: CogIcon }),
-        S.divider().title("Tłumaczenia"),
-        Translations(S, { title: "Metadane", icon: TranslateIcon }),
+        S.listItem()
+          .title("Ustawienia")
+          .icon(CogIcon)
+          .child(S.document().schemaType("settings").documentId("settings")),
       ]),
 };

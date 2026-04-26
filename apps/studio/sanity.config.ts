@@ -3,11 +3,7 @@ import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
 import { schemaTypes } from "./schemaTypes";
 import { filterSingletonTemplates, singletonDocumentActions } from "./plugins/singleton";
-import { combineTemplates } from "./utils/utils";
 import { structure } from "./plugins/structure";
-import { addLanguageTemplates, intlConfig } from "./plugins/intl";
-import { plPLLocale } from "@sanity/locale-pl-pl";
-import { documentInternationalization } from "@sanity/document-internationalization";
 import { iconPicker } from "sanity-plugin-icon-picker";
 import { media } from "sanity-plugin-media";
 import { Logo } from "./components/Logo";
@@ -62,14 +58,11 @@ export default defineConfig({
     presentationTool(presentationConfig),
     dashboardTool({ widgets: [vercelWidget()] }),
     visionTool(),
-    documentInternationalization(intlConfig),
     iconPicker(),
-    plPLLocale(),
   ],
 
   schema: {
     types: schemaTypes,
-    templates: combineTemplates(filterSingletonTemplates, addLanguageTemplates),
   },
 
   document: {

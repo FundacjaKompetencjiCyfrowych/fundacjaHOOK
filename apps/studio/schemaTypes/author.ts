@@ -1,12 +1,10 @@
 import { defineField, defineType } from "sanity";
-import { languageField } from "../plugins/intl";
 
 export default defineType({
   name: "author",
   title: "Autor",
   type: "document",
   fields: [
-    languageField,
     defineField({
       name: "name",
       title: "Imię",
