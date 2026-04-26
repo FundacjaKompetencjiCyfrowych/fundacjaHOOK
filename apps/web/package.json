@@ -13,13 +13,9 @@
     "test:ci": "vitest run"
   },
   "dependencies": {
-    "@formatjs/intl-localematcher": "^0.8.2",
     "@sanity/client": "^7.16.0",
-    "@types/negotiator": "^0.6.4",
     "groqd": "^1.7.1",
-    "negotiator": "^1.0.0",
     "next": "16.1.6",
-    "next-intl": "^4.8.3",
     "next-sanity": "^12.1.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",

@@ -73,6 +73,27 @@ export type Seo = {
   robots?: Robots;
 };
 
+export type Home = {
+  _id: string;
+  _type: "home";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  seo?: Seo;
+  documentName?: string;
+  sections?: Array<
+    | ({
+        _key: string;
+      } & Img)
+    | ({
+        _key: string;
+      } & LeadSection)
+    | ({
+        _key: string;
+      } & PostsSection)
+  >;
+};
+
 export type Settings = {
   _id: string;
   _type: "settings";
@@ -100,46 +121,11 @@ export type IconPicker = {
   svg?: string;
 };
 
-export type TranslationMetadata = {
-  _id: string;
-  _type: "translation.metadata";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  translations?: InternationalizedArrayReference;
-  schemaTypes?: Array<string>;
-};
-
-export type InternationalizedArrayReference = Array<
-  {
-    _key: string;
-  } & InternationalizedArrayReferenceValue
->;
-
-export type HomeReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "home";
-};
-
-export type PostReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "post";
-};
-
 export type AuthorReference = {
   _ref: string;
   _type: "reference";
   _weak?: boolean;
   [internalGroqTypeReferenceTo]?: "author";
-};
-
-export type InternationalizedArrayReferenceValue = {
-  _type: "internationalizedArrayReferenceValue";
-  value?: HomeReference | PostReference | AuthorReference;
 };
 
 export type CategoryReference = {
@@ -155,7 +141,6 @@ export type Post = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  locale?: string;
   seo?: Seo;
   title?: string;
   slug?: Slug;
@@ -176,7 +161,6 @@ export type Author = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  locale?: string;
   name?: string;
   slug?: Slug;
   img?: Img;
@@ -204,28 +188,6 @@ export type Slug = {
   _type: "slug";
   current?: string;
   source?: string;
-};
-
-export type Home = {
-  _id: string;
-  _type: "home";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  locale?: string;
-  seo?: Seo;
-  documentName?: string;
-  sections?: Array<
-    | ({
-        _key: string;
-      } & Img)
-    | ({
-        _key: string;
-      } & LeadSection)
-    | ({
-        _key: string;
-      } & PostsSection)
-  >;
 };
 
 export type SanityImageCrop = {
@@ -358,20 +320,15 @@ export type AllSanitySchemaTypes =
   | Img
   | RichText
   | Seo
+  | Home
   | Settings
   | Category
   | IconPicker
-  | TranslationMetadata
-  | InternationalizedArrayReference
-  | HomeReference
-  | PostReference
   | AuthorReference
-  | InternationalizedArrayReferenceValue
   | CategoryReference
   | Post
   | Author
   | Slug
-  | Home
   | SanityImageCrop
   | SanityImageHotspot
   | MediaTag

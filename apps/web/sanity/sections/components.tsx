@@ -1,10 +1,9 @@
 import type { Img, LeadSection, PostsSection } from "@/sanity/typegen";
-import { Link } from "@/i18n/navigation";
+import Link from "next/link";
 import { SanityImage } from "@/sanity/image/SanityImage";
 import { ComponentType } from "react";
 import { q } from "../groqd";
 import { sanityFetch } from "../live";
-import { getLocale } from "next-intl/server";
 
 /**
  * Example: A `section` registry mapping Sanity `_type` values to React components.
@@ -23,11 +22,8 @@ export const components: { [key: string]: ComponentType<any> } = {
     </>
   ),
   sectionPost: async ({ item }: { item: PostsSection }) => {
-    const locale = await getLocale();
-    const latestPosts = q
-      .parameters<{ locale: string }>()
-      .star.filterByType("post")
-      .filterBy("locale == $locale")
+    const latestPosts = q.star
+      .filterByType("post")
       .slice(0, item.displayNumber ?? 3)
       .order("publishedAt desc")
       .project((sub) => ({
@@ -36,7 +32,7 @@ export const components: { [key: string]: ComponentType<any> } = {
         image: sub.field("image"),
         slug: sub.field("slug"),
       }));
-    const { data } = await sanityFetch({ query: latestPosts.query, params: { locale } });
+    const { data } = await sanityFetch({ query: latestPosts.query });
     const posts = latestPosts.parse(data);
     if (!posts) return <h2>No posts found.</h2>;
     return (

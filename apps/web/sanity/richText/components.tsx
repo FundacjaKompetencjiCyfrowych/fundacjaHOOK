@@ -1,5 +1,5 @@
 import { PortableTextComponents } from "next-sanity";
-import { Link } from "@/i18n/navigation";
+import Link from "next/link";
 
 /**
  * Configures components rendered from Portable Text blocks in Sanity

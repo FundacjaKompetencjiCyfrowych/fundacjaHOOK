@@ -5,9 +5,8 @@ import { sanityFetch } from "@/sanity/live";
 import { mapMetadata } from "@/sanity/metadata/mapMetadata";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { setRequestLocale } from "next-intl/server";
 
-// QROQD Query builders
+// GROQD Query builders
 const postSlugs = q.star
   .filterByType("post")
   .project((sub) => ({ slug: sub.field("slug.current") }));
@@ -36,7 +35,7 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params; // since slug is unique per language we don't need locale here
+  const { slug } = await params;
   const { data } = await sanityFetch({
     query: post.query,
     params: { slug },
@@ -47,14 +46,8 @@ export async function generateMetadata({
 }
 
 /** This page renders posts dynamically based on the slug in the URL path */
-export default async function PostPage({
-  params,
-}: {
-  params: Promise<{ slug: string; locale: string }>;
-}) {
-  const { slug, locale } = await params;
-
-  setRequestLocale(locale); // Enables static rendering
+export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
 
   const { data } = await sanityFetch({ query: post.query, params: { slug } });
   if (!data) notFound();
