@@ -2,8 +2,9 @@ import { q } from "@/sanity/groqd";
 import { sanityFetch } from "@/sanity/live";
 import { SanitySections } from "@/sanity/sections/SanitySections";
 import { notFound } from "next/navigation";
-import UtilityHeader from "@/app/_components/UtilityHeader";
+import UtilityHeader from "@/app/_components/Navigation/UtilityHeader";
 import UpArrowButton from "./_components/Buttons/UpArrowButton";
+import Navbar from "@/app/_components/Navigation/Navbar";
 
 export default async function Home() {
   const home = q.star.filterByType("home").slice(0);
@@ -12,5 +13,10 @@ export default async function Home() {
   if (!data || data.length === 0) notFound();
   const h = data[0];
 
-  return <UtilityHeader />;
+  return (
+    <>
+      <UtilityHeader />
+      <Navbar />
+    </>
+  );
 }

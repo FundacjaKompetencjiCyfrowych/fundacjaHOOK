@@ -13,6 +13,7 @@
   --color-subtle: #e5e5e5;
 
   --color-main: #111111;
+  --color-navbar: oklch(20.5% 0 0);
   --color-muted: #666666;
 
   --radius-card: 1rem;
