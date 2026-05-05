@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import UtilityHeader from "@/app/_components/Navigation/UtilityHeader";
 import Navbar from "@/app/_components/Navigation/Navbar";
 import CardWithRedirect from "./_components/Cards/CardWithRedirect";
+import NewsletterButton from "./_components/Buttons/NewsletterButton";
 
 export default async function Home() {
   const home = q.star.filterByType("home").slice(0);
@@ -24,6 +25,7 @@ export default async function Home() {
         href="/warsztat-1"
         hrefText="Zobacz Warsztaty"
       />
+      <NewsletterButton />
     </>
   );
 }
