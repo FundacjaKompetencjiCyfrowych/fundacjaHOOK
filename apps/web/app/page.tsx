@@ -3,8 +3,8 @@ import { sanityFetch } from "@/sanity/live";
 import { SanitySections } from "@/sanity/sections/SanitySections";
 import { notFound } from "next/navigation";
 import UtilityHeader from "@/app/_components/Navigation/UtilityHeader";
-import UpArrowButton from "./_components/Buttons/UpArrowButton";
 import Navbar from "@/app/_components/Navigation/Navbar";
+import CardWithRedirect from "./_components/Cards/CardWithRedirect";
 
 export default async function Home() {
   const home = q.star.filterByType("home").slice(0);
@@ -17,6 +17,13 @@ export default async function Home() {
     <>
       <UtilityHeader />
       <Navbar />
+      <CardWithRedirect
+        title="Warsztat 1"
+        image="/path/to/image.jpg"
+        description="[TEXT BLOCK] Krótki opis warsztatu..."
+        href="/warsztat-1"
+        hrefText="Zobacz Warsztaty"
+      />
     </>
   );
 }
