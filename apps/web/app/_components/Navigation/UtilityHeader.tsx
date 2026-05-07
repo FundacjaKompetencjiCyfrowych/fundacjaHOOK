@@ -1,3 +1,5 @@
+import { SOCIAL_LINKS } from "@/lib/constants";
+
 //TODO: make krs fetched from sanity and add real links to social media (also fetched from sanity i think?)
 
 export default function UtilityHeader() {
@@ -9,11 +11,7 @@ export default function UtilityHeader() {
         </div>
 
         <div className="flex items-center gap-2">
-          {[
-            ["f", "#"],
-            ["in", "#"],
-            ["ig", "#"],
-          ].map(([icon, link]) => (
+          {SOCIAL_LINKS.map(([icon, link]) => (
             <a
               key={icon}
               href={link}

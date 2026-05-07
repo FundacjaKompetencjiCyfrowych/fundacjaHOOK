@@ -52,7 +52,6 @@ export default function Footer({ Address }: { Address: string }) {
           </div>
           {/*Newsletter*/}
           <div>
-            <p className="font-bold mb-2">Newsletter</p>
             <NewsletterForm />
           </div>
         </div>

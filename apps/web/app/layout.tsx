@@ -55,7 +55,7 @@ export default async function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <UtilityHeader />
         <Navbar />
-        {children}
+        <main className="flex-1">{children}</main>
         <Toaster />
         <SanityPreview />
         <NewsletterButton />
