@@ -2,10 +2,7 @@ import { q } from "@/sanity/groqd";
 import { sanityFetch } from "@/sanity/live";
 import { SanitySections } from "@/sanity/sections/SanitySections";
 import { notFound } from "next/navigation";
-import UtilityHeader from "@/app/_components/Navigation/UtilityHeader";
-import Navbar from "@/app/_components/Navigation/Navbar";
 import CardWithRedirect from "./_components/Cards/CardWithRedirect";
-import NewsletterButton from "./_components/Buttons/NewsletterButton";
 import CardLandingPage from "./_components/Cards/CardLandingPage";
 
 export default async function Home() {
@@ -17,8 +14,6 @@ export default async function Home() {
 
   return (
     <>
-      <UtilityHeader />
-      <Navbar />
       <CardLandingPage
         title="Warsztat 1"
         image="/path/to/image.jpg"
@@ -31,7 +26,6 @@ export default async function Home() {
         href="/warsztat-1"
         hrefText="Zobacz Warsztaty"
       />
-      <NewsletterButton />
     </>
   );
 }

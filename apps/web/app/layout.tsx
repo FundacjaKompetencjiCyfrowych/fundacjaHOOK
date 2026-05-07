@@ -11,6 +11,7 @@ import UtilityHeader from "@/app/_components/Navigation/UtilityHeader";
 import Navbar from "@/app/_components/Navigation/Navbar";
 import NewsletterButton from "@/app/_components/Buttons/NewsletterButton";
 import UpArrowButton from "@/app/_components/Buttons/UpArrowButton";
+import Footer from "@/app/_components/Footer";
 
 /** This is the base metadata for the entire project, it will cascade down to subpages
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function */
@@ -59,6 +60,7 @@ export default async function RootLayout({
         <SanityPreview />
         <NewsletterButton />
         <UpArrowButton />
+        <Footer Address="ul. Przykładowa 123, 00-000 Miasto" />
       </body>
       <SanityLive />
     </html>
