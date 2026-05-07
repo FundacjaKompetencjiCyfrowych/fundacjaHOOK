@@ -6,6 +6,7 @@ import UtilityHeader from "@/app/_components/Navigation/UtilityHeader";
 import Navbar from "@/app/_components/Navigation/Navbar";
 import CardWithRedirect from "./_components/Cards/CardWithRedirect";
 import NewsletterButton from "./_components/Buttons/NewsletterButton";
+import CardLandingPage from "./_components/Cards/CardLandingPage";
 
 export default async function Home() {
   const home = q.star.filterByType("home").slice(0);
@@ -18,6 +19,11 @@ export default async function Home() {
     <>
       <UtilityHeader />
       <Navbar />
+      <CardLandingPage
+        title="Warsztat 1"
+        image="/path/to/image.jpg"
+        description="[TEXT BLOCK] Krótki opis warsztatu..."
+      />
       <CardWithRedirect
         title="Warsztat 1"
         image="/path/to/image.jpg"
