@@ -7,6 +7,11 @@ import { SanityPreview } from "@/sanity/preview/SanityPreview";
 import { mapMetadata } from "@/sanity/metadata/mapMetadata";
 import { q } from "@/sanity/groqd";
 
+import UtilityHeader from "@/app/_components/Navigation/UtilityHeader";
+import Navbar from "@/app/_components/Navigation/Navbar";
+import NewsletterButton from "@/app/_components/Buttons/NewsletterButton";
+import UpArrowButton from "@/app/_components/Buttons/UpArrowButton";
+
 /** This is the base metadata for the entire project, it will cascade down to subpages
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function */
 
@@ -45,11 +50,15 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="pl">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <UtilityHeader />
+        <Navbar />
         {children}
         <Toaster />
         <SanityPreview />
+        <NewsletterButton />
+        <UpArrowButton />
       </body>
       <SanityLive />
     </html>
