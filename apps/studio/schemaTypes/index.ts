@@ -8,6 +8,9 @@ import img from "./img";
 import richText from "./richText";
 import leadSection from "./sections/leadSection";
 import postsSection from "./sections/postsSection";
+import redirectButton from "./objects/redirectButton";
+import cardLandingPage from "./objects/cardLandingPage";
+import cardWithRedirect from "./objects/cardWithRedirect";
 
 export const schemaTypes = [
   post,
@@ -20,4 +23,7 @@ export const schemaTypes = [
   img,
   leadSection,
   postsSection,
+  redirectButton,
+  cardLandingPage,
+  cardWithRedirect,
 ];

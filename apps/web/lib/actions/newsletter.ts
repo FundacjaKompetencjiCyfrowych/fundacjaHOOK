@@ -4,7 +4,7 @@
  * Server action for handling newsletter email submission
  * Currently simulates submission with a 2-second delay
  *
- * TODO: Integrate with actual email service or API route
+ * #TODO: Integrate with actual email service or API route
  */
 export async function submitNewsletterEmail(prevState: { submitted: boolean }, formData: FormData) {
   const email = formData.get("email") as string;

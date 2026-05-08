@@ -18,15 +18,13 @@ export type Robots = {
   noFollow?: boolean;
 };
 
-export type PostsSection = {
-  _type: "postsSection";
-  displayNumber?: number;
-};
-
-export type LeadSection = {
-  _type: "leadSection";
+export type CardWithRedirect = {
+  _type: "cardWithRedirect";
   title?: string;
-  subtitle?: string;
+  image?: Img;
+  description?: string;
+  href?: string;
+  hrefText?: string;
 };
 
 export type SanityImageAssetReference = {
@@ -42,6 +40,30 @@ export type Img = {
   media?: unknown;
   hotspot?: SanityImageHotspot;
   crop?: SanityImageCrop;
+};
+
+export type CardLandingPage = {
+  _type: "cardLandingPage";
+  title?: string;
+  image?: Img;
+  description?: string;
+};
+
+export type RedirectButton = {
+  _type: "redirectButton";
+  text?: string;
+  href?: string;
+};
+
+export type PostsSection = {
+  _type: "postsSection";
+  displayNumber?: number;
+};
+
+export type LeadSection = {
+  _type: "leadSection";
+  title?: string;
+  subtitle?: string;
 };
 
 export type RichText = Array<{
@@ -314,10 +336,13 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | Robots
-  | PostsSection
-  | LeadSection
+  | CardWithRedirect
   | SanityImageAssetReference
   | Img
+  | CardLandingPage
+  | RedirectButton
+  | PostsSection
+  | LeadSection
   | RichText
   | Seo
   | Home
