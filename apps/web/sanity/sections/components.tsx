@@ -4,6 +4,7 @@ import { SanityImage } from "@/sanity/image/SanityImage";
 import { ComponentType } from "react";
 import { q } from "../groqd";
 import { sanityFetch } from "../live";
+import Hero from "@/app/_components/Sections/LandingPage/Hero";
 
 /**
  * Example: A `section` registry mapping Sanity `_type` values to React components.
@@ -15,6 +16,15 @@ import { sanityFetch } from "../live";
  * - Missing or null fields should be handled within each component
  */
 export const components: { [key: string]: ComponentType<any> } = {
+  sectionHero: ({
+    item,
+  }: {
+    item: { title: string; subtitle: string; image: { [key: string]: any } };
+  }) => (
+    <>
+      <Hero title={item.title} subtitle={item.subtitle} image={item.image} />
+    </>
+  ),
   sectionLead: ({ item }: { item: LeadSection }) => (
     <>
       <h1 className="max-w-xs heading-1">{item.title}</h1>

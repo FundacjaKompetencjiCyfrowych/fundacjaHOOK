@@ -55,6 +55,19 @@ export type RedirectButton = {
   href?: string;
 };
 
+export type HeroSection = {
+  _type: "heroSection";
+  image?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  title?: string;
+  subtitle?: string;
+};
+
 export type PostsSection = {
   _type: "postsSection";
   displayNumber?: number;
@@ -109,11 +122,30 @@ export type Home = {
       } & Img)
     | ({
         _key: string;
+      } & HeroSection)
+    | ({
+        _key: string;
       } & LeadSection)
     | ({
         _key: string;
       } & PostsSection)
   >;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
 };
 
 export type Settings = {
@@ -210,22 +242,6 @@ export type Slug = {
   _type: "slug";
   current?: string;
   source?: string;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
 };
 
 export type MediaTag = {
@@ -341,11 +357,14 @@ export type AllSanitySchemaTypes =
   | Img
   | CardLandingPage
   | RedirectButton
+  | HeroSection
   | PostsSection
   | LeadSection
   | RichText
   | Seo
   | Home
+  | SanityImageCrop
+  | SanityImageHotspot
   | Settings
   | Category
   | IconPicker
@@ -354,8 +373,6 @@ export type AllSanitySchemaTypes =
   | Post
   | Author
   | Slug
-  | SanityImageCrop
-  | SanityImageHotspot
   | MediaTag
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -367,6 +384,27 @@ export type AllSanitySchemaTypes =
   | Geopoint;
 
 export declare const internalGroqTypeReferenceTo: unique symbol;
+
+// Source: ../web/app/page.tsx
+// Variable: homeQuery
+// Query: *[_type == "home"][0]{ _id, sections }
+export type HomeQueryResult = {
+  _id: string;
+  sections: Array<
+    | ({
+        _key: string;
+      } & HeroSection)
+    | ({
+        _key: string;
+      } & Img)
+    | ({
+        _key: string;
+      } & LeadSection)
+    | ({
+        _key: string;
+      } & PostsSection)
+  > | null;
+} | null;
 
 // Source: ../web/sanity/queries/groq.example.ts
 // Variable: postsQuery
@@ -387,6 +425,7 @@ export type PostsQueryResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    '*[_type == "home"][0]{ _id, sections }': HomeQueryResult;
     '\n  *[_type == "post"] | order(_createdAt desc) {\n    _id,\n    _createdAt,\n    title,\n    "slug": slug.current,\n    "author": author->name,\n    "image": mainImage.asset->url,\n    description,\n    "categories": categories[]->title,\n    body\n  }\n': PostsQueryResult;
   }
 }
