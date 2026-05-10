@@ -32,6 +32,22 @@ const homeQuery = defineQuery(`
           text,
           href
         }
+      },
+      _type in ["supportSection", "sectionSupport"] => {
+        ...,
+        button->{
+          _id,
+          text,
+          href
+        }
+      },
+      _type in ["cooperationSection", "sectionCooperation"] => {
+        ...,
+        button->{
+          _id,
+          text,
+          href
+        }
       }
     }
   }

@@ -57,18 +57,34 @@ export type CardLandingPage = {
   description?: string;
 };
 
-export type CardWithRedirectReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "cardWithRedirect";
-};
-
 export type RedirectButtonReference = {
   _ref: string;
   _type: "reference";
   _weak?: boolean;
   [internalGroqTypeReferenceTo]?: "redirectButton";
+};
+
+export type CooperationSection = {
+  _type: "cooperationSection";
+  title?: string;
+  description?: string;
+  button?: RedirectButtonReference;
+};
+
+export type SupportSection = {
+  _type: "supportSection";
+  title?: string;
+  description?: string;
+  krsNumber?: string;
+  backgroundImage?: Img;
+  button?: RedirectButtonReference;
+};
+
+export type CardWithRedirectReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "cardWithRedirect";
 };
 
 export type Cardswithredirect = {
@@ -192,6 +208,12 @@ export type Home = {
     | ({
         _key: string;
       } & Cardswithredirect)
+    | ({
+        _key: string;
+      } & SupportSection)
+    | ({
+        _key: string;
+      } & CooperationSection)
   >;
 };
 
@@ -419,8 +441,10 @@ export type AllSanitySchemaTypes =
   | SanityImageAssetReference
   | Img
   | CardLandingPage
-  | CardWithRedirectReference
   | RedirectButtonReference
+  | CooperationSection
+  | SupportSection
+  | CardWithRedirectReference
   | Cardswithredirect
   | RedirectButton
   | CardLandingPageReference
@@ -455,7 +479,7 @@ export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: ../web/app/page.tsx
 // Variable: homeQuery
-// Query: *[_type == "home"][0]{    _id,    sections[]{      ...,      _type in ["cardswithbackground", "sectionCardsWithBackground"] => {        ...,        cards[]->{          _id,          title,          description,          image        }      },      _type in ["cardswithredirect", "sectionCardsWithRedirect"] => {        ...,        cards[]->{          _id,          title,          description,          href,          hrefText,          image        },        button->{          _id,          text,          href        }      }    }  }
+// Query: *[_type == "home"][0]{    _id,    sections[]{      ...,      _type in ["cardswithbackground", "sectionCardsWithBackground"] => {        ...,        cards[]->{          _id,          title,          description,          image        }      },      _type in ["cardswithredirect", "sectionCardsWithRedirect"] => {        ...,        cards[]->{          _id,          title,          description,          href,          hrefText,          image        },        button->{          _id,          text,          href        }      },      _type in ["supportSection", "sectionSupport"] => {        ...,        button->{          _id,          text,          href        }      },      _type in ["cooperationSection", "sectionCooperation"] => {        ...,        button->{          _id,          text,          href        }      }    }  }
 export type HomeQueryResult = {
   _id: string;
   sections: Array<
@@ -517,6 +541,24 @@ export type HomeQueryResult = {
       }
     | {
         _key: string;
+        _type: "cooperationSection";
+        title?: string;
+        description?: string;
+        button?: RedirectButtonReference;
+      }
+    | {
+        _key: string;
+        _type: "cooperationSection";
+        title?: string;
+        description?: string;
+        button: {
+          _id: string;
+          text: string | null;
+          href: string | null;
+        } | null;
+      }
+    | {
+        _key: string;
         _type: "heroSection";
         image?: {
           asset?: SanityImageAssetReference;
@@ -547,6 +589,28 @@ export type HomeQueryResult = {
         _type: "postsSection";
         displayNumber?: number;
       }
+    | {
+        _key: string;
+        _type: "supportSection";
+        title?: string;
+        description?: string;
+        krsNumber?: string;
+        backgroundImage?: Img;
+        button?: RedirectButtonReference;
+      }
+    | {
+        _key: string;
+        _type: "supportSection";
+        title?: string;
+        description?: string;
+        krsNumber?: string;
+        backgroundImage?: Img;
+        button: {
+          _id: string;
+          text: string | null;
+          href: string | null;
+        } | null;
+      }
   > | null;
 } | null;
 
@@ -569,7 +633,7 @@ export type PostsQueryResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n  *[_type == "home"][0]{\n    _id,\n    sections[]{\n      ...,\n      _type in ["cardswithbackground", "sectionCardsWithBackground"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          image\n        }\n      },\n      _type in ["cardswithredirect", "sectionCardsWithRedirect"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          href,\n          hrefText,\n          image\n        },\n        button->{\n          _id,\n          text,\n          href\n        }\n      }\n    }\n  }\n': HomeQueryResult;
+    '\n  *[_type == "home"][0]{\n    _id,\n    sections[]{\n      ...,\n      _type in ["cardswithbackground", "sectionCardsWithBackground"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          image\n        }\n      },\n      _type in ["cardswithredirect", "sectionCardsWithRedirect"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          href,\n          hrefText,\n          image\n        },\n        button->{\n          _id,\n          text,\n          href\n        }\n      },\n      _type in ["supportSection", "sectionSupport"] => {\n        ...,\n        button->{\n          _id,\n          text,\n          href\n        }\n      },\n      _type in ["cooperationSection", "sectionCooperation"] => {\n        ...,\n        button->{\n          _id,\n          text,\n          href\n        }\n      }\n    }\n  }\n': HomeQueryResult;
     '\n  *[_type == "post"] | order(_createdAt desc) {\n    _id,\n    _createdAt,\n    title,\n    "slug": slug.current,\n    "author": author->name,\n    "image": mainImage.asset->url,\n    description,\n    "categories": categories[]->title,\n    body\n  }\n': PostsQueryResult;
   }
 }

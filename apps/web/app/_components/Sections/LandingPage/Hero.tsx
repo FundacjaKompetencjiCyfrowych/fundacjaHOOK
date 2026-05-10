@@ -10,7 +10,7 @@ export default function Hero({
   image: { [key: string]: any };
 }) {
   return (
-    <section className="py-8 px-4">
+    <section className="py-8 px-4 border-b border-subtle">
       <div className="container mx-auto">
         <div className="relative h-64 mt-4 mb-6 rounded-xl border border-dashed border-subtle bg-placeholder flex items-center justify-center overflow-hidden">
           <SanityImage image={image} fill className="object-cover" />

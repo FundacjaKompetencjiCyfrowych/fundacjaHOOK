@@ -43,6 +43,14 @@ export default defineType({
           name: "sectionCardsWithRedirect",
           type: "cardswithredirect",
         }),
+        defineArrayMember({
+          name: "sectionSupport",
+          type: "supportSection",
+        }),
+        defineArrayMember({
+          name: "sectionCooperation",
+          type: "cooperationSection",
+        }),
       ],
     }),
   ],

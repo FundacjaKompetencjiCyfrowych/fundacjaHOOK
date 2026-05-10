@@ -7,6 +7,8 @@ import { sanityFetch } from "../live";
 import Hero from "@/app/_components/Sections/LandingPage/Hero";
 import CardsLandingSection from "@/app/_components/Sections/LandingPage/CardsLandingSection";
 import CardsWithRedirectSection from "@/app/_components/Sections/LandingPage/CardsWithRedirectSection";
+import SupportSection from "@/app/_components/Sections/LandingPage/SupportSection";
+import CooperationSection from "@/app/_components/Sections/LandingPage/CooperationSection";
 
 /**
  * Example: A `section` registry mapping Sanity `_type` values to React components.
@@ -32,6 +34,10 @@ export const components: { [key: string]: ComponentType<any> } = {
   sectionCardsLanding: CardsWithBackgroundSectionComponent,
   cardswithredirect: CardsWithRedirectSectionComponent,
   sectionCardsWithRedirect: CardsWithRedirectSectionComponent,
+  supportSection: SupportSectionComponent,
+  sectionSupport: SupportSectionComponent,
+  cooperationSection: CooperationSectionComponent,
+  sectionCooperation: CooperationSectionComponent,
 };
 
 function HeroSectionComponent({
@@ -130,5 +136,49 @@ function CardsWithRedirectSectionComponent({
       cards={item.cards}
       button={item.button}
     />
+  );
+}
+
+function SupportSectionComponent({
+  item,
+}: {
+  item: {
+    title?: string;
+    description?: string;
+    krsNumber?: string;
+    backgroundImage?: Img;
+    button?: {
+      _id: string;
+      text?: string;
+      href?: string;
+    };
+  };
+}) {
+  return (
+    <SupportSection
+      title={item.title}
+      description={item.description}
+      krsNumber={item.krsNumber}
+      backgroundImage={item.backgroundImage}
+      button={item.button}
+    />
+  );
+}
+
+function CooperationSectionComponent({
+  item,
+}: {
+  item: {
+    title?: string;
+    description?: string;
+    button?: {
+      _id: string;
+      text?: string;
+      href?: string;
+    };
+  };
+}) {
+  return (
+    <CooperationSection title={item.title} description={item.description} button={item.button} />
   );
 }

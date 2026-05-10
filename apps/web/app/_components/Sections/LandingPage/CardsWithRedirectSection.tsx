@@ -55,7 +55,7 @@ export default async function CardsWithRedirectSection({
     : null;
 
   return (
-    <section className="wire-section px-4 py-12 sm:py-16">
+    <section className="wire-section px-4 py-12 sm:py-16 border-b border-subtle">
       <div className="container mx-auto">
         <h2 className="mb-2 text-xl font-bold sm:text-2xl">{title}</h2>
         {subtitle ? <p className="mb-6 text-sm text-muted">{subtitle}</p> : null}

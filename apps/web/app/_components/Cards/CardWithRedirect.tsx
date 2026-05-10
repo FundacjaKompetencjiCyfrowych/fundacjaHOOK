@@ -18,7 +18,12 @@ export default function CardWithRedirect({
   return (
     <div className="p-4 rounded-xl overflow-hidden transition-all duration-200 shadow-md bg-elevated hover:-translate-y-0.5">
       <div className="mb-3 h-32 overflow-hidden rounded-md border border-subtle bg-page">
-        <SanityImage image={image} width={536} height={128} className="h-full w-full object-cover" />
+        <SanityImage
+          image={image}
+          width={536}
+          height={128}
+          className="h-full w-full object-cover"
+        />
       </div>
       <h3 className="font-bold text-sm mb-1">{title}</h3>
       <p className="text-xs text-muted mb-3">{description}</p>

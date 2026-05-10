@@ -20,8 +20,12 @@ export const structure: StructureToolOptions = {
         S.documentTypeListItem("post").title("Wpisy").icon(ComposeIcon),
         S.documentTypeListItem("author").title("Autorzy").icon(UsersIcon),
         S.documentTypeListItem("cardLandingPage").title("Karty landing page").icon(DocumentIcon),
-        S.documentTypeListItem("cardWithRedirect").title("Karty z przekierowaniem").icon(DocumentIcon),
-        S.documentTypeListItem("redirectButton").title("Przyciski przekierowania").icon(DocumentIcon),
+        S.documentTypeListItem("cardWithRedirect")
+          .title("Karty z przekierowaniem")
+          .icon(DocumentIcon),
+        S.documentTypeListItem("redirectButton")
+          .title("Przyciski przekierowania")
+          .icon(DocumentIcon),
         S.divider().title("Ustawienia"),
         S.listItem()
           .title("Ustawienia")

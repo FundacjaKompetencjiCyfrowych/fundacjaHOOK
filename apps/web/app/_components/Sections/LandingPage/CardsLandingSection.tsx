@@ -36,7 +36,7 @@ export default async function CardsLandingSection({
     : (cards as CardsLandingItem[]);
 
   return (
-    <section className="wire-section relative overflow-hidden px-4 py-12 sm:py-16">
+    <section className="wire-section relative overflow-hidden px-4 py-12 sm:py-16 border-b border-subtle">
       <div className="pointer-events-none absolute inset-0">
         <SanityImage image={backgroundImage} fill className="object-cover" />
       </div>
