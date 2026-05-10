@@ -36,8 +36,12 @@ export default defineType({
           type: "postsSection",
         }),
         defineArrayMember({
-          name: "sectionCardsLanding",
-          type: "cardsLandingSection",
+          name: "sectionCardsWithBackground",
+          type: "cardswithbackground",
+        }),
+        defineArrayMember({
+          name: "sectionCardsWithRedirect",
+          type: "cardswithredirect",
         }),
       ],
     }),

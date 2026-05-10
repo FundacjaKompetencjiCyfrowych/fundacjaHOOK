@@ -19,7 +19,11 @@ export type Robots = {
 };
 
 export type CardWithRedirect = {
+  _id: string;
   _type: "cardWithRedirect";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
   title?: string;
   image?: Img;
   description?: string;
@@ -53,8 +57,38 @@ export type CardLandingPage = {
   description?: string;
 };
 
+export type CardWithRedirectReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "cardWithRedirect";
+};
+
+export type RedirectButtonReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "redirectButton";
+};
+
+export type Cardswithredirect = {
+  _type: "cardswithredirect";
+  title?: string;
+  subtitle?: string;
+  cards?: Array<
+    {
+      _key: string;
+    } & CardWithRedirectReference
+  >;
+  button?: RedirectButtonReference;
+};
+
 export type RedirectButton = {
+  _id: string;
   _type: "redirectButton";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
   text?: string;
   href?: string;
 };
@@ -66,9 +100,10 @@ export type CardLandingPageReference = {
   [internalGroqTypeReferenceTo]?: "cardLandingPage";
 };
 
-export type CardsLandingSection = {
-  _type: "cardsLandingSection";
+export type Cardswithbackground = {
+  _type: "cardswithbackground";
   title?: string;
+  subtitle?: string;
   backgroundImage?: Img;
   cards?: Array<
     {
@@ -153,7 +188,10 @@ export type Home = {
       } & PostsSection)
     | ({
         _key: string;
-      } & CardsLandingSection)
+      } & Cardswithbackground)
+    | ({
+        _key: string;
+      } & Cardswithredirect)
   >;
 };
 
@@ -381,9 +419,12 @@ export type AllSanitySchemaTypes =
   | SanityImageAssetReference
   | Img
   | CardLandingPage
+  | CardWithRedirectReference
+  | RedirectButtonReference
+  | Cardswithredirect
   | RedirectButton
   | CardLandingPageReference
-  | CardsLandingSection
+  | Cardswithbackground
   | HeroSection
   | PostsSection
   | LeadSection
@@ -414,14 +455,27 @@ export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: ../web/app/page.tsx
 // Variable: homeQuery
-// Query: *[_type == "home"][0]{    _id,    sections[]{      ...,      _type == "cardsLandingSection" => {        ...,        cards[]->{          _id,          title,          description,          image        }      }    }  }
+// Query: *[_type == "home"][0]{    _id,    sections[]{      ...,      _type in ["cardswithbackground", "sectionCardsWithBackground"] => {        ...,        cards[]->{          _id,          title,          description,          image        }      },      _type in ["cardswithredirect", "sectionCardsWithRedirect"] => {        ...,        cards[]->{          _id,          title,          description,          href,          hrefText,          image        },        button->{          _id,          text,          href        }      }    }  }
 export type HomeQueryResult = {
   _id: string;
   sections: Array<
     | {
         _key: string;
-        _type: "cardsLandingSection";
+        _type: "cardswithbackground";
         title?: string;
+        subtitle?: string;
+        backgroundImage?: Img;
+        cards?: Array<
+          {
+            _key: string;
+          } & CardLandingPageReference
+        >;
+      }
+    | {
+        _key: string;
+        _type: "cardswithbackground";
+        title?: string;
+        subtitle?: string;
         backgroundImage?: Img;
         cards: Array<{
           _id: string;
@@ -429,6 +483,37 @@ export type HomeQueryResult = {
           description: string | null;
           image: Img | null;
         }> | null;
+      }
+    | {
+        _key: string;
+        _type: "cardswithredirect";
+        title?: string;
+        subtitle?: string;
+        cards?: Array<
+          {
+            _key: string;
+          } & CardWithRedirectReference
+        >;
+        button?: RedirectButtonReference;
+      }
+    | {
+        _key: string;
+        _type: "cardswithredirect";
+        title?: string;
+        subtitle?: string;
+        cards: Array<{
+          _id: string;
+          title: string | null;
+          description: string | null;
+          href: string | null;
+          hrefText: string | null;
+          image: Img | null;
+        }> | null;
+        button: {
+          _id: string;
+          text: string | null;
+          href: string | null;
+        } | null;
       }
     | {
         _key: string;
@@ -484,7 +569,7 @@ export type PostsQueryResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n  *[_type == "home"][0]{\n    _id,\n    sections[]{\n      ...,\n      _type == "cardsLandingSection" => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          image\n        }\n      }\n    }\n  }\n': HomeQueryResult;
+    '\n  *[_type == "home"][0]{\n    _id,\n    sections[]{\n      ...,\n      _type in ["cardswithbackground", "sectionCardsWithBackground"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          image\n        }\n      },\n      _type in ["cardswithredirect", "sectionCardsWithRedirect"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          href,\n          hrefText,\n          image\n        },\n        button->{\n          _id,\n          text,\n          href\n        }\n      }\n    }\n  }\n': HomeQueryResult;
     '\n  *[_type == "post"] | order(_createdAt desc) {\n    _id,\n    _createdAt,\n    title,\n    "slug": slug.current,\n    "author": author->name,\n    "image": mainImage.asset->url,\n    description,\n    "categories": categories[]->title,\n    body\n  }\n': PostsQueryResult;
   }
 }

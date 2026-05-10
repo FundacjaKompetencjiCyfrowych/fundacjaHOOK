@@ -6,6 +6,7 @@ import { q } from "../groqd";
 import { sanityFetch } from "../live";
 import Hero from "@/app/_components/Sections/LandingPage/Hero";
 import CardsLandingSection from "@/app/_components/Sections/LandingPage/CardsLandingSection";
+import CardsWithRedirectSection from "@/app/_components/Sections/LandingPage/CardsWithRedirectSection";
 
 /**
  * Example: A `section` registry mapping Sanity `_type` values to React components.
@@ -25,8 +26,12 @@ export const components: { [key: string]: ComponentType<any> } = {
   sectionPost: PostsSectionComponent,
   img: ImageSectionComponent,
   sectionImage: ImageSectionComponent,
-  cardsLandingSection: CardsLandingSectionComponent,
-  sectionCardsLanding: CardsLandingSectionComponent,
+  cardswithbackground: CardsWithBackgroundSectionComponent,
+  sectionCardsWithBackground: CardsWithBackgroundSectionComponent,
+  cardsLandingSection: CardsWithBackgroundSectionComponent,
+  sectionCardsLanding: CardsWithBackgroundSectionComponent,
+  cardswithredirect: CardsWithRedirectSectionComponent,
+  sectionCardsWithRedirect: CardsWithRedirectSectionComponent,
 };
 
 function HeroSectionComponent({
@@ -77,11 +82,12 @@ function ImageSectionComponent({ item }: { item: Img }) {
   return <SanityImage image={item} height={300} width={300} />;
 }
 
-function CardsLandingSectionComponent({
+function CardsWithBackgroundSectionComponent({
   item,
 }: {
   item: {
     title?: string;
+    subtitle?: string;
     backgroundImage?: Img;
     cards?: Array<{ _id: string; title?: string; description?: string; image?: Img }>;
   };
@@ -89,8 +95,40 @@ function CardsLandingSectionComponent({
   return (
     <CardsLandingSection
       title={item.title}
+      subtitle={item.subtitle}
       backgroundImage={item.backgroundImage}
       cards={item.cards}
+    />
+  );
+}
+
+function CardsWithRedirectSectionComponent({
+  item,
+}: {
+  item: {
+    title?: string;
+    subtitle?: string;
+    cards?: Array<{
+      _id: string;
+      title?: string;
+      description?: string;
+      image?: Img;
+      href?: string;
+      hrefText?: string;
+    }>;
+    button?: {
+      _id: string;
+      text?: string;
+      href?: string;
+    };
+  };
+}) {
+  return (
+    <CardsWithRedirectSection
+      title={item.title}
+      subtitle={item.subtitle}
+      cards={item.cards}
+      button={item.button}
     />
   );
 }

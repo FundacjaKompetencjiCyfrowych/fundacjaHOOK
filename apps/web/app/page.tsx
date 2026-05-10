@@ -8,13 +8,29 @@ const homeQuery = defineQuery(`
     _id,
     sections[]{
       ...,
-      _type == "cardsLandingSection" => {
+      _type in ["cardswithbackground", "sectionCardsWithBackground"] => {
         ...,
         cards[]->{
           _id,
           title,
           description,
           image
+        }
+      },
+      _type in ["cardswithredirect", "sectionCardsWithRedirect"] => {
+        ...,
+        cards[]->{
+          _id,
+          title,
+          description,
+          href,
+          hrefText,
+          image
+        },
+        button->{
+          _id,
+          text,
+          href
         }
       }
     }

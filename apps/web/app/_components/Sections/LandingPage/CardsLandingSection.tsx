@@ -19,10 +19,12 @@ type CardsLandingInput = CardsLandingItem | CardsLandingReference;
 
 export default async function CardsLandingSection({
   title,
+  subtitle,
   backgroundImage,
   cards,
 }: {
   title?: string | null;
+  subtitle?: string | null;
   backgroundImage?: Img | null;
   cards?: CardsLandingInput[] | null;
 }) {
@@ -42,10 +44,11 @@ export default async function CardsLandingSection({
 
       <div className="container mx-auto relative z-10">
         <h2 className="mb-6 text-xl font-bold sm:text-2xl">{title}</h2>
+        {subtitle ? <p className="mb-6 text-sm text-muted">{subtitle}</p> : null}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
           {resolvedCards.map((card, index) => (
             <CardLandingPage
-              key={card._id ?? `${card.title ?? "card"}-${index}`}
+              key={`${card._id ?? card.title ?? "card"}-${index}`}
               title={card.title}
               image={card.image}
               description={card.description}

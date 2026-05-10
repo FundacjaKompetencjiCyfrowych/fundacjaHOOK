@@ -24,53 +24,74 @@
   },
   {
     "name": "cardWithRedirect",
-    "type": "type",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "cardWithRedirect"
-          }
-        },
-        "title": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          },
-          "optional": true
-        },
-        "image": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "inline",
-            "name": "img"
-          },
-          "optional": true
-        },
-        "description": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          },
-          "optional": true
-        },
-        "href": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          },
-          "optional": true
-        },
-        "hrefText": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          },
-          "optional": true
+    "type": "document",
+    "attributes": {
+      "_id": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
         }
+      },
+      "_type": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string",
+          "value": "cardWithRedirect"
+        }
+      },
+      "_createdAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_updatedAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_rev": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "title": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "image": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "img"
+        },
+        "optional": true
+      },
+      "description": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "href": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "hrefText": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
       }
     }
   },
@@ -211,7 +232,67 @@
     }
   },
   {
-    "name": "redirectButton",
+    "type": "type",
+    "name": "cardWithRedirect.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "cardWithRedirect"
+    }
+  },
+  {
+    "type": "type",
+    "name": "redirectButton.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "redirectButton"
+    }
+  },
+  {
+    "name": "cardswithredirect",
     "type": "type",
     "value": {
       "type": "object",
@@ -220,23 +301,104 @@
           "type": "objectAttribute",
           "value": {
             "type": "string",
-            "value": "redirectButton"
+            "value": "cardswithredirect"
           }
         },
-        "text": {
+        "title": {
           "type": "objectAttribute",
           "value": {
             "type": "string"
           },
           "optional": true
         },
-        "href": {
+        "subtitle": {
           "type": "objectAttribute",
           "value": {
             "type": "string"
+          },
+          "optional": true
+        },
+        "cards": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "array",
+            "of": {
+              "type": "object",
+              "attributes": {
+                "_key": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "rest": {
+                "type": "inline",
+                "name": "cardWithRedirect.reference"
+              }
+            }
+          },
+          "optional": true
+        },
+        "button": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "redirectButton.reference"
           },
           "optional": true
         }
+      }
+    }
+  },
+  {
+    "name": "redirectButton",
+    "type": "document",
+    "attributes": {
+      "_id": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_type": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string",
+          "value": "redirectButton"
+        }
+      },
+      "_createdAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_updatedAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_rev": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "text": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "href": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
       }
     }
   },
@@ -271,7 +433,7 @@
     }
   },
   {
-    "name": "cardsLandingSection",
+    "name": "cardswithbackground",
     "type": "type",
     "value": {
       "type": "object",
@@ -280,10 +442,17 @@
           "type": "objectAttribute",
           "value": {
             "type": "string",
-            "value": "cardsLandingSection"
+            "value": "cardswithbackground"
           }
         },
         "title": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "subtitle": {
           "type": "objectAttribute",
           "value": {
             "type": "string"
@@ -809,7 +978,22 @@
                 },
                 "rest": {
                   "type": "inline",
-                  "name": "cardsLandingSection"
+                  "name": "cardswithbackground"
+                }
+              },
+              {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "inline",
+                  "name": "cardswithredirect"
                 }
               }
             ]

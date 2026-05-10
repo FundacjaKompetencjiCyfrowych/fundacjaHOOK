@@ -1,8 +1,8 @@
 import { defineField, defineType } from "sanity";
 
 export default defineType({
-  name: "cardswithbackground",
-  title: "Karty z backgroundem",
+  name: "cardswithredirect",
+  title: "Karty z przekierowaniem",
   type: "object",
   fields: [
     defineField({
@@ -17,33 +17,31 @@ export default defineType({
       type: "string",
     }),
     defineField({
-      name: "backgroundImage",
-      title: "Tlo sekcji",
-      type: "img",
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
       name: "cards",
       title: "Karty",
       type: "array",
       of: [
         {
           type: "reference",
-          to: [{ type: "cardLandingPage" }],
+          to: [{ type: "cardWithRedirect" }],
         },
       ],
-      validation: (Rule) => Rule.required().min(1),
+      validation: (Rule) => Rule.required().min(1).max(4),
+    }),
+    defineField({
+      name: "button",
+      title: "Przycisk przekierowania",
+      type: "reference",
+      to: [{ type: "redirectButton" }],
     }),
   ],
   preview: {
     select: {
       title: "title",
-      media: "backgroundImage",
     },
-    prepare({ title, media }) {
+    prepare({ title }) {
       return {
-        title: title ?? "Karty z backgroundem",
-        media,
+        title: title ?? "Karty z przekierowaniem",
       };
     },
   },

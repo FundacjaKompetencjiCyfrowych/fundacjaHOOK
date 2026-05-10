@@ -3,7 +3,7 @@ import { defineField, defineType } from "sanity";
 export default defineType({
   name: "cardWithRedirect",
   title: "Karta z przekierowaniem",
-  type: "object",
+  type: "document",
   fields: [
     defineField({
       name: "title",

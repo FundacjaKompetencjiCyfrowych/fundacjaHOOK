@@ -3,7 +3,7 @@ import { defineField, defineType } from "sanity";
 export default defineType({
   name: "redirectButton",
   title: "Przycisk przekierowania",
-  type: "object",
+  type: "document",
   fields: [
     defineField({
       name: "text",
