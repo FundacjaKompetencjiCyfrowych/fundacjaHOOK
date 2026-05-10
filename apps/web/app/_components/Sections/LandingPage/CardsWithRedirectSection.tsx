@@ -74,7 +74,7 @@ export default async function CardsWithRedirectSection({
         </div>
 
         {resolvedButton?.href && resolvedButton.text ? (
-          <div className="mt-6">
+          <div className="mt-6 w-full flex justify-center">
             <RedirectButton href={resolvedButton.href} text={resolvedButton.text} />
           </div>
         ) : null}
