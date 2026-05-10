@@ -15,9 +15,13 @@ export default defineType({
     select: {
       displayNumber: "displayNumber",
     },
-    prepare(selection) {
+    prepare({ displayNumber }) {
       return {
-        media: () => `Posty (${selection.displayNumber})`,
+        title: "Posty",
+        subtitle:
+          typeof displayNumber === "number"
+            ? `Liczba postów: ${displayNumber}`
+            : "Liczba postów: domyślna",
       };
     },
   },

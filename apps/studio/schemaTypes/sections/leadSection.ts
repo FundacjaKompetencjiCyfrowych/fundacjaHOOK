@@ -17,9 +17,13 @@ export default defineType({
     }),
   ],
   preview: {
-    prepare() {
+    select: {
+      title: "title",
+    },
+    prepare({ title }) {
       return {
-        media: () => "Nagłówek",
+        title: title ?? "Nagłówek",
+        subtitle: "Typ: Nagłówek",
       };
     },
   },

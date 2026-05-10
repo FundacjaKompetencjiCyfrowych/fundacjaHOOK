@@ -39,10 +39,15 @@ export default defineType({
     select: {
       title: "title",
       media: "backgroundImage",
+      cardCount: "cards.length",
     },
-    prepare({ title, media }) {
+    prepare({ title, media, cardCount }) {
       return {
         title: title ?? "Karty z backgroundem",
+        subtitle:
+          typeof cardCount === "number"
+            ? `Typ: Karty z backgroundem | Kart: ${cardCount}`
+            : "Typ: Karty z backgroundem",
         media,
       };
     },

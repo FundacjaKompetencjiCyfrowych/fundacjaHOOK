@@ -38,10 +38,15 @@ export default defineType({
   preview: {
     select: {
       title: "title",
+      cardCount: "cards.length",
     },
-    prepare({ title }) {
+    prepare({ title, cardCount }) {
       return {
         title: title ?? "Karty z przekierowaniem",
+        subtitle:
+          typeof cardCount === "number"
+            ? `Typ: Karty z przekierowaniem | Kart: ${cardCount}`
+            : "Typ: Karty z przekierowaniem",
       };
     },
   },

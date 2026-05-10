@@ -34,6 +34,7 @@ export default defineType({
     prepare({ title, media }) {
       return {
         title: title ?? "Sekcja Hero",
+        subtitle: "Typ: Sekcja Hero",
         media,
       };
     },

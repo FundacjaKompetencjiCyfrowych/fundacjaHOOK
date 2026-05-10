@@ -44,6 +44,7 @@ export default defineType({
     prepare({ title, media }) {
       return {
         title: title ?? "Wsparcie",
+        subtitle: "Typ: Wsparcie",
         media,
       };
     },

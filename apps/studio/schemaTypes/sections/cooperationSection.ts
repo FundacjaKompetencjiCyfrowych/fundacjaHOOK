@@ -30,7 +30,8 @@ export default defineType({
     },
     prepare({ title }) {
       return {
-        title: title ?? "Wspolpraca",
+        title: title ?? "Współpraca",
+        subtitle: "Typ: Współpraca",
       };
     },
   },
