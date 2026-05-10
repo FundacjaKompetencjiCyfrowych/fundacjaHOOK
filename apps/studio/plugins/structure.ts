@@ -1,5 +1,5 @@
 import { StructureToolOptions } from "sanity/structure";
-import { ComposeIcon, HomeIcon, UsersIcon, CogIcon } from "@sanity/icons";
+import { ComposeIcon, HomeIcon, UsersIcon, CogIcon, DocumentIcon } from "@sanity/icons";
 
 /**
  * Structure of the Sanity Studio
@@ -19,6 +19,7 @@ export const structure: StructureToolOptions = {
         S.divider().title("Kolekcje"),
         S.documentTypeListItem("post").title("Wpisy").icon(ComposeIcon),
         S.documentTypeListItem("author").title("Autorzy").icon(UsersIcon),
+        S.documentTypeListItem("cardLandingPage").title("Karty landing page").icon(DocumentIcon),
         S.divider().title("Ustawienia"),
         S.listItem()
           .title("Ustawienia")

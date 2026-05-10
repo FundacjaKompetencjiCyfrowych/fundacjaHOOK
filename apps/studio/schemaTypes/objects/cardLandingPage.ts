@@ -3,7 +3,7 @@ import { defineField, defineType } from "sanity";
 export default defineType({
   name: "cardLandingPage",
   title: "Karta",
-  type: "object",
+  type: "document",
   fields: [
     defineField({
       name: "title",

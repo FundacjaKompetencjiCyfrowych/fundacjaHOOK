@@ -43,7 +43,11 @@ export type Img = {
 };
 
 export type CardLandingPage = {
+  _id: string;
   _type: "cardLandingPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
   title?: string;
   image?: Img;
   description?: string;
@@ -53,6 +57,24 @@ export type RedirectButton = {
   _type: "redirectButton";
   text?: string;
   href?: string;
+};
+
+export type CardLandingPageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "cardLandingPage";
+};
+
+export type CardsLandingSection = {
+  _type: "cardsLandingSection";
+  title?: string;
+  backgroundImage?: Img;
+  cards?: Array<
+    {
+      _key: string;
+    } & CardLandingPageReference
+  >;
 };
 
 export type HeroSection = {
@@ -129,6 +151,9 @@ export type Home = {
     | ({
         _key: string;
       } & PostsSection)
+    | ({
+        _key: string;
+      } & CardsLandingSection)
   >;
 };
 
@@ -357,6 +382,8 @@ export type AllSanitySchemaTypes =
   | Img
   | CardLandingPage
   | RedirectButton
+  | CardLandingPageReference
+  | CardsLandingSection
   | HeroSection
   | PostsSection
   | LeadSection
@@ -387,22 +414,54 @@ export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: ../web/app/page.tsx
 // Variable: homeQuery
-// Query: *[_type == "home"][0]{ _id, sections }
+// Query: *[_type == "home"][0]{    _id,    sections[]{      ...,      _type == "cardsLandingSection" => {        ...,        cards[]->{          _id,          title,          description,          image        }      }    }  }
 export type HomeQueryResult = {
   _id: string;
   sections: Array<
-    | ({
+    | {
         _key: string;
-      } & HeroSection)
-    | ({
+        _type: "cardsLandingSection";
+        title?: string;
+        backgroundImage?: Img;
+        cards: Array<{
+          _id: string;
+          title: string | null;
+          description: string | null;
+          image: Img | null;
+        }> | null;
+      }
+    | {
         _key: string;
-      } & Img)
-    | ({
+        _type: "heroSection";
+        image?: {
+          asset?: SanityImageAssetReference;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        };
+        title?: string;
+        subtitle?: string;
+      }
+    | {
         _key: string;
-      } & LeadSection)
-    | ({
+        _type: "img";
+        asset?: SanityImageAssetReference;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+      }
+    | {
         _key: string;
-      } & PostsSection)
+        _type: "leadSection";
+        title?: string;
+        subtitle?: string;
+      }
+    | {
+        _key: string;
+        _type: "postsSection";
+        displayNumber?: number;
+      }
   > | null;
 } | null;
 
@@ -425,7 +484,7 @@ export type PostsQueryResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '*[_type == "home"][0]{ _id, sections }': HomeQueryResult;
+    '\n  *[_type == "home"][0]{\n    _id,\n    sections[]{\n      ...,\n      _type == "cardsLandingSection" => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          image\n        }\n      }\n    }\n  }\n': HomeQueryResult;
     '\n  *[_type == "post"] | order(_createdAt desc) {\n    _id,\n    _createdAt,\n    title,\n    "slug": slug.current,\n    "author": author->name,\n    "image": mainImage.asset->url,\n    description,\n    "categories": categories[]->title,\n    body\n  }\n': PostsQueryResult;
   }
 }

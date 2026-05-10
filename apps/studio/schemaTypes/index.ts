@@ -9,6 +9,7 @@ import richText from "./richText";
 import leadSection from "./sections/leadSection";
 import postsSection from "./sections/postsSection";
 import heroSection from "./sections/heroSection";
+import cardsLandingSection from "./sections/cardsLandingSection";
 import redirectButton from "./objects/redirectButton";
 import cardLandingPage from "./objects/cardLandingPage";
 import cardWithRedirect from "./objects/cardWithRedirect";
@@ -25,6 +26,7 @@ export const schemaTypes = [
   leadSection,
   postsSection,
   heroSection,
+  cardsLandingSection,
   redirectButton,
   cardLandingPage,
   cardWithRedirect,

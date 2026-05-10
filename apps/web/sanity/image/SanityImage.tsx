@@ -24,10 +24,22 @@ export function SanityImage({ image, preview, ...props }: SanityImageProps) {
   }
   const id = image.asset?._ref ?? image.asset?._id;
   const alt = props.alt ?? image.asset?.altText ?? image.alt ?? "";
+  const { fill, style, ...restProps } = props;
 
   if (preview && typeof window === "undefined") {
     throw new Error("Image preview can only be used in client components");
   }
+
+  const mergedStyle = fill
+    ? {
+        position: "absolute",
+        inset: 0,
+        width: "100%",
+        height: "100%",
+        objectFit: "cover" as const,
+        ...style,
+      }
+    : style;
 
   return (
     <Image
@@ -39,7 +51,8 @@ export function SanityImage({ image, preview, ...props }: SanityImageProps) {
       projectId={process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}
       dataset={process.env.NEXT_PUBLIC_SANITY_DATASET}
       queryParams={{ fm: "webp" }}
-      {...props}
+      style={mergedStyle}
+      {...restProps}
     ></Image>
   );
 }
