@@ -7,7 +7,7 @@ export default defineType({
   fields: [
     defineField({
       name: "title",
-      title: "Tytul sekcji",
+      title: "Tytuł sekcji",
       type: "string",
       validation: (Rule) => Rule.required(),
     }),
@@ -25,7 +25,7 @@ export default defineType({
     }),
     defineField({
       name: "backgroundImage",
-      title: "Tlo sekcji",
+      title: "Tło sekcji",
       type: "img",
       validation: (Rule) => Rule.required(),
     }),

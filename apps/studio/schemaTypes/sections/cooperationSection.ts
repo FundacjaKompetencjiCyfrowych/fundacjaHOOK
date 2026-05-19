@@ -2,12 +2,12 @@ import { defineField, defineType } from "sanity";
 
 export default defineType({
   name: "cooperationSection",
-  title: "Wspolpraca",
+  title: "Współpraca",
   type: "object",
   fields: [
     defineField({
       name: "title",
-      title: "Tytul sekcji",
+      title: "Tytuł sekcji",
       type: "string",
       validation: (Rule) => Rule.required(),
     }),

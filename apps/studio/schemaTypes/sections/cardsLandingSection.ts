@@ -2,23 +2,23 @@ import { defineField, defineType } from "sanity";
 
 export default defineType({
   name: "cardswithbackground",
-  title: "Karty z backgroundem",
+  title: "Karty z tłem",
   type: "object",
   fields: [
     defineField({
       name: "title",
-      title: "Tytul sekcji",
+      title: "Tytuł sekcji",
       type: "string",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "subtitle",
-      title: "Podtytul",
+      title: "Podtytuł sekcji",
       type: "string",
     }),
     defineField({
       name: "backgroundImage",
-      title: "Tlo sekcji",
+      title: "Tło sekcji",
       type: "img",
       validation: (Rule) => Rule.required(),
     }),
@@ -43,11 +43,11 @@ export default defineType({
     },
     prepare({ title, media, cardCount }) {
       return {
-        title: title ?? "Karty z backgroundem",
+        title: title ?? "Karty z tłem",
         subtitle:
           typeof cardCount === "number"
-            ? `Typ: Karty z backgroundem | Kart: ${cardCount}`
-            : "Typ: Karty z backgroundem",
+            ? `Typ: Karty z tłem | Kart: ${cardCount}`
+            : "Typ: Karty z tłem",
         media,
       };
     },

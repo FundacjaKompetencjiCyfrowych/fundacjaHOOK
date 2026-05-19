@@ -7,13 +7,13 @@ export default defineType({
   fields: [
     defineField({
       name: "title",
-      title: "Tytul sekcji",
+      title: "Tytuł sekcji",
       type: "string",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "subtitle",
-      title: "Podtytul",
+      title: "Podtytuł sekcji",
       type: "string",
     }),
     defineField({
