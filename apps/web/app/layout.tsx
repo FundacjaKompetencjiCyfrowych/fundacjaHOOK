@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "@/app/globals.css";
 import { sanityFetch, SanityLive } from "@/sanity/live";
 import { Toaster } from "sonner";
@@ -12,6 +12,7 @@ import Navbar from "@/app/_components/Navigation/Navbar";
 import NewsletterButton from "@/app/_components/Buttons/NewsletterButton";
 import UpArrowButton from "@/app/_components/Buttons/UpArrowButton";
 import Footer from "@/app/_components/Footer";
+import { cn } from "@/lib/utils";
 
 /** This is the base metadata for the entire project, it will cascade down to subpages
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function */
@@ -35,14 +36,10 @@ export async function generateMetadata(): Promise<Metadata> {
 /** Setup font optimization
  * @see https://nextjs.org/docs/app/getting-started/fonts */
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const poppins = Poppins({
+  variable: "--font-sans",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "500", "700"],
 });
 
 export default async function RootLayout({
@@ -51,8 +48,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pl">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+    <html lang="pl" className={cn("h-full", "antialiased", "font-sans", poppins.variable)}>
+      <body>
         <UtilityHeader />
         <Navbar />
         <main className="flex-1">{children}</main>
