@@ -10,6 +10,9 @@ export type ContentItemType = {
   fileUrl: string;
   format: string;
   size: string;
+  event?: string;
+  type?: string;
+  area?: string;
 };
 
 export default function ContentItem({ material }: { material: ContentItemType }) {

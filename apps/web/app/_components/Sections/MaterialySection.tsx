@@ -1,4 +1,4 @@
-import ContentItem, { type ContentItemType } from "./ContentItem";
+import ContentItem, { type ContentItemType } from "./LandingPage/ContentItem";
 
 export default function MaterialySection({ materials }: { materials: ContentItemType[] }) {
   return (

@@ -4,7 +4,7 @@ import NewsletterForm from "./NewsletterForm";
 export default function Footer({ Address }: { Address: string }) {
   const mainLinks = [
     ["Warsztaty", "/warsztaty"],
-    ["Materiały", "/materialy"],
+    ["Materiały", "/materials"],
     ["Wesprzyj nas", "/wesprzyj-nas"],
     ["O nas", "/o-nas"],
     ["Kontakt", "/kontakt"],
@@ -16,17 +16,17 @@ export default function Footer({ Address }: { Address: string }) {
   ];
 
   return (
-    <footer className="border-t border-subtle bg-sunken px-4 py-10 text-main">
-      <div className="container mx-auto">
+    <footer className="bg-sunken px-4 py-10 border-subtle border-t text-main">
+      <div className="mx-auto container">
         {/*Left part*/}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
+        <div className="gap-8 grid grid-cols-1 md:grid-cols-4 text-sm">
           <div>
             <Image src="/logo.png" alt="Fundacja HOOK" width={40} height={90} />
             <p className="mt-2">{Address}</p>
           </div>
           {/*Main links*/}
           <div>
-            <p className="font-bold mb-2">Linki</p>
+            <p className="mb-2 font-bold">Linki</p>
             <ul className="space-y-1 text-muted">
               {mainLinks.map(([label, href]) => (
                 <li key={label}>
@@ -39,7 +39,7 @@ export default function Footer({ Address }: { Address: string }) {
           </div>
           {/*Legal links*/}
           <div>
-            <p className="font-bold mb-2">Prawne</p>
+            <p className="mb-2 font-bold">Prawne</p>
             <ul className="space-y-1 text-muted">
               {legalLinks.map(([label, href]) => (
                 <li key={label}>
