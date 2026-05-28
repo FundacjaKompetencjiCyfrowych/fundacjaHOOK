@@ -12519,7 +12519,7 @@ snapshots:
       '@vitejs/plugin-react': 5.2.0(vite@7.3.1(@types/node@20.19.35)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2))
       chokidar: 5.0.0
       console-table-printer: 2.15.0
-      date-fns: 4.1.0
+      date-fns: 4.3.0
       debug: 4.4.3(supports-color@8.1.1)
       dotenv: 17.3.1
       eventsource: 4.1.0
@@ -18205,7 +18205,7 @@ snapshots:
       classnames: 2.5.1
       color2k: 2.0.3
       dataloader: 2.2.3
-      date-fns: 4.1.0
+      date-fns: 4.3.0
       debug: 4.4.3(supports-color@8.1.1)
       exif-component: 1.0.1
       fast-deep-equal: 3.1.3
