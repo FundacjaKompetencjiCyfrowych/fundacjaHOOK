@@ -1,5 +1,6 @@
 import category from "./category";
 import post from "./pages/post";
+import material from "./pages/material";
 import author from "./author";
 import home from "./pages/home";
 import settings from "./settings";
@@ -19,6 +20,7 @@ import cardWithRedirect from "./objects/cardWithRedirect";
 
 export const schemaTypes = [
   post,
+  material,
   author,
   category,
   settings,

@@ -260,6 +260,50 @@ export type IconPicker = {
   svg?: string;
 };
 
+export type SanityFileAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+};
+
+export type Material = {
+  _id: string;
+  _type: "material";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  description?: string;
+  date?: string;
+  event?: "Warsztaty" | "Konferencja" | "Webinar" | "Szkolenie" | "Inne";
+  type?:
+    | "Workbook"
+    | "Checklist"
+    | "Poradnik"
+    | "Publikacja"
+    | "Nagranie wideo"
+    | "Szablon"
+    | "Infografika"
+    | "Inne";
+  area?:
+    | "Zdrowie"
+    | "Prawo"
+    | "Finanse"
+    | "Kariera"
+    | "Rozw\xF3j Osobisty"
+    | "Rodzicielstwo"
+    | "Inne";
+  file?: {
+    asset?: SanityFileAssetReference;
+    media?: unknown;
+    _type: "file";
+  };
+  format?: "PDF" | "Zip" | "MP4" | "Link" | "Inne";
+  size?: string;
+  placements?: Array<string>;
+};
+
 export type AuthorReference = {
   _ref: string;
   _type: "reference";
@@ -460,6 +504,8 @@ export type AllSanitySchemaTypes =
   | Settings
   | Category
   | IconPicker
+  | SanityFileAssetReference
+  | Material
   | AuthorReference
   | CategoryReference
   | Post
@@ -629,11 +675,50 @@ export type PostsQueryResult = Array<{
   body: RichText | null;
 }>;
 
+// Source: ../web/sanity/queries/materials.ts
+// Variable: materialsQuery
+// Query: *[_type == "material"] | order(date desc) {    _id,    title,    description,    date,    event,    type,    area,    format,    size,    placements,    "fileAsset": file.asset->{      url,      extension,      size    }  }
+export type MaterialsQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  description: string | null;
+  date: string | null;
+  event: "Inne" | "Konferencja" | "Szkolenie" | "Warsztaty" | "Webinar" | null;
+  type:
+    | "Checklist"
+    | "Infografika"
+    | "Inne"
+    | "Nagranie wideo"
+    | "Poradnik"
+    | "Publikacja"
+    | "Szablon"
+    | "Workbook"
+    | null;
+  area:
+    | "Finanse"
+    | "Inne"
+    | "Kariera"
+    | "Prawo"
+    | "Rodzicielstwo"
+    | "Rozw\xF3j Osobisty"
+    | "Zdrowie"
+    | null;
+  format: "Inne" | "Link" | "MP4" | "PDF" | "Zip" | null;
+  size: string | null;
+  placements: Array<string> | null;
+  fileAsset: {
+    url: string | null;
+    extension: string | null;
+    size: number | null;
+  } | null;
+}>;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_type == "home"][0]{\n    _id,\n    sections[]{\n      ...,\n      _type in ["cardswithbackground", "sectionCardsWithBackground"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          image\n        }\n      },\n      _type in ["cardswithredirect", "sectionCardsWithRedirect"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          href,\n          hrefText,\n          image\n        },\n        button->{\n          _id,\n          text,\n          href\n        }\n      },\n      _type in ["supportSection", "sectionSupport"] => {\n        ...,\n        button->{\n          _id,\n          text,\n          href\n        }\n      },\n      _type in ["cooperationSection", "sectionCooperation"] => {\n        ...,\n        button->{\n          _id,\n          text,\n          href\n        }\n      }\n    }\n  }\n': HomeQueryResult;
     '\n  *[_type == "post"] | order(_createdAt desc) {\n    _id,\n    _createdAt,\n    title,\n    "slug": slug.current,\n    "author": author->name,\n    "image": mainImage.asset->url,\n    description,\n    "categories": categories[]->title,\n    body\n  }\n': PostsQueryResult;
+    '\n  *[_type == "material"] | order(date desc) {\n    _id,\n    title,\n    description,\n    date,\n    event,\n    type,\n    area,\n    format,\n    size,\n    placements,\n    "fileAsset": file.asset->{\n      url,\n      extension,\n      size\n    }\n  }\n': MaterialsQueryResult;
   }
 }

@@ -1,98 +1,13 @@
 import MaterialyFilters from "@/app/_components/Filtering/MaterialyFilters";
+import { mapMaterialsToFilterItems } from "@/lib/mappers/materials";
+import { sanityFetch } from "@/sanity/live";
+import { materialsQuery } from "@/sanity/queries/materials";
 
-const demoMaterials = [
-  {
-    title: "Przewodnik po warsztatach",
-    date: "2025-03-15",
-    description: "Kompletny przewodnik dla uczestników",
-    fileUrl: "https://example.com/warsztaty/przewodnik-po-warsztatach.pdf",
-    format: "PDF",
-    size: "1.2 MB",
-    event: "Warsztaty startowe",
-    type: "Poradnik",
-    area: "Rozwój osobisty",
-  },
-  {
-    title: "Infografika: Stres",
-    date: "2025-03-01",
-    description: "Wizualne podsumowanie technik relaksacji",
-    fileUrl: "https://example.com/warsztaty/infografika-stres.pdf",
-    format: "Link",
-    size: "640 KB",
-    event: "Webinar dobrostan",
-    type: "Infografika",
-    area: "Zdrowie",
-  },
-  {
-    title: "Materiały szkoleniowe",
-    date: "2025-02-10",
-    description: "Zestaw ćwiczeń i zadań praktycznych",
-    fileUrl: "https://example.com/warsztaty/materialy-szkoleniowe.pdf",
-    format: "PDF",
-    size: "850 KB",
-    event: "Bootcamp kariery",
-    type: "Workbook",
-    area: "Kariera",
-  },
-  {
-    title: "Poradnik mentora",
-    date: "2025-01-20",
-    description: "Wskazówki dla mentorów i prowadzących",
-    fileUrl: "https://example.com/warsztaty/poradnik-mentora.pdf",
-    format: "PDF",
-    size: "2.1 MB",
-    event: "Akademia mentorów",
-    type: "Publikacja",
-    area: "Rodzicielstwo",
-  },
-  {
-    title: "Nagranie z webinaru",
-    date: "2025-01-05",
-    description: "Pełne nagranie sesji o finansach",
-    fileUrl: "https://example.com/warsztaty/nagranie-z-webinaru.mp4",
-    format: "MP4",
-    size: "128 MB",
-    event: "Webinar finanse",
-    type: "Nagranie video",
-    area: "Finanse",
-  },
-  {
-    title: "Raport z badań",
-    date: "2024-12-01",
-    description: "Wyniki badań dotyczących efektywności programów",
-    fileUrl: "https://example.com/warsztaty/raport-z-badan.pdf",
-    format: "PDF",
-    size: "3.4 MB",
-    event: "Forum ekspertów",
-    type: "Publikacja",
-    area: "Finanse",
-  },
-  {
-    title: "Arkusz samooceny",
-    date: "2024-11-05",
-    description: "Narzędzie do oceny własnych postępów",
-    fileUrl: "https://example.com/warsztaty/arkusz-samooceny.zip",
-    format: "ZIP",
-    size: "420 KB",
-    event: "Program mentoringowy",
-    type: "Checklist",
-    area: "Rozwój osobisty",
-  },
-  {
-    title: "Szablon CV",
-    date: "2024-10-15",
-    description: "Gotowy szablon do wypełnienia",
-    fileUrl: "https://example.com/warsztaty/szablon-cv.zip",
-    format: "ZIP",
-    size: "180 KB",
-    event: "Bootcamp kariery",
-    type: "Szablon",
-    area: "Kariera",
-  },
-] as const;
+const MaterialsPage = async () => {
+  const { data } = await sanityFetch({ query: materialsQuery });
+  const materials = mapMaterialsToFilterItems(data ?? []);
 
-const MaterialsPage = () => {
-  return <MaterialyFilters materials={[...demoMaterials]} />;
+  return <MaterialyFilters materials={materials} />;
 };
 
 export default MaterialsPage;

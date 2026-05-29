@@ -18,6 +18,7 @@ export const structure: StructureToolOptions = {
           .child(S.document().schemaType("home").documentId("home")),
         S.divider().title("Kolekcje"),
         S.documentTypeListItem("post").title("Wpisy").icon(ComposeIcon),
+        S.documentTypeListItem("material").title("Materiały").icon(DocumentIcon),
         S.documentTypeListItem("author").title("Autorzy").icon(UsersIcon),
         S.documentTypeListItem("cardLandingPage").title("Karty landing page").icon(DocumentIcon),
         S.documentTypeListItem("cardWithRedirect")

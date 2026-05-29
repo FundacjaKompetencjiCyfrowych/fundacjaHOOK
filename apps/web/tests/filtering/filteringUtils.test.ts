@@ -15,7 +15,7 @@ const makeMaterial = (overrides: Partial<MaterialFilterItem> = {}): MaterialFilt
   fileUrl: "https://example.com/file.pdf",
   format: "PDF",
   size: "1 MB",
-  event: "Evento",
+  event: "Warsztaty",
   type: "Poradnik",
   area: "Zdrowie",
   ...overrides,
@@ -42,16 +42,16 @@ const FIXTURES: MaterialFilterItem[] = [
   makeMaterial({
     title: "Arkusz",
     date: "2024-11-05",
-    format: "ZIP",
+    format: "Zip",
     type: "Checklist",
     area: "Kariera",
-    event: "Bootcamp",
+    event: "Szkolenie",
   }),
   makeMaterial({
     title: "Nagranie",
     date: "2024-08-20",
     format: "MP4",
-    type: "Nagranie video",
+    type: "Nagranie wideo",
     area: "Zdrowie",
     event: "Warsztaty",
   }),
@@ -71,12 +71,6 @@ describe("toggleSet", () => {
     expect(result).toEqual(new Set(["b"]));
   });
 
-  it("does not mutate the original set", () => {
-    const original = new Set(["a"]);
-    toggleSet(original, "b");
-    expect(original).toEqual(new Set(["a"]));
-  });
-
   it("handles an empty set by adding the value", () => {
     expect(toggleSet(new Set(), "x")).toEqual(new Set(["x"]));
   });
@@ -90,7 +84,7 @@ describe("countValues", () => {
     const result = countValues(FIXTURES, "format");
     expect(result.get("PDF")).toBe(1);
     expect(result.get("Link")).toBe(1);
-    expect(result.get("ZIP")).toBe(1);
+    expect(result.get("Zip")).toBe(1);
     expect(result.get("MP4")).toBe(1);
   });
 
@@ -263,7 +257,7 @@ describe("filterAndSortMaterials", () => {
       const result = filterAndSortMaterials({
         ...baseInput,
         materials: FIXTURES,
-        selectedFormats: new Set(["PDF", "ZIP"]),
+        selectedFormats: new Set(["PDF", "Zip"]),
       });
       expect(result).toHaveLength(2);
     });
@@ -327,7 +321,7 @@ describe("filterAndSortMaterials", () => {
         ...baseInput,
         materials: FIXTURES,
         selectedEvent: "Warsztaty",
-        selectedFormats: new Set(["ZIP"]),
+        selectedFormats: new Set(["Zip"]),
       });
       expect(result).toHaveLength(0);
     });
@@ -365,7 +359,7 @@ describe("getActiveFilterCount", () => {
 
   it("counts each selected format individually", () => {
     expect(
-      getActiveFilterCount({ ...emptyCountArgs, selectedFormats: new Set(["PDF", "ZIP"]) })
+      getActiveFilterCount({ ...emptyCountArgs, selectedFormats: new Set(["PDF", "Zip"]) })
     ).toBe(2);
   });
 

@@ -1,10 +1,6 @@
-import type { ContentItemType } from "@/app/_components/Sections/LandingPage/ContentItem";
+import type { MaterialFilterItem } from "./materialyFilters.types";
 
-export type MaterialFilterItem = ContentItemType & {
-  event: string;
-  type: string;
-  area: string;
-};
+export type { MaterialFilterItem } from "./materialyFilters.types";
 
 export function toggleSet(current: Set<string>, value: string) {
   const next = new Set(current);

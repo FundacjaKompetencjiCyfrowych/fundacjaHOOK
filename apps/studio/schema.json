@@ -1355,6 +1355,278 @@
   },
   {
     "type": "type",
+    "name": "sanity.fileAsset.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "sanity.fileAsset"
+    }
+  },
+  {
+    "name": "material",
+    "type": "document",
+    "attributes": {
+      "_id": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_type": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string",
+          "value": "material"
+        }
+      },
+      "_createdAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_updatedAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_rev": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "title": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "description": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "date": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "event": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "Warsztaty"
+            },
+            {
+              "type": "string",
+              "value": "Konferencja"
+            },
+            {
+              "type": "string",
+              "value": "Webinar"
+            },
+            {
+              "type": "string",
+              "value": "Szkolenie"
+            },
+            {
+              "type": "string",
+              "value": "Inne"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "type": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "Workbook"
+            },
+            {
+              "type": "string",
+              "value": "Checklist"
+            },
+            {
+              "type": "string",
+              "value": "Poradnik"
+            },
+            {
+              "type": "string",
+              "value": "Publikacja"
+            },
+            {
+              "type": "string",
+              "value": "Nagranie wideo"
+            },
+            {
+              "type": "string",
+              "value": "Szablon"
+            },
+            {
+              "type": "string",
+              "value": "Infografika"
+            },
+            {
+              "type": "string",
+              "value": "Inne"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "area": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "Zdrowie"
+            },
+            {
+              "type": "string",
+              "value": "Prawo"
+            },
+            {
+              "type": "string",
+              "value": "Finanse"
+            },
+            {
+              "type": "string",
+              "value": "Kariera"
+            },
+            {
+              "type": "string",
+              "value": "Rozwój Osobisty"
+            },
+            {
+              "type": "string",
+              "value": "Rodzicielstwo"
+            },
+            {
+              "type": "string",
+              "value": "Inne"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "file": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "asset": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "sanity.fileAsset.reference"
+              },
+              "optional": true
+            },
+            "media": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "unknown"
+              },
+              "optional": true
+            },
+            "_type": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string",
+                "value": "file"
+              }
+            }
+          }
+        },
+        "optional": true
+      },
+      "format": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "PDF"
+            },
+            {
+              "type": "string",
+              "value": "Zip"
+            },
+            {
+              "type": "string",
+              "value": "MP4"
+            },
+            {
+              "type": "string",
+              "value": "Link"
+            },
+            {
+              "type": "string",
+              "value": "Inne"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "size": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "placements": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "array",
+          "of": {
+            "type": "string"
+          }
+        },
+        "optional": true
+      }
+    }
+  },
+  {
+    "type": "type",
     "name": "author.reference",
     "value": {
       "type": "object",
