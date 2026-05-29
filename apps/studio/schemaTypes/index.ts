@@ -16,6 +16,7 @@ import cooperationSection from "./sections/cooperationSection";
 import redirectButton from "./objects/redirectButton";
 import cardLandingPage from "./objects/cardLandingPage";
 import cardWithRedirect from "./objects/cardWithRedirect";
+import workshop from "./objects/workshop";
 
 export const schemaTypes = [
   post,
@@ -36,4 +37,5 @@ export const schemaTypes = [
   redirectButton,
   cardLandingPage,
   cardWithRedirect,
+  workshop,
 ];

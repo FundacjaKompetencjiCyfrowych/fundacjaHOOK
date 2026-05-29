@@ -23,7 +23,7 @@
     }
   },
   {
-    "name": "cardWithRedirect",
+    "name": "workshop",
     "type": "document",
     "attributes": {
       "_id": {
@@ -36,7 +36,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "string",
-          "value": "cardWithRedirect"
+          "value": "workshop"
         }
       },
       "_createdAt": {
@@ -79,6 +79,52 @@
         },
         "optional": true
       },
+      "datetime": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "location": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "duration": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "number"
+        },
+        "optional": true
+      },
+      "group": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "adult"
+            },
+            {
+              "type": "string",
+              "value": "teen"
+            },
+            {
+              "type": "string",
+              "value": "children "
+            },
+            {
+              "type": "string",
+              "value": "family "
+            }
+          ]
+        },
+        "optional": true
+      },
       "href": {
         "type": "objectAttribute",
         "value": {
@@ -86,10 +132,24 @@
         },
         "optional": true
       },
-      "hrefText": {
+      "status": {
         "type": "objectAttribute",
         "value": {
-          "type": "string"
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "inProgress"
+            },
+            {
+              "type": "string",
+              "value": "planned"
+            },
+            {
+              "type": "string",
+              "value": "completed"
+            }
+          ]
         },
         "optional": true
       }
@@ -169,6 +229,79 @@
           },
           "optional": true
         }
+      }
+    }
+  },
+  {
+    "name": "cardWithRedirect",
+    "type": "document",
+    "attributes": {
+      "_id": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_type": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string",
+          "value": "cardWithRedirect"
+        }
+      },
+      "_createdAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_updatedAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_rev": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "title": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "image": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "img"
+        },
+        "optional": true
+      },
+      "description": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "href": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "hrefText": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
       }
     }
   },

@@ -18,17 +18,21 @@ export type Robots = {
   noFollow?: boolean;
 };
 
-export type CardWithRedirect = {
+export type Workshop = {
   _id: string;
-  _type: "cardWithRedirect";
+  _type: "workshop";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   title?: string;
   image?: Img;
   description?: string;
+  datetime?: string;
+  location?: string;
+  duration?: number;
+  group?: "adult" | "teen" | "children" | "family";
   href?: string;
-  hrefText?: string;
+  status?: "inProgress" | "planned" | "completed";
 };
 
 export type SanityImageAssetReference = {
@@ -44,6 +48,19 @@ export type Img = {
   media?: unknown;
   hotspot?: SanityImageHotspot;
   crop?: SanityImageCrop;
+};
+
+export type CardWithRedirect = {
+  _id: string;
+  _type: "cardWithRedirect";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  image?: Img;
+  description?: string;
+  href?: string;
+  hrefText?: string;
 };
 
 export type CardLandingPage = {
@@ -437,9 +454,10 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | Robots
-  | CardWithRedirect
+  | Workshop
   | SanityImageAssetReference
   | Img
+  | CardWithRedirect
   | CardLandingPage
   | RedirectButtonReference
   | CooperationSection
@@ -476,6 +494,26 @@ export type AllSanitySchemaTypes =
   | Geopoint;
 
 export declare const internalGroqTypeReferenceTo: unique symbol;
+
+// Source: ../web/app/(root)/workshops/page.tsx
+// Variable: workshopsQuery
+// Query: *[_type == "workshop"] | order(_createdAt desc)
+export type WorkshopsQueryResult = Array<{
+  _id: string;
+  _type: "workshop";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  image?: Img;
+  description?: string;
+  datetime?: string;
+  location?: string;
+  duration?: number;
+  group?: "adult" | "children" | "family" | "teen";
+  href?: string;
+  status?: "completed" | "inProgress" | "planned";
+}>;
 
 // Source: ../web/app/page.tsx
 // Variable: homeQuery
@@ -633,6 +671,7 @@ export type PostsQueryResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    '\n  *[_type == "workshop"] | order(_createdAt desc)': WorkshopsQueryResult;
     '\n  *[_type == "home"][0]{\n    _id,\n    sections[]{\n      ...,\n      _type in ["cardswithbackground", "sectionCardsWithBackground"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          image\n        }\n      },\n      _type in ["cardswithredirect", "sectionCardsWithRedirect"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          href,\n          hrefText,\n          image\n        },\n        button->{\n          _id,\n          text,\n          href\n        }\n      },\n      _type in ["supportSection", "sectionSupport"] => {\n        ...,\n        button->{\n          _id,\n          text,\n          href\n        }\n      },\n      _type in ["cooperationSection", "sectionCooperation"] => {\n        ...,\n        button->{\n          _id,\n          text,\n          href\n        }\n      }\n    }\n  }\n': HomeQueryResult;
     '\n  *[_type == "post"] | order(_createdAt desc) {\n    _id,\n    _createdAt,\n    title,\n    "slug": slug.current,\n    "author": author->name,\n    "image": mainImage.asset->url,\n    description,\n    "categories": categories[]->title,\n    body\n  }\n': PostsQueryResult;
   }
