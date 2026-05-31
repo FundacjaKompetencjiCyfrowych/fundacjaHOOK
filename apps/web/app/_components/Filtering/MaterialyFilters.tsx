@@ -59,19 +59,16 @@ export default function MaterialyFilters({ materials }: { materials: MaterialFil
   }, [selEvent, selTypes, selAreas, selFormats, dateFrom, dateTo]);
 
   const countForValue = (kind: "event" | "type" | "area" | "format", value: string) => {
-    const source =
-      // kind === "event"
-      //   ? eventCounts
-      //   : kind === "type"
-      //     ? typeCounts
-      //     : kind === "area"
-      //       ? areaCounts
-      //       : formatCounts;
-      if (kind === "event") return eventCounts;
-    if (kind === "type") return typeCounts;
-    if (kind === "area") return areaCounts;
-    if (kind === "format") return formatCounts;
-    return source.get(value) ?? 0;
+    switch (kind) {
+      case "event":
+        return eventCounts.get(value) ?? 0;
+      case "type":
+        return typeCounts.get(value) ?? 0;
+      case "area":
+        return areaCounts.get(value) ?? 0;
+      case "format":
+        return formatCounts.get(value) ?? 0;
+    }
   };
 
   const resetFilters = () => {
