@@ -1,4 +1,4 @@
-import type { ContentItemType } from "@/app/_components/Sections/LandingPage/ContentItem";
+import type { ContentItemType } from "@/app/_components/Cards/ContentItem";
 
 export type MaterialFilterItem = ContentItemType & {
   event: string;
