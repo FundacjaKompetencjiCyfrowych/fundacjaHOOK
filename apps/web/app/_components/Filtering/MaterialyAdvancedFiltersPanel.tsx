@@ -1,5 +1,5 @@
-import { format } from "date-fns";
-import { pl } from "date-fns/locale";
+import { formatDatePolish } from "@/lib/formatDate";
+import { pl } from "date-fns/locale/pl";
 import { CalendarIcon } from "lucide-react";
 
 import { Button } from "@/app/_components/ui/button";
@@ -105,7 +105,7 @@ export default function MaterialyAdvancedFiltersPanel({
                   )}
                 >
                   <CalendarIcon className="mr-2 w-4 h-4" />
-                  {dateFrom ? format(dateFrom, "dd.MM.yyyy") : "Od"}
+                  {dateFrom ? formatDatePolish(dateFrom) : "Od"}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="p-0 w-auto" align="start">
@@ -130,7 +130,7 @@ export default function MaterialyAdvancedFiltersPanel({
                   )}
                 >
                   <CalendarIcon className="mr-2 w-4 h-4" />
-                  {dateTo ? format(dateTo, "dd.MM.yyyy") : "Do"}
+                  {dateTo ? formatDatePolish(dateTo) : "Do"}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="p-0 w-auto" align="start">

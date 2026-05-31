@@ -1,3 +1,6 @@
+import { format } from "date-fns/format";
+import { pl } from "date-fns/locale/pl";
+
 export function formatDate(value: string) {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return value;
@@ -8,3 +11,7 @@ export function formatDate(value: string) {
 
   return `${day}.${month}.${year}`;
 }
+
+export const formatDatePolish = (date: Date): string => {
+  return format(date, "dd.MM.yyyy", { locale: pl });
+};
