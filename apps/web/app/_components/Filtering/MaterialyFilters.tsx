@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 
-import MaterialySection from "@/app/_components/Sections/MaterialySection";
+import MaterialySection from "@/app/_components/Sections/MaterialyPage/MaterialySection";
 import { Collapsible } from "@/app/_components/ui/collapsible";
 
 import MaterialyAdvancedFiltersPanel from "./MaterialyAdvancedFiltersPanel";
