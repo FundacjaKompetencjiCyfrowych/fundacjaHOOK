@@ -60,13 +60,17 @@ export default function MaterialyFilters({ materials }: { materials: MaterialFil
 
   const countForValue = (kind: "event" | "type" | "area" | "format", value: string) => {
     const source =
-      kind === "event"
-        ? eventCounts
-        : kind === "type"
-          ? typeCounts
-          : kind === "area"
-            ? areaCounts
-            : formatCounts;
+      // kind === "event"
+      //   ? eventCounts
+      //   : kind === "type"
+      //     ? typeCounts
+      //     : kind === "area"
+      //       ? areaCounts
+      //       : formatCounts;
+      if (kind === "event") return eventCounts;
+    if (kind === "type") return typeCounts;
+    if (kind === "area") return areaCounts;
+    if (kind === "format") return formatCounts;
     return source.get(value) ?? 0;
   };
 
