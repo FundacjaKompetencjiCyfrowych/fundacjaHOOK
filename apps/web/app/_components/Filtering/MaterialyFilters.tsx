@@ -21,12 +21,12 @@ export default function MaterialyFilters({ materials }: { materials: MaterialFil
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState<"newest" | "oldest">("newest");
-  const [selWydarzenie, setSelWydarzenie] = useState("all");
+  const [selEvent, setSelEvent] = useState("all");
   const [dateFrom, setDateFrom] = useState<Date | undefined>();
   const [dateTo, setDateTo] = useState<Date | undefined>();
-  const [selTypy, setSelTypy] = useState<Set<string>>(new Set());
-  const [selObszary, setSelObszary] = useState<Set<string>>(new Set());
-  const [selFormaty, setSelFormaty] = useState<Set<string>>(new Set());
+  const [selTypes, setSelTypes] = useState<Set<string>>(new Set());
+  const [selAreas, setSelAreas] = useState<Set<string>>(new Set());
+  const [selFormats, setSelFormats] = useState<Set<string>>(new Set());
 
   const eventCounts = useMemo(() => countValues(materials, "event"), [materials]);
   const typeCounts = useMemo(() => countValues(materials, "type"), [materials]);
@@ -38,25 +38,25 @@ export default function MaterialyFilters({ materials }: { materials: MaterialFil
       materials,
       search,
       sort,
-      selectedEvent: selWydarzenie,
-      selectedTypes: selTypy,
-      selectedAreas: selObszary,
-      selectedFormats: selFormaty,
+      selectedEvent: selEvent,
+      selectedTypes: selTypes,
+      selectedAreas: selAreas,
+      selectedFormats: selFormats,
       dateFrom,
       dateTo,
     });
-  }, [materials, search, sort, selWydarzenie, selTypy, selObszary, selFormaty, dateFrom, dateTo]);
+  }, [materials, search, sort, selEvent, selTypes, selAreas, selFormats, dateFrom, dateTo]);
 
   const activeFilterCount = useMemo(() => {
     return getActiveFilterCount({
-      selectedEvent: selWydarzenie,
-      selectedTypes: selTypy,
-      selectedAreas: selObszary,
-      selectedFormats: selFormaty,
+      selectedEvent: selEvent,
+      selectedTypes: selTypes,
+      selectedAreas: selAreas,
+      selectedFormats: selFormats,
       dateFrom,
       dateTo,
     });
-  }, [selWydarzenie, selTypy, selObszary, selFormaty, dateFrom, dateTo]);
+  }, [selEvent, selTypes, selAreas, selFormats, dateFrom, dateTo]);
 
   const countForValue = (kind: "event" | "type" | "area" | "format", value: string) => {
     const source =
@@ -72,12 +72,12 @@ export default function MaterialyFilters({ materials }: { materials: MaterialFil
 
   const resetFilters = () => {
     setSort("newest");
-    setSelWydarzenie("all");
+    setSelEvent("all");
     setDateFrom(undefined);
     setDateTo(undefined);
-    setSelTypy(new Set());
-    setSelObszary(new Set());
-    setSelFormaty(new Set());
+    setSelTypes(new Set());
+    setSelAreas(new Set());
+    setSelFormats(new Set());
   };
 
   return (
@@ -93,21 +93,21 @@ export default function MaterialyFilters({ materials }: { materials: MaterialFil
 
           <MaterialyAdvancedFiltersPanel
             sort={sort}
-            selectedEvent={selWydarzenie}
+            selectedEvent={selEvent}
             events={WYDARZENIA}
             dateFrom={dateFrom}
             dateTo={dateTo}
-            selectedTypes={selTypy}
-            selectedAreas={selObszary}
-            selectedFormats={selFormaty}
+            selectedTypes={selTypes}
+            selectedAreas={selAreas}
+            selectedFormats={selFormats}
             countForValue={countForValue}
             onSortChange={setSort}
-            onSelectedEventChange={setSelWydarzenie}
+            onSelectedEventChange={setSelEvent}
             onDateFromChange={setDateFrom}
             onDateToChange={setDateTo}
-            onTypeToggle={(value) => setSelTypy((current) => toggleSet(current, value))}
-            onAreaToggle={(value) => setSelObszary((current) => toggleSet(current, value))}
-            onFormatToggle={(value) => setSelFormaty((current) => toggleSet(current, value))}
+            onTypeToggle={(value) => setSelTypes((current) => toggleSet(current, value))}
+            onAreaToggle={(value) => setSelAreas((current) => toggleSet(current, value))}
+            onFormatToggle={(value) => setSelFormats((current) => toggleSet(current, value))}
           />
         </Collapsible>
 
