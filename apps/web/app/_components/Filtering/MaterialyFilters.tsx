@@ -10,14 +10,19 @@ import MaterialyFiltersReset from "./MaterialyFiltersReset";
 import MaterialyFiltersTopBar from "./MaterialyFiltersTopBar";
 import { WYDARZENIA, type MaterialFilterItem } from "./materialyFilters.types";
 
-import {
-  countValues,
-  filterAndSortMaterials,
-  getActiveFilterCount,
-  toggleSet,
-} from "./materialyFilters.utils";
+import { filterAndSortMaterials, getActiveFilterCount, toggleSet } from "./materialyFilters.utils";
 
-export default function MaterialyFilters({ materials }: { materials: MaterialFilterItem[] }) {
+interface MaterialyFiltersProps {
+  materials: MaterialFilterItem[];
+  counts: {
+    eventCount: Map<string, number>;
+    typeCount: Map<string, number>;
+    areaCount: Map<string, number>;
+    formatCount: Map<string, number>;
+  };
+}
+
+export default function MaterialyFilters({ materials, counts }: MaterialyFiltersProps) {
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState<"newest" | "oldest">("newest");
@@ -28,10 +33,10 @@ export default function MaterialyFilters({ materials }: { materials: MaterialFil
   const [selAreas, setSelAreas] = useState<Set<string>>(new Set());
   const [selFormats, setSelFormats] = useState<Set<string>>(new Set());
 
-  const eventCounts = useMemo(() => countValues(materials, "event"), [materials]);
-  const typeCounts = useMemo(() => countValues(materials, "type"), [materials]);
-  const areaCounts = useMemo(() => countValues(materials, "area"), [materials]);
-  const formatCounts = useMemo(() => countValues(materials, "format"), [materials]);
+  const eventCounts = counts.eventCount;
+  const typeCounts = counts.typeCount;
+  const areaCounts = counts.areaCount;
+  const formatCounts = counts.formatCount;
 
   const filteredMaterials = useMemo(() => {
     return filterAndSortMaterials({
