@@ -115,11 +115,11 @@
             },
             {
               "type": "string",
-              "value": "children "
+              "value": "children"
             },
             {
               "type": "string",
-              "value": "family "
+              "value": "family"
             }
           ]
         },

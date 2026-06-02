@@ -48,8 +48,11 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pl" className={cn("h-full", "antialiased", "font-sans", poppins.variable)}>
-      <body>
+    <html
+      lang="pl"
+      className={cn("h-full", "antialiased", "font-sans", poppins.variable)}
+    >
+      <body className="flex flex-col min-h-full">
         <UtilityHeader />
         <Navbar />
         <main className="flex-1">{children}</main>
