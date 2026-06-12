@@ -21,8 +21,9 @@ export const getHoursLabel = (count: number) => {
   return "godzin";
 };
 
-export const translateStatus = (status?: string) => {
-  return status ? (STATUS_TRANSLATIONS[status] ?? status) : "";
+export const translateStatus = (status?: keyof typeof STATUS_TRANSLATIONS) => {
+  if (!status) return null;
+  return STATUS_TRANSLATIONS[status] || status;
 };
 
 export const getFormattedWorkshopDate = (dateStr?: string) => {

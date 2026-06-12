@@ -2,7 +2,7 @@ export const STATUS_TRANSLATIONS: Record<string, string> = {
   inProgress: "W trakcie",
   planned: "Planowane",
   completed: "Zakończone",
-};
+} as const;
 
 export const translateGroup = (group?: string) => {
   switch (group) {
