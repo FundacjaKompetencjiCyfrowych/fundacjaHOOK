@@ -1,65 +1,18 @@
 import { Workshop } from "@/sanity/typegen";
-import { Card, CardAction, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { SanityImage } from "@/sanity/image/SanityImage";
 import { Badge } from "../ui/badge";
 import { Calendar1, MapPin, Timer, Users } from "lucide-react";
+import { translateGroup } from "@/lib/mappers/workshop";
+import { getFormattedWorkshopDate, getHoursLabel } from "@/lib/utils";
+import { translateStatus } from "@/lib/utils";
 
 interface Props {
   workshop: Workshop;
 }
 
 const WorkshopCard = ({ workshop }: Props) => {
-  const formattedDate = workshop.datetime
-    ? new Date(workshop.datetime).toLocaleString("pl-PL", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      })
-    : null;
-
-  const getHoursLabel = (count: number) => {
-    if (count === 1) return "godzina";
-
-    const lastDigit = count % 10;
-    const lastTwoDigits = count % 100;
-
-    if (lastDigit >= 2 && lastDigit <= 4 && !(lastTwoDigits >= 12 && lastTwoDigits <= 14)) {
-      return "godziny";
-    }
-
-    return "godzin";
-  };
-
-  const translateGroup = (group?: string) => {
-    switch (group) {
-      case "adult":
-        return "Dorośli 18+";
-
-      case "teen":
-        return "Młodzież 14-18 lat";
-
-      case "children":
-        return "Dzieci 8-13 lat";
-
-      case "family":
-        return "Rodziny z dziećmi";
-
-      default:
-        return group;
-    }
-  };
-
-  const STATUS_TRANSLATIONS: Record<string, string> = {
-    inProgress: "W trakcie",
-    planned: "Planowane",
-    completed: "Zakończone",
-  };
-
-  const translateStatus = (status?: string) => {
-    return status ? (STATUS_TRANSLATIONS[status] ?? status) : "";
-  };
+  const formattedDate = getFormattedWorkshopDate(workshop.datetime);
 
   return (
     <Card className="relative gap-2 shadow-md mx-auto pt-0 w-full max-w-142">
