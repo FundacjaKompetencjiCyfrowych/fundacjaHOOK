@@ -1,11 +1,5 @@
 import { Workshop } from "@/sanity/typegen";
-import {
-  Card,
-  CardAction,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
+import { Card, CardAction, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { SanityImage } from "@/sanity/image/SanityImage";
 import { Badge } from "../ui/badge";
 import { Calendar1, MapPin, Timer, Users } from "lucide-react";
@@ -31,11 +25,7 @@ const WorkshopCard = ({ workshop }: Props) => {
     const lastDigit = count % 10;
     const lastTwoDigits = count % 100;
 
-    if (
-      lastDigit >= 2 &&
-      lastDigit <= 4 &&
-      !(lastTwoDigits >= 12 && lastTwoDigits <= 14)
-    ) {
+    if (lastDigit >= 2 && lastDigit <= 4 && !(lastTwoDigits >= 12 && lastTwoDigits <= 14)) {
       return "godziny";
     }
 
@@ -108,8 +98,7 @@ const WorkshopCard = ({ workshop }: Props) => {
 
             {workshop.duration && (
               <div className="flex items-center gap-1">
-                <Timer size={18} /> {workshop.duration}{" "}
-                {getHoursLabel(Number(workshop.duration))}
+                <Timer size={18} /> {workshop.duration} {getHoursLabel(Number(workshop.duration))}
               </div>
             )}
 
