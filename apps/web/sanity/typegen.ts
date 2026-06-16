@@ -18,6 +18,33 @@ export type Robots = {
   noFollow?: boolean;
 };
 
+export type SocialLinks = {
+  facebook?: string;
+  instagram?: string;
+  linkedin?: string;
+};
+
+export type Link = {
+  _type: "link";
+  socialLinks?: SocialLinks;
+};
+
+export type SanityFileAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+};
+
+export type Logo = {
+  _type: "logo";
+  logo?: {
+    asset?: SanityFileAssetReference;
+    media?: unknown;
+    _type: "file";
+  };
+};
+
 export type Workshop = {
   _id: string;
   _type: "workshop";
@@ -257,6 +284,8 @@ export type Settings = {
   _updatedAt: string;
   _rev: string;
   seo?: Seo;
+  logo?: Logo;
+  link?: Link;
 };
 
 export type Category = {
@@ -275,13 +304,6 @@ export type IconPicker = {
   provider?: string;
   name?: string;
   svg?: string;
-};
-
-export type SanityFileAssetReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
 };
 
 export type Material = {
@@ -498,6 +520,10 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | Robots
+  | SocialLinks
+  | Link
+  | SanityFileAssetReference
+  | Logo
   | Workshop
   | SanityImageAssetReference
   | Img
@@ -522,7 +548,6 @@ export type AllSanitySchemaTypes =
   | Settings
   | Category
   | IconPicker
-  | SanityFileAssetReference
   | Material
   | AuthorReference
   | CategoryReference

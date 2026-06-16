@@ -18,6 +18,8 @@ import redirectButton from "./objects/redirectButton";
 import cardLandingPage from "./objects/cardLandingPage";
 import cardWithRedirect from "./objects/cardWithRedirect";
 import workshop from "./objects/workshop";
+import logo from "./objects/logo";
+import link from "./objects/link";
 
 export const schemaTypes = [
   post,
@@ -40,4 +42,6 @@ export const schemaTypes = [
   cardLandingPage,
   cardWithRedirect,
   workshop,
+  logo,
+  link,
 ];
