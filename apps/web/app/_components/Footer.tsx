@@ -1,19 +1,29 @@
 import Image from "next/image";
 import NewsletterForm from "./NewsletterForm";
+import ROUTES from "@/constants/routes";
+import { settingsQuery } from "@/sanity/queries/settings";
+import { sanityFetch } from "@/sanity/live";
 
-export default function Footer({ Address }: { Address: string }) {
+export default async function Footer({ Address }: { Address: string }) {
+  const settings = await sanityFetch({
+    query: settingsQuery,
+  });
+
   const mainLinks = [
-    ["Warsztaty", "/warsztaty"],
-    ["Materiały", "/materials"],
-    ["Wesprzyj nas", "/wesprzyj-nas"],
-    ["O nas", "/o-nas"],
-    ["Kontakt", "/kontakt"],
+    ["Warsztaty", ROUTES.WORKSHOPS],
+    ["Materiały", ROUTES.MATERIALS],
+    ["Wesprzyj nas", ROUTES.SUPPORT_US],
+    ["O nas", ROUTES.ABOUT_US],
+    ["Kontakt", ROUTES.CONTACT],
   ];
 
   const legalLinks = [
-    ["Klauzula informacyjna", "#"],
-    ["Polityka prywatności (RODO)", "#"],
+    ["Klauzula informacyjna", ROUTES.INFORMATION_CLAUSE],
+    ["Polityka prywatności (RODO)", ROUTES.PRIVACY_POLICY],
   ];
+
+  const logoUrl = settings?.data?.logo?.logo?.asset?.url;
+  const socialLinks = settings?.data?.link?.socialLinks;
 
   return (
     <footer className="bg-sunken px-4 py-10 border-subtle border-t text-main">
@@ -21,7 +31,7 @@ export default function Footer({ Address }: { Address: string }) {
         {/*Left part*/}
         <div className="gap-8 grid grid-cols-1 md:grid-cols-4 text-sm">
           <div>
-            <Image src="/logo.png" alt="Fundacja HOOK" width={40} height={90} />
+            {logoUrl && <Image src={logoUrl} alt="Fundacja HOOK" width={40} height={90} />}
             <p className="mt-2">{Address}</p>
           </div>
           {/*Main links*/}
@@ -52,7 +62,7 @@ export default function Footer({ Address }: { Address: string }) {
           </div>
           {/*Newsletter*/}
           <div>
-            <NewsletterForm />
+            <NewsletterForm SOCIAL_LINKS={socialLinks} />
           </div>
         </div>
       </div>

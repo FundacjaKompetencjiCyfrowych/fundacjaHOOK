@@ -776,6 +776,26 @@ export type MaterialsQueryResult = Array<{
   } | null;
 }>;
 
+// Source: ../web/sanity/queries/settings.ts
+// Variable: settingsQuery
+// Query: *[_type == "settings"][0] {    logo {      logo {        asset-> {          url        }      }    },    link {      socialLinks {        facebook,        instagram,        linkedin      }    }  }
+export type SettingsQueryResult = {
+  logo: {
+    logo: {
+      asset: {
+        url: string | null;
+      } | null;
+    } | null;
+  } | null;
+  link: {
+    socialLinks: {
+      facebook: string | null;
+      instagram: string | null;
+      linkedin: string | null;
+    } | null;
+  } | null;
+} | null;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
@@ -784,5 +804,6 @@ declare module "@sanity/client" {
     '\n  *[_type == "home"][0]{\n    _id,\n    sections[]{\n      ...,\n      _type in ["cardswithbackground", "sectionCardsWithBackground"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          image\n        }\n      },\n      _type in ["cardswithredirect", "sectionCardsWithRedirect"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          href,\n          hrefText,\n          image\n        },\n        button->{\n          _id,\n          text,\n          href\n        }\n      },\n      _type in ["supportSection", "sectionSupport"] => {\n        ...,\n        button->{\n          _id,\n          text,\n          href\n        }\n      },\n      _type in ["cooperationSection", "sectionCooperation"] => {\n        ...,\n        button->{\n          _id,\n          text,\n          href\n        }\n      }\n    }\n  }\n': HomeQueryResult;
     '\n  *[_type == "post"] | order(_createdAt desc) {\n    _id,\n    _createdAt,\n    title,\n    "slug": slug.current,\n    "author": author->name,\n    "image": mainImage.asset->url,\n    description,\n    "categories": categories[]->title,\n    body\n  }\n': PostsQueryResult;
     '\n  *[_type == "material"] | order(date desc) {\n    _id,\n    title,\n    description,\n    date,\n    event,\n    type,\n    area,\n    format,\n    size,\n    placements,\n    "fileAsset": file.asset->{\n      url,\n      extension,\n      size\n    }\n  }\n': MaterialsQueryResult;
+    '\n  *[_type == "settings"][0] {\n    logo {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n    link {\n      socialLinks {\n        facebook,\n        instagram,\n        linkedin\n      }\n    }\n  }\n': SettingsQueryResult;
   }
 }
