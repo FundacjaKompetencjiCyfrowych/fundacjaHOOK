@@ -13,6 +13,12 @@ interface NewsletterFormProps {
 export default function NewsletterForm({ SOCIAL_LINKS }: NewsletterFormProps) {
   const { email, setEmail, formAction, formRef, isPending, submitted } = useNewsletterSubmit();
 
+  const platformLabels = {
+    facebook: "f",
+    instagram: "ig",
+    linkedin: "in",
+  };
+
   return (
     <div>
       <p className="mb-2 font-bold">Newsletter</p>
@@ -34,17 +40,19 @@ export default function NewsletterForm({ SOCIAL_LINKS }: NewsletterFormProps) {
           {isPending ? "Wysyłanie..." : submitted ? "Zapisano!" : "Zapisz się"}
         </button>
       </form>
-      <div className="flex gap-2 mt-3 text-secondary-foreground">
+      <div className="flex gap-2 mt-3">
         {SOCIAL_LINKS &&
           Object.entries(SOCIAL_LINKS).map(
-            ([icon, link]) =>
+            ([platform, link]) =>
               link && (
                 <a
-                  key={icon}
+                  key={platform}
                   href={link}
-                  className="flex justify-center items-center bg-elevated hover:bg-brand-soft rounded w-8 h-8 transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex justify-center items-center bg-elevated hover:bg-brand-soft rounded w-8 h-8 font-semibold text-main text-xs transition-colors"
                 >
-                  <span className="text-main text-sm lowercase">{icon}</span>
+                  {platformLabels[platform as keyof typeof platformLabels]}
                 </a>
               )
           )}
