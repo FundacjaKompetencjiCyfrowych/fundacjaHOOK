@@ -13,6 +13,7 @@ import NewsletterButton from "@/app/_components/Buttons/NewsletterButton";
 import UpArrowButton from "@/app/_components/Buttons/UpArrowButton";
 import Footer from "@/app/_components/Footer";
 import { cn } from "@/lib/utils";
+import { settingsQuery } from "@/sanity/queries/settings";
 
 /** This is the base metadata for the entire project, it will cascade down to subpages
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function */
@@ -47,17 +48,25 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const settings = await sanityFetch({
+    query: settingsQuery,
+  });
+
   return (
     <html lang="pl" className={cn("h-full", "antialiased", "font-sans", poppins.variable)}>
       <body className="flex flex-col min-h-full">
         <UtilityHeader />
-        <Navbar />
+        <Navbar Logo={settings?.data?.logo?.logo?.asset?.url} />
         <main className="flex-1">{children}</main>
         <Toaster />
         <SanityPreview />
         <NewsletterButton />
         <UpArrowButton />
-        <Footer Address="ul. Przykładowa 123, 00-000 Miasto" />
+        <Footer
+          Address="ul. Przykładowa 123, 00-000 Miasto"
+          Logo={settings?.data?.logo?.logo?.asset?.url}
+          SocialLinks={settings?.data?.link?.socialLinks}
+        />
       </body>
       <SanityLive />
     </html>

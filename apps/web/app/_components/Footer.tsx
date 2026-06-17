@@ -4,11 +4,17 @@ import ROUTES from "@/constants/routes";
 import { settingsQuery } from "@/sanity/queries/settings";
 import { sanityFetch } from "@/sanity/live";
 
-export default async function Footer({ Address }: { Address: string }) {
-  const settings = await sanityFetch({
-    query: settingsQuery,
-  });
+interface FooterProps {
+  Address: string;
+  Logo?: string | null;
+  SocialLinks?: {
+    facebook?: string | null;
+    instagram?: string | null;
+    linkedin?: string | null;
+  } | null;
+}
 
+export default async function Footer({ Address, Logo, SocialLinks }: FooterProps) {
   const mainLinks = [
     ["Warsztaty", ROUTES.WORKSHOPS],
     ["Materiały", ROUTES.MATERIALS],
@@ -22,8 +28,8 @@ export default async function Footer({ Address }: { Address: string }) {
     ["Polityka prywatności (RODO)", ROUTES.PRIVACY_POLICY],
   ];
 
-  const logoUrl = settings?.data?.logo?.logo?.asset?.url;
-  const socialLinks = settings?.data?.link?.socialLinks;
+  const logoUrl = Logo;
+  const socialLinks = SocialLinks;
 
   return (
     <footer className="bg-sunken px-4 py-10 border-subtle border-t text-main">

@@ -798,6 +798,19 @@ export type SettingsQueryResult = {
   } | null;
 } | null;
 
+// Source: ../web/sanity/queries/settings.ts
+// Variable: logoQuery
+// Query: *[_type == "settings"][0] {    logo {      logo {        asset-> {          url        }      }    },  }
+export type LogoQueryResult = {
+  logo: {
+    logo: {
+      asset: {
+        url: string | null;
+      } | null;
+    } | null;
+  } | null;
+} | null;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
@@ -807,5 +820,6 @@ declare module "@sanity/client" {
     '\n  *[_type == "post"] | order(_createdAt desc) {\n    _id,\n    _createdAt,\n    title,\n    "slug": slug.current,\n    "author": author->name,\n    "image": mainImage.asset->url,\n    description,\n    "categories": categories[]->title,\n    body\n  }\n': PostsQueryResult;
     '\n  *[_type == "material"] | order(date desc) {\n    _id,\n    title,\n    description,\n    date,\n    event,\n    type,\n    area,\n    format,\n    size,\n    placements,\n    "fileAsset": file.asset->{\n      url,\n      extension,\n      size\n    }\n  }\n': MaterialsQueryResult;
     '\n  *[_type == "settings"][0] {\n    logo {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n    link {\n      socialLinks {\n        facebook,\n        instagram,\n        linkedin\n      }\n    }\n  }\n': SettingsQueryResult;
+    '\n  *[_type == "settings"][0] {\n    logo {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n  }\n': LogoQueryResult;
   }
 }

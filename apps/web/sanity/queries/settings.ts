@@ -18,3 +18,15 @@ export const settingsQuery = defineQuery(`
     }
   }
 `);
+
+export const logoQuery = defineQuery(`
+  *[_type == "settings"][0] {
+    logo {
+      logo {
+        asset-> {
+          url
+        }
+      }
+    },
+  }
+`);

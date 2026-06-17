@@ -9,7 +9,7 @@ import ROUTES from "@/constants/routes";
 
 import { Menu, X } from "lucide-react";
 
-export default function Navbar() {
+export default function Navbar({ Logo }: { Logo?: string | null }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navLinks = [
@@ -27,7 +27,7 @@ export default function Navbar() {
       <nav className="relative flex items-center gap-6 bg-brand-soft shadow-md px-6 py-2 border-0 border-secondary rounded-full">
         <Link href={ROUTES.HOME} className="" aria-label="Fundacja HOOK - strona główna">
           <Image
-            src="/logo.png"
+            src={Logo || "/logo.png"}
             alt="Logo Fundacja HOOK"
             width={72}
             height={32}
