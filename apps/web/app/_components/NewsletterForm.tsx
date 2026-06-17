@@ -1,6 +1,7 @@
 "use client";
 
 import { useNewsletterSubmit } from "@/lib/hooks/useNewsletterSubmit";
+import SocialMediaLinks from "@/app/_components/SocialMediaLinks";
 
 interface NewsletterFormProps {
   SOCIAL_LINKS?: {
@@ -41,21 +42,7 @@ export default function NewsletterForm({ SOCIAL_LINKS }: NewsletterFormProps) {
         </button>
       </form>
       <div className="flex gap-2 mt-3">
-        {SOCIAL_LINKS &&
-          Object.entries(SOCIAL_LINKS).map(
-            ([platform, link]) =>
-              link && (
-                <a
-                  key={platform}
-                  href={link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex justify-center items-center bg-elevated hover:bg-brand-soft rounded w-8 h-8 font-semibold text-main text-xs transition-colors"
-                >
-                  {platformLabels[platform as keyof typeof platformLabels]}
-                </a>
-              )
-          )}
+        <SocialMediaLinks SocialLinks={SOCIAL_LINKS} />
       </div>
     </div>
   );
