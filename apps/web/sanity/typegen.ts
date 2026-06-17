@@ -29,19 +29,21 @@ export type Link = {
   socialLinks?: SocialLinks;
 };
 
-export type SanityFileAssetReference = {
+export type SanityImageAssetReference = {
   _ref: string;
   _type: "reference";
   _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
 };
 
 export type Logo = {
   _type: "logo";
   logo?: {
-    asset?: SanityFileAssetReference;
+    asset?: SanityImageAssetReference;
     media?: unknown;
-    _type: "file";
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
   };
 };
 
@@ -60,13 +62,6 @@ export type Workshop = {
   group?: "adult" | "teen" | "children" | "family";
   href?: string;
   status?: "inProgress" | "planned" | "completed";
-};
-
-export type SanityImageAssetReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
 };
 
 export type Img = {
@@ -306,6 +301,13 @@ export type IconPicker = {
   svg?: string;
 };
 
+export type SanityFileAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+};
+
 export type Material = {
   _id: string;
   _type: "material";
@@ -522,10 +524,9 @@ export type AllSanitySchemaTypes =
   | Robots
   | SocialLinks
   | Link
-  | SanityFileAssetReference
+  | SanityImageAssetReference
   | Logo
   | Workshop
-  | SanityImageAssetReference
   | Img
   | CardWithRedirect
   | CardLandingPage
@@ -548,6 +549,7 @@ export type AllSanitySchemaTypes =
   | Settings
   | Category
   | IconPicker
+  | SanityFileAssetReference
   | Material
   | AuthorReference
   | CategoryReference

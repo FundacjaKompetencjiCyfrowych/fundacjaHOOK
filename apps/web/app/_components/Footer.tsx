@@ -31,7 +31,18 @@ export default async function Footer({ Address }: { Address: string }) {
         {/*Left part*/}
         <div className="gap-8 grid grid-cols-1 md:grid-cols-4 text-sm">
           <div>
-            {logoUrl && <Image src={logoUrl} alt="Fundacja HOOK" width={40} height={90} />}
+            {/*Logo*/}
+            <div className="relative w-32 h-12">
+              {logoUrl && (
+                <Image
+                  src={logoUrl}
+                  alt="Fundacja HOOK"
+                  fill
+                  priority
+                  className="object-contain object-left"
+                />
+              )}
+            </div>
             <p className="mt-2">{Address}</p>
           </div>
           {/*Main links*/}

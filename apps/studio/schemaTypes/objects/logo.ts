@@ -8,7 +8,7 @@ export default defineType({
     defineField({
       name: "logo",
       title: "Logo (SVG)",
-      type: "file",
+      type: "image",
       options: {
         accept: "image/svg+xml",
       },
