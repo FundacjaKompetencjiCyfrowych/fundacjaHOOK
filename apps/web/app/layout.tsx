@@ -63,9 +63,9 @@ export default async function RootLayout({
         <NewsletterButton />
         <UpArrowButton />
         <Footer
-          Address="ul. Przykładowa 123, 00-000 Miasto"
-          Logo={settings?.data?.logo?.logo?.asset?.url}
-          SocialLinks={settings?.data?.link?.socialLinks}
+          address="ul. Przykładowa 123, 00-000 Miasto"
+          logo={settings?.data?.logo?.logo?.asset?.url}
+          socialLinks={settings?.data?.link?.socialLinks}
         />
       </body>
       <SanityLive />

@@ -1,20 +1,18 @@
 import Image from "next/image";
 import NewsletterForm from "./NewsletterForm";
 import ROUTES from "@/constants/routes";
-import { settingsQuery } from "@/sanity/queries/settings";
-import { sanityFetch } from "@/sanity/live";
 
 interface FooterProps {
-  Address: string;
-  Logo?: string | null;
-  SocialLinks?: {
+  address: string;
+  logo?: string | null;
+  socialLinks?: {
     facebook?: string | null;
     instagram?: string | null;
     linkedin?: string | null;
   } | null;
 }
 
-export default async function Footer({ Address, Logo, SocialLinks }: FooterProps) {
+export default async function Footer({ address, logo, socialLinks }: FooterProps) {
   const mainLinks = [
     ["Warsztaty", ROUTES.WORKSHOPS],
     ["Materiały", ROUTES.MATERIALS],
@@ -28,8 +26,8 @@ export default async function Footer({ Address, Logo, SocialLinks }: FooterProps
     ["Polityka prywatności (RODO)", ROUTES.PRIVACY_POLICY],
   ];
 
-  const logoUrl = Logo;
-  const socialLinks = SocialLinks;
+  const logoUrl = logo;
+  const socialLinksData = socialLinks;
 
   return (
     <footer className="bg-sunken px-4 py-10 border-subtle border-t text-main">
@@ -49,7 +47,7 @@ export default async function Footer({ Address, Logo, SocialLinks }: FooterProps
                 />
               )}
             </div>
-            <p className="mt-2">{Address}</p>
+            <p className="mt-2">{address}</p>
           </div>
           {/*Main links*/}
           <div>
@@ -79,7 +77,7 @@ export default async function Footer({ Address, Logo, SocialLinks }: FooterProps
           </div>
           {/*Newsletter*/}
           <div>
-            <NewsletterForm SOCIAL_LINKS={socialLinks} />
+            <NewsletterForm SOCIAL_LINKS={socialLinksData} />
           </div>
         </div>
       </div>
