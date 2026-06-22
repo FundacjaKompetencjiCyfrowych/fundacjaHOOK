@@ -5,8 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-brand-primary: #0635d0;
-  --color-brand-onhover: #5306b8;
+  --color-brand-primary: #0091a5;
+  --color-brand-onhover: #007a8c;
   --color-brand-soft: #ffd6e0;
 
   --color-page: #ffffff;
