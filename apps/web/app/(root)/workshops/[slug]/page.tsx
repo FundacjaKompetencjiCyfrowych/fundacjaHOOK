@@ -3,12 +3,31 @@ import { workshopDetailsQuery } from "@/sanity/queries/workshopDetails";
 import { sanityFetch } from "@/sanity/live";
 import { Button } from "@/app/_components/ui/button";
 import { Badge } from "@/app/_components/ui/badge";
-import { Calendar1, MapPin, Timer, Users, Download, LogIn } from "lucide-react";
-import { translateGroup } from "@/lib/mappers/workshop";
-import { getFormattedWorkshopDate, getHoursLabel, translateStatus } from "@/lib/utils";
+import { Calendar1, MapPin, Download, LogIn } from "lucide-react";
+import { getFormattedWorkshopDate, translateStatus } from "@/lib/utils";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Suspense } from "react";
+import { workshopSlugsQuery } from "@/sanity/queries/workshopDetails";
+
+async function getWorkshops() {
+  const { data } = await sanityFetch({
+    query: workshopSlugsQuery,
+  });
+  return data || [];
+}
+
+export async function generateStaticParams() {
+  const workshops = await getWorkshops();
+
+  if (!workshops || workshops.length === 0) {
+    return [{ slug: "not-found" }];
+  }
+
+  return workshops.map((workshop: { slug: string }) => ({
+    slug: workshop.slug,
+  }));
+}
 
 interface WorkshopPageProps {
   params: Promise<{ slug: string }>;

@@ -37,3 +37,9 @@ export const workshopDetailsQuery = defineQuery(`
     },
   }
 `);
+
+export const workshopSlugsQuery = defineQuery(`
+  *[_type == "workshop"] {
+    "slug": slug.current
+  }
+`);
