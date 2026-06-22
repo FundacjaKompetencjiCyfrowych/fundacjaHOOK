@@ -26,24 +26,24 @@ async function WorkshopContent({ slug }: { slug: string }) {
   const formattedDate = workshop.datetime ? getFormattedWorkshopDate(workshop.datetime) : null;
 
   return (
-    <main className="min-h-screen w-full">
+    <main className="w-full min-h-screen">
       {/* Header with back link */}
-      <div className="w-full bg-gray-50 py-4 px-4 sm:px-8">
-        <Link href="/workshops" className="text-teal-600 hover:text-teal-700 text-sm font-medium">
+      <div className="bg-gray-50 px-4 sm:px-8 py-4 w-full">
+        <Link href="/workshops" className="font-medium text-teal-600 hover:text-teal-700 text-sm">
           ← Wróć do listy
         </Link>
       </div>
 
       {/* Main content */}
-      <div className="w-full max-w-3xl mx-auto px-4 sm:px-8 py-12">
+      <div className="mx-auto px-4 sm:px-8 py-12 w-full max-w-3xl">
         {/* Title with Badge */}
         <div className="mb-8">
           <div className="flex items-start gap-3 mb-2">
-            <h1 className="text-3xl sm:text-4xl font-bold">{workshop.title}</h1>
+            <h1 className="font-bold text-3xl sm:text-4xl">{workshop.title}</h1>
             {workshop.status && (
               <Badge
                 variant={workshop.status === "inProgress" ? "default" : "outline"}
-                className="font-normal text-xs mt-2 whitespace-nowrap"
+                className="mt-2 font-normal text-xs whitespace-nowrap"
               >
                 {translateStatus(workshop.status)}
               </Badge>
@@ -53,7 +53,7 @@ async function WorkshopContent({ slug }: { slug: string }) {
 
         {/* Description */}
         {workshop.description && (
-          <p className="text-gray-700 text-base leading-relaxed mb-8">{workshop.description}</p>
+          <p className="mb-8 text-gray-700 text-base leading-relaxed">{workshop.description}</p>
         )}
 
         {/* Workshop image */}
@@ -70,8 +70,8 @@ async function WorkshopContent({ slug }: { slug: string }) {
         <div className="space-y-6 mb-10">
           {/* Termin warsztatu */}
           {formattedDate && (
-            <div className="pb-6 border-b border-gray-200">
-              <h3 className="font-bold text-lg mb-4">Termin warsztatu</h3>
+            <div className="pb-6 border-gray-200 border-b">
+              <h3 className="mb-4 font-bold text-lg">Termin warsztatu</h3>
               <div className="flex items-center gap-3 text-gray-700">
                 <Calendar1 size={20} className="text-teal-600 shrink-0" />
                 <span className="text-base">{formattedDate}</span>
@@ -79,53 +79,13 @@ async function WorkshopContent({ slug }: { slug: string }) {
             </div>
           )}
 
-          {/* Lokalizacja */}
-          {workshop.location && (
-            <div className="pb-6 border-b border-gray-200">
-              <h3 className="font-bold text-lg mb-4">Lokalizacja</h3>
-              <div className="flex items-center gap-3 text-gray-700 mb-4">
-                <MapPin size={20} className="text-teal-600 shrink-0" />
-                <span className="text-base">{workshop.location}</span>
-              </div>
-              <div className="bg-gray-100 rounded-lg h-48 flex items-center justify-center text-gray-400">
-                [MAP / LOCATION PLACEHOLDER]
-              </div>
-            </div>
-          )}
-
-          {/* Workshop info grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pb-6 border-b border-gray-200">
-            {workshop.duration && (
-              <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <Timer size={18} className="text-teal-600" />
-                  <span className="font-semibold text-sm">Czas trwania</span>
-                </div>
-                <p className="text-gray-700">
-                  {workshop.duration} {getHoursLabel(Number(workshop.duration))}
-                </p>
-              </div>
-            )}
-
-            {workshop.group && (
-              <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <Users size={18} className="text-teal-600" />
-                  <span className="font-semibold text-sm">Grupa docelowa</span>
-                </div>
-                <p className="text-gray-700">{translateGroup(workshop.group)}</p>
-              </div>
-            )}
-          </div>
-
-          {/* Materials download section */}
           {workshop.materials?.asset?.url && (
-            <div className="pb-6 border-b border-gray-200">
-              <h3 className="font-bold text-lg mb-4">Regulamin</h3>
+            <div className="pb-6 border-gray-200 border-b">
+              <h3 className="mb-4 font-bold text-lg">Regulamin</h3>
               <a
                 href={workshop.materials.asset.url}
                 download={workshop.materials.asset.originalFilename || "materials"}
-                className="inline-flex items-center gap-2 text-teal-600 hover:text-teal-700 font-medium"
+                className="inline-flex items-center gap-2 font-medium text-teal-600 hover:text-teal-700"
               >
                 <Download size={18} />
                 Pobierz regulamin (PDF)
@@ -134,8 +94,49 @@ async function WorkshopContent({ slug }: { slug: string }) {
           )}
         </div>
 
+        {/* Lokalizacja */}
+        {workshop.location && (
+          <div className="pb-6 border-gray-200 border-b">
+            <h3 className="mb-4 font-bold text-lg">Lokalizacja</h3>
+            <div className="flex items-center gap-3 mb-4 text-gray-700">
+              <MapPin size={20} className="text-teal-600 shrink-0" />
+              <span className="text-base">{workshop.location}</span>
+            </div>
+            <div className="flex justify-center items-center bg-gray-100 rounded-lg h-48 text-gray-400">
+              [MAP / LOCATION PLACEHOLDER]
+            </div>
+          </div>
+        )}
+
+        {/* Workshop info grid */}
+        <div className="gap-6 grid grid-cols-1 sm:grid-cols-2 pb-6 border-gray-200 border-b">
+          {workshop.duration && (
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <Timer size={18} className="text-teal-600" />
+                <span className="font-semibold text-sm">Czas trwania</span>
+              </div>
+              <p className="text-gray-700">
+                {workshop.duration} {getHoursLabel(Number(workshop.duration))}
+              </p>
+            </div>
+          )}
+
+          {workshop.group && (
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <Users size={18} className="text-teal-600" />
+                <span className="font-semibold text-sm">Grupa docelowa</span>
+              </div>
+              <p className="text-gray-700">{translateGroup(workshop.group)}</p>
+            </div>
+          )}
+        </div>
+
+        {/* Materials download section */}
+
         {/* Action buttons */}
-        <div className="flex flex-col sm:flex-row gap-3">
+        <div className="flex sm:flex-row flex-col gap-3">
           {workshop.signupFormUrl && (
             <a
               href={workshop.signupFormUrl}
@@ -143,7 +144,7 @@ async function WorkshopContent({ slug }: { slug: string }) {
               rel="noopener noreferrer"
               className="flex-1"
             >
-              <Button className="w-full bg-teal-600 hover:bg-teal-700 text-white">
+              <Button className="bg-teal-600 hover:bg-teal-700 w-full text-white">
                 <LogIn size={18} className="mr-2" />
                 Zapisz się
               </Button>
@@ -154,11 +155,11 @@ async function WorkshopContent({ slug }: { slug: string }) {
             <a
               href={workshop.materials.asset.url}
               download={workshop.materials.asset.originalFilename || "materials"}
-              className="flex-1 sm:flex-initial"
+              className="sm:flex-initial flex-1"
             >
               <Button
                 variant="outline"
-                className="w-full border-teal-600 text-teal-600 hover:bg-teal-50"
+                className="hover:bg-teal-50 border-teal-600 w-full text-teal-600"
               >
                 <Download size={18} className="mr-2" />
                 Pobierz materiały
@@ -176,7 +177,7 @@ export default async function WorkshopPage({ params }: WorkshopPageProps) {
 
   return (
     <Suspense
-      fallback={<div className="min-h-screen flex items-center justify-center">Ładowanie...</div>}
+      fallback={<div className="flex justify-center items-center min-h-screen">Ładowanie...</div>}
     >
       <WorkshopContent slug={slug} />
     </Suspense>
