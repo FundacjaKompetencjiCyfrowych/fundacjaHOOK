@@ -4,7 +4,7 @@ export const STATUS_TRANSLATIONS: Record<string, string> = {
   completed: "Zakończone",
 } as const;
 
-export const translateGroup = (group?: string) => {
+export const mapGroup = (group?: string) => {
   switch (group) {
     case "adult":
       return "Dorośli 18+";

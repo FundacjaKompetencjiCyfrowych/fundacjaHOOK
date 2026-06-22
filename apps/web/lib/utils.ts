@@ -21,7 +21,7 @@ export const getHoursLabel = (count: number) => {
   return "godzin";
 };
 
-export const translateStatus = (status?: keyof typeof STATUS_TRANSLATIONS) => {
+export const mapStatus = (status?: keyof typeof STATUS_TRANSLATIONS) => {
   if (!status) return null;
   return STATUS_TRANSLATIONS[status] || status;
 };

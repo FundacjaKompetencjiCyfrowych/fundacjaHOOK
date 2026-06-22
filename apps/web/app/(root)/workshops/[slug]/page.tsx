@@ -4,7 +4,7 @@ import { sanityFetch } from "@/sanity/live";
 import { Button } from "@/app/_components/ui/button";
 import { Badge } from "@/app/_components/ui/badge";
 import { Calendar1, MapPin, Download, LogIn } from "lucide-react";
-import { getFormattedWorkshopDate, translateStatus } from "@/lib/utils";
+import { getFormattedWorkshopDate, mapStatus } from "@/lib/utils";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -76,7 +76,7 @@ async function WorkshopContent({ slug }: { slug: string }) {
                 variant={workshop.status === "inProgress" ? "default" : "outline"}
                 className="mt-2 font-normal text-xs whitespace-nowrap"
               >
-                {translateStatus(workshop.status)}
+                {mapStatus(workshop.status)}
               </Badge>
             )}
           </div>
@@ -159,7 +159,7 @@ async function WorkshopContent({ slug }: { slug: string }) {
                 <Users size={18} className="text-brand-primary" />
                 <span className="font-semibold text-sm">Grupa docelowa</span>
               </div>
-              <p className="text-main">{translateGroup(workshop.group)}</p>
+              <p className="text-main">{mapGroup (workshop.group)}</p>
             </div>
           )}
         </div> */}

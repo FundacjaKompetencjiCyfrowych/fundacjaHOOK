@@ -3,9 +3,9 @@ import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { SanityImage } from "@/sanity/image/SanityImage";
 import { Badge } from "../ui/badge";
 import { Calendar1, MapPin, Timer, Users } from "lucide-react";
-import { translateGroup } from "@/lib/mappers/workshop";
+import { mapGroup } from "@/lib/mappers/workshop";
 import { getFormattedWorkshopDate, getHoursLabel } from "@/lib/utils";
-import { translateStatus } from "@/lib/utils";
+import { mapStatus } from "@/lib/utils";
 
 interface Props {
   workshop: Workshop;
@@ -32,7 +32,7 @@ const WorkshopCard = ({ workshop }: Props) => {
               variant={workshop.status === "inProgress" ? "default" : "outline"}
               className="font-normal text-[10px]"
             >
-              {translateStatus(workshop.status)}
+              {mapStatus(workshop.status)}
             </Badge>
           </CardTitle>
 
@@ -58,7 +58,7 @@ const WorkshopCard = ({ workshop }: Props) => {
 
               {workshop.group && (
                 <div className="flex items-center gap-1">
-                  <Users size={18} /> {translateGroup(workshop.group)}
+                  <Users size={18} /> {mapGroup(workshop.group)}
                 </div>
               )}
             </CardDescription>
