@@ -5,6 +5,7 @@ import { sanityFetch } from "@/sanity/live";
 import { mapMetadata } from "@/sanity/metadata/mapMetadata";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { client } from "@/sanity/client";
 
 // GROQD Query builders
 const postSlugs = q.star
@@ -20,11 +21,11 @@ const post = q
 /** Next doesn't know what slugs exist -> we can inform it so it can pre-generate all posts
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-static-params */
 export async function generateStaticParams() {
-  const { data } = await sanityFetch({
-    query: postSlugs.query,
-    perspective: "published",
-    stega: false,
-  });
+  const data = await client.fetch(postSlugs.query, {}, { perspective: "published", stega: false });
+
+  if (!data || data.length === 0) {
+    return [{ slug: "not-found" }];
+  }
   return postSlugs.parse(data); // [{ slug: example-slug }, ...]
 }
 

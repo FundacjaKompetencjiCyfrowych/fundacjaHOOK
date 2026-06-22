@@ -9,11 +9,14 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Suspense } from "react";
 import { workshopSlugsQuery } from "@/sanity/queries/workshopDetails";
+import { client } from "@/sanity/client";
 
 async function getWorkshops() {
-  const { data } = await sanityFetch({
-    query: workshopSlugsQuery,
-  });
+  const data = await client.fetch(
+    workshopSlugsQuery,
+    {},
+    { perspective: "published", stega: false }
+  );
   return data || [];
 }
 
