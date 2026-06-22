@@ -15,7 +15,7 @@ const WorkshopCard = ({ workshop }: Props) => {
   const formattedDate = getFormattedWorkshopDate(workshop.datetime);
 
   return (
-    <a href={`/workshops/${workshop.slug}`}>
+    <a href={`/workshops/${workshop.slug?.current || "not-found"}`}>
       <Card className="relative gap-2 shadow-md hover:shadow-lg mx-auto pt-0 w-full max-w-142 transition-shadow cursor-pointer">
         <div className="px-4 pt-4">
           <SanityImage

@@ -813,6 +813,25 @@ export type LogoQueryResult = {
   } | null;
 } | null;
 
+// Source: ../web/sanity/queries/workshopDetails.ts
+// Variable: workshopDetailsQuery
+// Query: *[_type == "workshop" && slug.current == $slug][0] {    _id,    title,    description,    datetime,    location,    duration,    group,    status,    image {      asset-> {        url      }    },  }
+export type WorkshopDetailsQueryResult = {
+  _id: string;
+  title: string | null;
+  description: string | null;
+  datetime: string | null;
+  location: string | null;
+  duration: number | null;
+  group: "adult" | "children" | "family" | "teen" | null;
+  status: "completed" | "inProgress" | "planned" | null;
+  image: {
+    asset: {
+      url: string | null;
+    } | null;
+  } | null;
+} | null;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
@@ -823,5 +842,6 @@ declare module "@sanity/client" {
     '\n  *[_type == "material"] | order(date desc) {\n    _id,\n    title,\n    description,\n    date,\n    event,\n    type,\n    area,\n    format,\n    size,\n    placements,\n    "fileAsset": file.asset->{\n      url,\n      extension,\n      size\n    }\n  }\n': MaterialsQueryResult;
     '\n  *[_type == "settings"][0] {\n    logo {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n    link {\n      socialLinks {\n        facebook,\n        instagram,\n        linkedin\n      }\n    }\n  }\n': SettingsQueryResult;
     '\n  *[_type == "settings"][0] {\n    logo {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n  }\n': LogoQueryResult;
+    '\n  *[_type == "workshop" && slug.current == $slug][0] {\n    _id,\n    title,\n    description,\n    datetime,\n    location,\n    duration,\n    group,\n    status,\n    image {\n      asset-> {\n        url\n      }\n    },\n  }\n': WorkshopDetailsQueryResult;
   }
 }
