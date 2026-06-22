@@ -36,6 +36,12 @@ interface WorkshopPageProps {
   params: Promise<{ slug: string }>;
 }
 
+async function WorkshopPageContent({ params }: WorkshopPageProps) {
+  const { slug } = await params;
+
+  return <WorkshopContent slug={slug} />;
+}
+
 async function WorkshopContent({ slug }: { slug: string }) {
   const { data } = await sanityFetch({
     query: workshopDetailsQuery,
@@ -189,13 +195,11 @@ async function WorkshopContent({ slug }: { slug: string }) {
 }
 
 export default async function WorkshopPage({ params }: WorkshopPageProps) {
-  const { slug } = await params;
-
   return (
     <Suspense
       fallback={<div className="flex justify-center items-center min-h-screen">Ładowanie...</div>}
     >
-      <WorkshopContent slug={slug} />
+      <WorkshopPageContent params={params} />
     </Suspense>
   );
 }
