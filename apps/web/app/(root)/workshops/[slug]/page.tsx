@@ -10,8 +10,12 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { workshopSlugsQuery } from "@/sanity/queries/workshopDetails";
 import { client } from "@/sanity/client";
+import { cacheLife } from "next/dist/server/use-cache/cache-life";
 
 async function getWorkshops() {
+  "use cache";
+  cacheLife("days");
+
   const data = await client.fetch(
     workshopSlugsQuery,
     {},
