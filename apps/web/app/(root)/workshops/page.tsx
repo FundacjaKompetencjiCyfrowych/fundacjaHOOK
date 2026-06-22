@@ -1,4 +1,3 @@
-import CardWithRedirect from "@/app/_components/Cards/CardWithRedirect";
 import WorkshopCard from "@/app/_components/Cards/WorkshopCard";
 import { sanityFetch } from "@/sanity/live";
 import { defineQuery } from "next-sanity";

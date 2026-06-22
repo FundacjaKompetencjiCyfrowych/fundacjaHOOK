@@ -54,6 +54,7 @@ export type Workshop = {
   _updatedAt: string;
   _rev: string;
   title?: string;
+  slug?: Slug;
   image?: Img;
   description?: string;
   datetime?: string;
@@ -70,6 +71,12 @@ export type Img = {
   media?: unknown;
   hotspot?: SanityImageHotspot;
   crop?: SanityImageCrop;
+};
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
 };
 
 export type CardWithRedirect = {
@@ -408,12 +415,6 @@ export type Author = {
   }>;
 };
 
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
-};
-
 export type MediaTag = {
   _id: string;
   _type: "media.tag";
@@ -528,6 +529,7 @@ export type AllSanitySchemaTypes =
   | Logo
   | Workshop
   | Img
+  | Slug
   | CardWithRedirect
   | CardLandingPage
   | RedirectButtonReference
@@ -555,7 +557,6 @@ export type AllSanitySchemaTypes =
   | CategoryReference
   | Post
   | Author
-  | Slug
   | MediaTag
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -578,6 +579,7 @@ export type WorkshopsQueryResult = Array<{
   _updatedAt: string;
   _rev: string;
   title?: string;
+  slug?: Slug;
   image?: Img;
   description?: string;
   datetime?: string;
