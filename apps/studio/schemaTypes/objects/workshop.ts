@@ -92,6 +92,20 @@ export default defineType({
       },
       validation: (Rule) => Rule.required(),
     }),
+
+    defineField({
+      name: "signupFormUrl",
+      title: "Link do formularza zapisów",
+      type: "string",
+      description: "URL do Google Form lub innego formularza zapisów",
+    }),
+
+    defineField({
+      name: "materials",
+      title: "Materiały",
+      type: "file",
+      description: "Materiały do pobrania (PDF, ZIP, itp.)",
+    }),
   ],
   preview: {
     select: {

@@ -47,6 +47,13 @@ export type Logo = {
   };
 };
 
+export type SanityFileAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+};
+
 export type Workshop = {
   _id: string;
   _type: "workshop";
@@ -63,6 +70,12 @@ export type Workshop = {
   group?: "adult" | "teen" | "children" | "family";
   href?: string;
   status?: "inProgress" | "planned" | "completed";
+  signupFormUrl?: string;
+  materials?: {
+    asset?: SanityFileAssetReference;
+    media?: unknown;
+    _type: "file";
+  };
 };
 
 export type Img = {
@@ -308,13 +321,6 @@ export type IconPicker = {
   svg?: string;
 };
 
-export type SanityFileAssetReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
-};
-
 export type Material = {
   _id: string;
   _type: "material";
@@ -527,6 +533,7 @@ export type AllSanitySchemaTypes =
   | Link
   | SanityImageAssetReference
   | Logo
+  | SanityFileAssetReference
   | Workshop
   | Img
   | Slug
@@ -551,7 +558,6 @@ export type AllSanitySchemaTypes =
   | Settings
   | Category
   | IconPicker
-  | SanityFileAssetReference
   | Material
   | AuthorReference
   | CategoryReference
@@ -588,6 +594,12 @@ export type WorkshopsQueryResult = Array<{
   group?: "adult" | "children" | "family" | "teen";
   href?: string;
   status?: "completed" | "inProgress" | "planned";
+  signupFormUrl?: string;
+  materials?: {
+    asset?: SanityFileAssetReference;
+    media?: unknown;
+    _type: "file";
+  };
 }>;
 
 // Source: ../web/app/page.tsx
@@ -815,10 +827,11 @@ export type LogoQueryResult = {
 
 // Source: ../web/sanity/queries/workshopDetails.ts
 // Variable: workshopDetailsQuery
-// Query: *[_type == "workshop" && slug.current == $slug][0] {    _id,    title,    description,    datetime,    location,    duration,    group,    status,    image {      asset-> {        url      }    },  }
+// Query: *[_type == "workshop" && slug.current == $slug][0] {    _id,    title,    slug,    description,    datetime,    location,    duration,    group,    status,    image {      asset-> {        _id,        _ref,        url,        metadata {          lqip,          dimensions        },        altText,        title,        description      },      crop,      hotspot    },    signupFormUrl,    materials {      asset-> {        _ref,        url,        originalFilename      }    },  }
 export type WorkshopDetailsQueryResult = {
   _id: string;
   title: string | null;
+  slug: Slug | null;
   description: string | null;
   datetime: string | null;
   location: string | null;
@@ -827,7 +840,26 @@ export type WorkshopDetailsQueryResult = {
   status: "completed" | "inProgress" | "planned" | null;
   image: {
     asset: {
+      _id: string;
+      _ref: null;
       url: string | null;
+      metadata: {
+        lqip: string | null;
+        dimensions: SanityImageDimensions | null;
+      } | null;
+      altText: string | null;
+      title: string | null;
+      description: string | null;
+    } | null;
+    crop: SanityImageCrop | null;
+    hotspot: SanityImageHotspot | null;
+  } | null;
+  signupFormUrl: string | null;
+  materials: {
+    asset: {
+      _ref: null;
+      url: string | null;
+      originalFilename: string | null;
     } | null;
   } | null;
 } | null;
@@ -842,6 +874,6 @@ declare module "@sanity/client" {
     '\n  *[_type == "material"] | order(date desc) {\n    _id,\n    title,\n    description,\n    date,\n    event,\n    type,\n    area,\n    format,\n    size,\n    placements,\n    "fileAsset": file.asset->{\n      url,\n      extension,\n      size\n    }\n  }\n': MaterialsQueryResult;
     '\n  *[_type == "settings"][0] {\n    logo {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n    link {\n      socialLinks {\n        facebook,\n        instagram,\n        linkedin\n      }\n    }\n  }\n': SettingsQueryResult;
     '\n  *[_type == "settings"][0] {\n    logo {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n  }\n': LogoQueryResult;
-    '\n  *[_type == "workshop" && slug.current == $slug][0] {\n    _id,\n    title,\n    description,\n    datetime,\n    location,\n    duration,\n    group,\n    status,\n    image {\n      asset-> {\n        url\n      }\n    },\n  }\n': WorkshopDetailsQueryResult;
+    '\n  *[_type == "workshop" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    description,\n    datetime,\n    location,\n    duration,\n    group,\n    status,\n    image {\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description\n      },\n      crop,\n      hotspot\n    },\n    signupFormUrl,\n    materials {\n      asset-> {\n        _ref,\n        url,\n        originalFilename\n      }\n    },\n  }\n': WorkshopDetailsQueryResult;
   }
 }

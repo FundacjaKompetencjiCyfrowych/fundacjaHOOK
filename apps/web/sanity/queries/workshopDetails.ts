@@ -4,6 +4,7 @@ export const workshopDetailsQuery = defineQuery(`
   *[_type == "workshop" && slug.current == $slug][0] {
     _id,
     title,
+    slug,
     description,
     datetime,
     location,
@@ -12,7 +13,26 @@ export const workshopDetailsQuery = defineQuery(`
     status,
     image {
       asset-> {
-        url
+        _id,
+        _ref,
+        url,
+        metadata {
+          lqip,
+          dimensions
+        },
+        altText,
+        title,
+        description
+      },
+      crop,
+      hotspot
+    },
+    signupFormUrl,
+    materials {
+      asset-> {
+        _ref,
+        url,
+        originalFilename
       }
     },
   }
