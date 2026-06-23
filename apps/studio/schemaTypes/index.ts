@@ -20,6 +20,7 @@ import cardWithRedirect from "./objects/cardWithRedirect";
 import workshop from "./objects/workshop";
 import logo from "./objects/logo";
 import link from "./objects/link";
+import news from "./objects/news";
 
 export const schemaTypes = [
   post,
@@ -44,4 +45,5 @@ export const schemaTypes = [
   workshop,
   logo,
   link,
+  news,
 ];
