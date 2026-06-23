@@ -31,9 +31,14 @@ export async function generateStaticParams() {
     return [{ slug: "not-found" }];
   }
 
-  return workshops.map((workshop: { slug: string }) => ({
-    slug: workshop.slug,
-  }));
+  return workshops
+    .filter(
+      (workshop): workshop is { slug: string } =>
+        workshop.slug !== null && workshop.slug !== undefined
+    )
+    .map((workshop) => ({
+      slug: workshop.slug,
+    }));
 }
 
 interface WorkshopPageProps {

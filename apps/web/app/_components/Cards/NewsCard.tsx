@@ -1,3 +1,5 @@
-// interface Props {
-//   news: News;
-// }
+import { News } from "@/sanity/typegen";
+
+interface Props {
+  news: News;
+}
