@@ -11,6 +11,7 @@ import { SanityImage } from "@/sanity/image/SanityImage";
 import { sanityFetch } from "@/sanity/live";
 import { projectBySlugQuery, projectSlugsQuery } from "@/sanity/queries/projects";
 import { Project } from "@/sanity/typegen";
+import { cacheLife } from "next/cache";
 
 type ProjectEvent = {
   _id: string;
@@ -28,6 +29,9 @@ type ProjectSlugItem = {
 };
 
 async function getProjects() {
+  "use cache";
+  cacheLife("days");
+
   const data = await client.fetch<ProjectSlugItem[]>(
     projectSlugsQuery,
     {},
