@@ -73,7 +73,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       <div className="mx-auto container">
         <Link
           href="/projects"
-          className="inline-flex mb-4 text-muted-foreground hover:text-foreground text-base transition-colors"
+          className="block mb-4 font-medium text-brand-primary hover:text-brand-onhover"
         >
           ← Wróć do listy
         </Link>
