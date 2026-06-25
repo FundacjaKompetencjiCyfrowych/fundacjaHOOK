@@ -1,7 +1,6 @@
 "use client";
 
 import PROJECTS_STATUS from "@/lib/constants/projects";
-import { useState } from "react";
 
 interface ProjectFiltersProps {
   counts: Record<string, number>;

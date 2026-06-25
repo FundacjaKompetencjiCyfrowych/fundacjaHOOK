@@ -1,9 +1,10 @@
 "use client";
 
+import ProjectCard from "@/app/_components/Cards/ProjectCard";
 import ProjectFilters from "@/app/_components/Filtering/ProjectFilters";
 import SortByOrder from "@/app/_components/Filtering/SortByOrder";
 import { Project } from "@/sanity/typegen";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 const ProjectPageClient = ({
   projects,
@@ -16,13 +17,44 @@ const ProjectPageClient = ({
   const [showAllProjects, setShowAllProjects] = useState<boolean>(false);
   const [sortBy, setSortBy] = useState<string>("Najnowsze");
 
+  const filteredAndSortedProjects = useMemo(() => {
+    const filteredProjects =
+      filter === "all" ? projects : projects.filter((project) => project.status === filter);
+
+    return [...filteredProjects].sort((firstProject, secondProject) => {
+      const firstTimestamp = new Date(firstProject.startDate ?? firstProject._createdAt).getTime();
+      const secondTimestamp = new Date(
+        secondProject.startDate ?? secondProject._createdAt
+      ).getTime();
+
+      return sortBy === "Najstarsze"
+        ? firstTimestamp - secondTimestamp
+        : secondTimestamp - firstTimestamp;
+    });
+  }, [filter, projects, sortBy]);
+
+  const visibleProjects = showAllProjects
+    ? filteredAndSortedProjects
+    : filteredAndSortedProjects.slice(0, 3);
+
   return (
     <>
       <div className="flex sm:flex-row flex-col justify-between sm:items-center gap-4 mb-6">
         <ProjectFilters counts={counts} filter={filter} setFilter={setFilter} />
         <SortByOrder sort={sortBy} setSort={setSortBy} />
       </div>
-      {projects.length > 3 && (
+      {visibleProjects.length > 0 ? (
+        <div className="gap-4 grid grid-cols-1 md:grid-cols-3">
+          {visibleProjects.map((project) => (
+            <ProjectCard key={project._id} project={project} />
+          ))}
+        </div>
+      ) : (
+        <div className="bg-card px-6 py-10 border border-border border-dashed rounded-xl text-muted-foreground text-center">
+          Brak projektow dla wybranego filtra.
+        </div>
+      )}
+      {filteredAndSortedProjects.length > 3 && (
         <div className="flex justify-center mt-8">
           <button
             onClick={() => setShowAllProjects(!showAllProjects)}

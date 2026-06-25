@@ -6,6 +6,23 @@ export const PROJECTS_MAP: Record<string, string> = {
   completed: "Zakończone",
 } as const;
 
+export type ProjectStatus = NonNullable<Project["status"]>;
+
+export const PROJECT_STATUS_LABELS: Record<ProjectStatus, string> = {
+  inProgress: "W trakcie",
+  planned: "Planowany",
+  completed: "Zakończony",
+};
+
+export const PROJECT_STATUS_VARIANTS: Record<
+  ProjectStatus,
+  "default" | "secondary" | "outline"
+> = {
+  inProgress: "default",
+  planned: "secondary",
+  completed: "outline",
+};
+
 export function countValues(materials: Project[], key: "status"): Map<string, number> {
   const counts = new Map<string, number>();
 

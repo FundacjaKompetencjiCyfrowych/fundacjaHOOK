@@ -966,6 +966,30 @@ export type ProjectsQueryResult = Array<{
   >;
 }>;
 
+// Source: ../web/sanity/queries/projects.ts
+// Variable: projectBySlugQuery
+// Query: *[_type == "project" && slug.current == $slug][0]
+export type ProjectBySlugQueryResult = {
+  _id: string;
+  _type: "project";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  image?: Img;
+  description?: string;
+  article?: string;
+  status?: "completed" | "inProgress" | "planned";
+  startDate?: string;
+  endDate?: string;
+  events?: Array<
+    {
+      _key: string;
+    } & EventReference
+  >;
+} | null;
+
 // Source: ../web/sanity/queries/settings.ts
 // Variable: settingsQuery
 // Query: *[_type == "settings"][0] {    logo {      logo {        asset-> {          url        }      }    },    link {      socialLinks {        facebook,        instagram,        linkedin      }    }  }
@@ -1056,6 +1080,7 @@ declare module "@sanity/client" {
     '\n  *[_type == "news"] | order(_createdAt desc)': NewsQueryResult;
     '\n  *[_type == "news" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    description,\n    article,\n    image {\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description\n      },\n      crop,\n      hotspot\n    },\n  }\n': NewsBySlugQueryResult;
     '\n  *[_type == "project"] | order(_createdAt desc)': ProjectsQueryResult;
+    '\n  *[_type == "project" && slug.current == $slug][0]': ProjectBySlugQueryResult;
     '\n  *[_type == "settings"][0] {\n    logo {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n    link {\n      socialLinks {\n        facebook,\n        instagram,\n        linkedin\n      }\n    }\n  }\n': SettingsQueryResult;
     '\n  *[_type == "settings"][0] {\n    logo {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n  }\n': LogoQueryResult;
     '\n  *[_type == "workshop" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    description,\n    datetime,\n    location,\n    duration,\n    group,\n    status,\n    image {\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description\n      },\n      crop,\n      hotspot\n    },\n    signupFormUrl,\n    materials {\n      asset-> {\n        _ref,\n        url,\n        originalFilename\n      }\n    },\n  }\n': WorkshopDetailsQueryResult;
