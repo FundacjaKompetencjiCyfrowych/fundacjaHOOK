@@ -27,6 +27,8 @@ export const structure: StructureToolOptions = {
           .title("Przyciski przekierowania")
           .icon(DocumentIcon),
         S.documentTypeListItem("workshop").title("Warsztaty").icon(DocumentIcon),
+        S.documentTypeListItem("project").title("Projekty").icon(DocumentIcon),
+        S.documentTypeListItem("event").title("Wydarzenia").icon(DocumentIcon),
         S.divider().title("Ustawienia"),
         S.listItem()
           .title("Ustawienia")

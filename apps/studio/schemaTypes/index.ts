@@ -21,6 +21,8 @@ import workshop from "./objects/workshop";
 import logo from "./objects/logo";
 import link from "./objects/link";
 import news from "./objects/news";
+import project from "./objects/projects";
+import event from "./objects/events";
 
 export const schemaTypes = [
   post,
@@ -46,4 +48,6 @@ export const schemaTypes = [
   logo,
   link,
   news,
+  project,
+  event,
 ];
