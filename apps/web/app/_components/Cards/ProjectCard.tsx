@@ -18,14 +18,20 @@ const ProjectCard = ({ project }: Props) => {
     <Link href={href} className="block h-full">
       <Card className="gap-2 bg-card shadow-md hover:shadow-lg pt-0 border border-border focus-within:ring-2 focus-within:ring-ring/50 h-full transition-all hover:-translate-y-0.5 duration-150">
         <div className="px-4 pt-4">
-          <SanityImage
-            image={project.image}
-            width={536}
-            height={256}
-            className="rounded-xl w-full h-32 object-cover"
-          />
+          {project.image ? (
+            <SanityImage
+              image={project.image}
+              width={536}
+              height={256}
+              className="rounded-xl w-full h-32 object-cover"
+            />
+          ) : (
+            <div className="flex justify-center items-center bg-placeholder border border-subtle border-dashed rounded-xl h-32 text-muted-foreground text-sm">
+              [IMAGE PLACEHOLDER]
+            </div>
+          )}
         </div>
-        <CardHeader className="gap-3">
+        <CardHeader className="gap-2">
           <CardTitle className="flex flex-wrap items-center gap-2 text-base leading-tight">
             <span className="font-bold text-foreground">{project.title}</span>
             <Badge variant={PROJECT_STATUS_VARIANTS[status]} className="text-[10px]">

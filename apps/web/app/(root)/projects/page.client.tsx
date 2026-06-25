@@ -3,9 +3,15 @@
 import ProjectCard from "@/app/_components/Cards/ProjectCard";
 import ProjectFilters from "@/app/_components/Filtering/ProjectFilters";
 import SortByOrder from "@/app/_components/Filtering/SortByOrder";
+import { Button } from "@/app/_components/ui/button";
 import { filterProjects, sortProjects } from "@/lib/projectHelpers";
 import { Project } from "@/sanity/typegen";
 import { useMemo, useState } from "react";
+
+const getProjectsLabel = (count: number) => {
+  if (count === 1) return "projekt";
+  return "projektów";
+};
 
 const ProjectPageClient = ({
   projects,
@@ -28,33 +34,50 @@ const ProjectPageClient = ({
     : filteredAndSortedProjects.slice(0, 3);
 
   return (
-    <>
-      <div className="flex sm:flex-row flex-col justify-between sm:items-center gap-4 mb-6">
-        <ProjectFilters counts={counts} filter={filter} setFilter={setFilter} />
-        <SortByOrder sort={sortBy} setSort={setSortBy} />
+    <section className="px-4 py-8 sm:py-10 border-subtle border-b wire-section">
+      <div className="mx-auto container">
+        <header className="mb-6">
+          <h1 className="font-bold text-foreground text-4xl sm:text-5xl leading-tight">Projekty</h1>
+          <p className="mt-2 max-w-xl text-muted-foreground text-base">
+            Poznaj nasze bieżące i planowane projekty społeczne.
+          </p>
+        </header>
+
+        <div className="flex lg:flex-row flex-col lg:justify-between lg:items-end gap-4 mb-6">
+          <ProjectFilters counts={counts} filter={filter} setFilter={setFilter} />
+          <div className="flex flex-col items-start lg:items-end gap-2">
+            <p className="text-muted-foreground text-sm">
+              {projects.length} {getProjectsLabel(projects.length)}
+            </p>
+            <SortByOrder sort={sortBy} setSort={setSortBy} />
+          </div>
+        </div>
+
+        {visibleProjects.length > 0 ? (
+          <div className="gap-4 grid grid-cols-1 md:grid-cols-3">
+            {visibleProjects.map((project) => (
+              <ProjectCard key={project._id} project={project} />
+            ))}
+          </div>
+        ) : (
+          <div className="bg-card px-6 py-10 border border-border border-dashed rounded-xl text-muted-foreground text-center">
+            Brak projektów dla wybranego filtra.
+          </div>
+        )}
+
+        {filteredAndSortedProjects.length > 3 && (
+          <div className="flex justify-center mt-8">
+            <Button
+              type="button"
+              onClick={() => setShowAllProjects(!showAllProjects)}
+              className="bg-brand-primary hover:bg-brand-onhover px-7 rounded-full text-white"
+            >
+              {showAllProjects ? "Pokaż mniej" : "Pokaż wszystkie"}
+            </Button>
+          </div>
+        )}
       </div>
-      {visibleProjects.length > 0 ? (
-        <div className="gap-4 grid grid-cols-1 md:grid-cols-3">
-          {visibleProjects.map((project) => (
-            <ProjectCard key={project._id} project={project} />
-          ))}
-        </div>
-      ) : (
-        <div className="bg-card px-6 py-10 border border-border border-dashed rounded-xl text-muted-foreground text-center">
-          Brak projektow dla wybranego filtra.
-        </div>
-      )}
-      {filteredAndSortedProjects.length > 3 && (
-        <div className="flex justify-center mt-8">
-          <button
-            onClick={() => setShowAllProjects(!showAllProjects)}
-            className="bg-brand-primary hover:bg-brand-onhover px-6 py-2 rounded-lg font-medium text-white transition-colors"
-          >
-            {showAllProjects ? "Zobacz mniej" : "Załaduj więcej"}
-          </button>
-        </div>
-      )}
-    </>
+    </section>
   );
 };
 

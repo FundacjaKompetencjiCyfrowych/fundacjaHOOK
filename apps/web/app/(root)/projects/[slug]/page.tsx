@@ -1,13 +1,38 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Calendar1, MapPin } from "lucide-react";
 
+import { Badge } from "@/app/_components/ui/badge";
+import { Card } from "@/app/_components/ui/card";
+import { formatDate } from "@/lib/formatDate";
+import { PROJECT_STATUS_LABELS, PROJECT_STATUS_VARIANTS } from "@/lib/mappers/projects";
 import { client } from "@/sanity/client";
 import { SanityImage } from "@/sanity/image/SanityImage";
 import { sanityFetch } from "@/sanity/live";
-import { projectBySlugQuery, projectsQuery } from "@/sanity/queries/projects";
+import { projectBySlugQuery, projectSlugsQuery } from "@/sanity/queries/projects";
+import { Project } from "@/sanity/typegen";
+
+type ProjectEvent = {
+  _id: string;
+  title?: string;
+  date?: string;
+  location?: string;
+};
+
+type ProjectWithResolvedEvents = Omit<Project, "events"> & {
+  events?: ProjectEvent[];
+};
+
+type ProjectSlugItem = {
+  slug?: string | null;
+};
 
 async function getProjects() {
-  const data = await client.fetch(projectsQuery, {}, { perspective: "published", stega: false });
+  const data = await client.fetch<ProjectSlugItem[]>(
+    projectSlugsQuery,
+    {},
+    { perspective: "published", stega: false }
+  );
 
   return data || [];
 }
@@ -20,11 +45,8 @@ export async function generateStaticParams() {
   }
 
   return projects
-    .filter(
-      (project): project is (typeof projects)[number] & { slug: { current: string } } =>
-        project.slug !== null && project.slug !== undefined && project.slug.current !== undefined
-    )
-    .map((project) => ({ slug: project.slug.current }));
+    .filter((project): project is { slug: string } => !!project.slug)
+    .map((project) => ({ slug: project.slug }));
 }
 
 interface ProjectPageProps {
@@ -34,41 +56,96 @@ interface ProjectPageProps {
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug } = await params;
 
-  const { data: project } = await sanityFetch({
+  const { data } = await sanityFetch({
     query: projectBySlugQuery,
     params: { slug },
   });
 
-  if (!project) {
-    notFound();
-  }
+  const project = data as ProjectWithResolvedEvents | null;
+
+  if (!project) notFound();
+
+  const status = project.status ?? "planned";
+  const dateRange = `${formatDate(project.startDate ?? "")} - ${formatDate(project.endDate ?? "")}`;
 
   return (
-    <section className="wire-section">
+    <section className="px-4 py-8 sm:py-10 border-subtle border-b wire-section">
       <div className="mx-auto container">
         <Link
           href="/projects"
-          className="block mb-4 font-medium text-brand-primary hover:text-brand-onhover"
+          className="inline-flex mb-4 text-muted-foreground hover:text-foreground text-base transition-colors"
         >
           ← Wróć do listy
         </Link>
 
-        <h1 className="mb-4 font-bold text-main text-2xl">{project.title}</h1>
-
-        {project.image && (
-          <div className="mb-6 rounded-lg overflow-hidden">
+        <div className="bg-placeholder mb-5 border border-subtle rounded-xl overflow-hidden">
+          {project.image ? (
             <SanityImage
               image={project.image}
-              width={1200}
-              height={480}
-              className="w-full h-64 object-cover"
+              width={1600}
+              height={520}
+              className="w-full h-55 sm:h-75 object-cover"
             />
-          </div>
+          ) : (
+            <div className="flex justify-center items-center h-55 sm:h-75 text-muted-foreground text-sm">
+              [IMAGE PLACEHOLDER]
+            </div>
+          )}
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2 mb-2">
+          <h1 className="font-bold text-foreground text-4xl sm:text-5xl leading-tight">
+            {project.title}
+          </h1>
+          <Badge variant={PROJECT_STATUS_VARIANTS[status]} className="text-[10px]">
+            {PROJECT_STATUS_LABELS[status]}
+          </Badge>
+        </div>
+
+        {dateRange && (
+          <p className="flex items-center gap-2 mb-5 text-muted-foreground text-sm">
+            <Calendar1 size={14} />
+            {dateRange}
+          </p>
         )}
 
-        {project.description && <p className="mb-4 text-muted">{project.description}</p>}
+        {project.description && (
+          <p className="max-w-4xl text-foreground text-base leading-relaxed">
+            {project.description}
+          </p>
+        )}
 
-        {project.article && <div className="text-main whitespace-pre-line">{project.article}</div>}
+        {project.events && project.events.length > 0 && (
+          <div className="mt-8">
+            <h2 className="font-bold text-foreground text-xl">Wydarzenia w ramach projektu</h2>
+            <div className="space-y-3 mt-4">
+              {project.events.map((event) => (
+                <Card
+                  key={event._id}
+                  className="gap-1 bg-elevated shadow-sm py-3 rounded-xl ring-1 ring-foreground/5"
+                >
+                  <div className="px-4">
+                    <h3 className="font-bold text-foreground text-lg">{event.title}</h3>
+                    <div className="space-y-1 mt-1 text-muted-foreground text-sm">
+                      {event.date && (
+                        <p className="flex items-center gap-2">
+                          <Calendar1 size={14} />
+                          {formatDate(event.date)}
+                        </p>
+                      )}
+                      {event.location && (
+                        <p className="flex items-center gap-2">
+                          <MapPin size={14} />
+                          {event.location}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
