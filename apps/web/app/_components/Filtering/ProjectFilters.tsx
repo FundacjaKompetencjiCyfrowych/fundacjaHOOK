@@ -3,22 +3,22 @@ import { Project } from "@/sanity/typegen";
 import { useState } from "react";
 
 interface ProjectFiltersProps {
-  data: Project[];
+  counts: Record<string, number>;
 }
 
-export default function ProjectFilters({ data }: ProjectFiltersProps) {
+export default function ProjectFilters({ counts }: ProjectFiltersProps) {
   const [showAllProjects, setShowAllProjects] = useState<boolean>(false);
-  const [filter, setFilter] = useState<string>(PROJECTS_STATUS[0]);
+  const [filter, setFilter] = useState<string>(PROJECTS_STATUS[0].value);
 
   <div className="flex flex-wrap items-center gap-1 bg-neutral-100 shadow-sm p-1 rounded-2xl sm:rounded-full">
     {PROJECTS_STATUS.slice(0, 2).map((f) => {
-      const active = filter === f.valueOf();
+      const active = filter === f.value;
       return (
         <button
-          key={f.valueOf()}
+          key={f.value}
           type="button"
           onClick={() => {
-            setFilter(f.valueOf());
+            setFilter(f.value);
             setShowAllProjects(false);
           }}
           className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
@@ -40,13 +40,13 @@ export default function ProjectFilters({ data }: ProjectFiltersProps) {
     })}
     <div className="flex items-center gap-1">
       {PROJECTS_STATUS.slice(2).map((f) => {
-        const active = filter === f.valuevalueOf();
+        const active = filter === f.value;
         return (
           <button
-            key={f.valueOf()}
+            key={f.value}
             type="button"
             onClick={() => {
-              setFilter(f.valueOf());
+              setFilter(f.value);
               setShowAllProjects(false);
             }}
             className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
