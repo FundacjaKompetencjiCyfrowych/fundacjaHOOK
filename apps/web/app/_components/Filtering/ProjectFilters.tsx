@@ -1,6 +1,7 @@
 "use client";
 
 import PROJECTS_STATUS from "@/lib/constants/projects";
+import { cn } from "@/lib/utils";
 
 interface ProjectFiltersProps {
   counts: Record<string, number>;
@@ -20,17 +21,23 @@ export default function ProjectFilters({ counts, filter, setFilter }: ProjectFil
             onClick={() => {
               setFilter(f.value);
             }}
-            className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-              active
-                ? "bg-background text-foreground font-medium shadow-sm"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
+            className={cn(
+              "inline-flex items-center gap-2 px-3 py-1.5 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring text-sm transition-colors",
+              {
+                "bg-muted text-foreground": active,
+                "bg-neutral-200 text-muted-foreground": !active,
+              }
+            )}
           >
             {f.label}
             <span
-              className={`inline-flex items-center justify-center min-w-5 h-5 px-1.5 rounded-full text-[11px] ${
-                active ? "bg-muted text-foreground" : "bg-neutral-200 text-muted-foreground"
-              }`}
+              className={cn(
+                "inline-flex justify-center items-center px-1.5 rounded-full min-w-5 h-5 text-[11px]",
+                {
+                  "bg-muted text-foreground": active,
+                  "bg-neutral-200 text-muted-foreground": !active,
+                }
+              )}
             >
               {counts[f.value]}
             </span>
@@ -47,17 +54,23 @@ export default function ProjectFilters({ counts, filter, setFilter }: ProjectFil
               onClick={() => {
                 setFilter(f.value);
               }}
-              className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                active
-                  ? "bg-background text-foreground font-medium shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
+              className={cn(
+                "inline-flex items-center gap-2 px-3 py-1.5 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring text-sm transition-colors",
+                {
+                  "bg-background text-foreground font-medium shadow-sm": active,
+                  "text-muted-foreground hover:text-foreground": !active,
+                }
+              )}
             >
               {f.label}
               <span
-                className={`inline-flex items-center justify-center min-w-5 h-5 px-1.5 rounded-full text-[11px] ${
-                  active ? "bg-muted text-foreground" : "bg-neutral-200 text-muted-foreground"
-                }`}
+                className={cn(
+                  "inline-flex justify-center items-center px-1.5 rounded-full min-w-5 h-5 text-[11px]",
+                  {
+                    "bg-muted text-foreground": active,
+                    "bg-neutral-200 text-muted-foreground": !active,
+                  }
+                )}
               >
                 {counts[f.value]}
               </span>
