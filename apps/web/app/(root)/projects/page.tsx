@@ -1,7 +1,7 @@
-import ProjectFilters from "@/app/_components/Filtering/ProjectFilters";
 import { sanityFetch } from "@/sanity/live";
 import projectsQuery from "@/sanity/queries/projects";
 import { countValues } from "@/lib/mappers/projects";
+import ProjectPageClient from "./page.client";
 
 const ProjectsPage = async () => {
   const { data: projects } = await sanityFetch({
@@ -19,7 +19,7 @@ const ProjectsPage = async () => {
     completed: statusCounts.get("completed") ?? 0,
   };
 
-  return <ProjectFilters counts={counts} />;
+  return <ProjectPageClient projects={projects} counts={counts} />;
 };
 
 export default ProjectsPage;

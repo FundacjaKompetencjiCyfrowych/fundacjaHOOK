@@ -5,11 +5,11 @@ import { useState } from "react";
 
 interface ProjectFiltersProps {
   counts: Record<string, number>;
+  filter: string;
+  setFilter: (filter: string) => void;
 }
 
-export default function ProjectFilters({ counts }: ProjectFiltersProps) {
-  const [filter, setFilter] = useState<string>(PROJECTS_STATUS[0].value);
-
+export default function ProjectFilters({ counts, filter, setFilter }: ProjectFiltersProps) {
   return (
     <div className="flex flex-wrap items-center gap-1 bg-neutral-100 shadow-sm p-1 rounded-2xl sm:rounded-full">
       {PROJECTS_STATUS.slice(0, 2).map((f) => {
