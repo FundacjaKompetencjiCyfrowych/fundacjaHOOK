@@ -3,6 +3,7 @@
 import ProjectCard from "@/app/_components/Cards/ProjectCard";
 import ProjectFilters from "@/app/_components/Filtering/ProjectFilters";
 import SortByOrder from "@/app/_components/Filtering/SortByOrder";
+import { filterProjects, sortProjects } from "@/lib/projectHelpers";
 import { Project } from "@/sanity/typegen";
 import { useMemo, useState } from "react";
 
@@ -18,19 +19,8 @@ const ProjectPageClient = ({
   const [sortBy, setSortBy] = useState<string>("Najnowsze");
 
   const filteredAndSortedProjects = useMemo(() => {
-    const filteredProjects =
-      filter === "all" ? projects : projects.filter((project) => project.status === filter);
-
-    return [...filteredProjects].sort((firstProject, secondProject) => {
-      const firstTimestamp = new Date(firstProject.startDate ?? firstProject._createdAt).getTime();
-      const secondTimestamp = new Date(
-        secondProject.startDate ?? secondProject._createdAt
-      ).getTime();
-
-      return sortBy === "Najstarsze"
-        ? firstTimestamp - secondTimestamp
-        : secondTimestamp - firstTimestamp;
-    });
+    const filtered = filterProjects(projects, filter);
+    return sortProjects(filtered, sortBy);
   }, [filter, projects, sortBy]);
 
   const visibleProjects = showAllProjects
