@@ -14,10 +14,7 @@ export const PROJECT_STATUS_LABELS: Record<ProjectStatus, string> = {
   completed: "Zakończony",
 };
 
-export const PROJECT_STATUS_VARIANTS: Record<
-  ProjectStatus,
-  "default" | "secondary" | "outline"
-> = {
+export const PROJECT_STATUS_VARIANTS: Record<ProjectStatus, "default" | "secondary" | "outline"> = {
   inProgress: "default",
   planned: "secondary",
   completed: "outline",

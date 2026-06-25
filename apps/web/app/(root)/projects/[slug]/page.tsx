@@ -22,9 +22,7 @@ export async function generateStaticParams() {
   return projects
     .filter(
       (project): project is (typeof projects)[number] & { slug: { current: string } } =>
-        project.slug !== null &&
-        project.slug !== undefined &&
-        project.slug.current !== undefined
+        project.slug !== null && project.slug !== undefined && project.slug.current !== undefined
     )
     .map((project) => ({ slug: project.slug.current }));
 }
@@ -50,29 +48,27 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       <div className="mx-auto container">
         <Link
           href="/projects"
-          className="mb-4 block font-medium text-brand-primary hover:text-brand-onhover"
+          className="block mb-4 font-medium text-brand-primary hover:text-brand-onhover"
         >
           ← Wróć do listy
         </Link>
 
-        <h1 className="mb-4 text-2xl font-bold text-main">{project.title}</h1>
+        <h1 className="mb-4 font-bold text-main text-2xl">{project.title}</h1>
 
         {project.image && (
-          <div className="mb-6 overflow-hidden rounded-lg">
+          <div className="mb-6 rounded-lg overflow-hidden">
             <SanityImage
               image={project.image}
               width={1200}
               height={480}
-              className="h-64 w-full object-cover"
+              className="w-full h-64 object-cover"
             />
           </div>
         )}
 
         {project.description && <p className="mb-4 text-muted">{project.description}</p>}
 
-        {project.article && (
-          <div className="whitespace-pre-line text-main">{project.article}</div>
-        )}
+        {project.article && <div className="text-main whitespace-pre-line">{project.article}</div>}
       </div>
     </section>
   );
