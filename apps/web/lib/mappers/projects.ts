@@ -1,24 +1,33 @@
 import { Project } from "@/sanity/typegen";
 
-export const PROJECTS_MAP: Record<string, string> = {
-  inProgress: "W trakcie",
-  planned: "Planowane",
-  completed: "Zakończone",
+export const PROJECT_STATUSES = {
+  inProgress: "inProgress",
+  planned: "planned",
+  completed: "completed",
 } as const;
 
-export type ProjectStatus = NonNullable<Project["status"]>;
+export type ProjectStatus = (typeof PROJECT_STATUSES)[keyof typeof PROJECT_STATUSES];
 
-export const PROJECT_STATUS_LABELS: Record<ProjectStatus, string> = {
-  inProgress: "W trakcie",
-  planned: "Planowany",
-  completed: "Zakończony",
+const STATUS_CONFIG: Record<
+  ProjectStatus,
+  { label: string; shortLabel: string; variant: "default" | "secondary" | "outline" }
+> = {
+  inProgress: { label: "W trakcie", shortLabel: "W trakcie", variant: "default" },
+  planned: { label: "Planowany", shortLabel: "Planowane", variant: "secondary" },
+  completed: { label: "Zakończony", shortLabel: "Zakończone", variant: "outline" },
 };
 
-export const PROJECT_STATUS_VARIANTS: Record<ProjectStatus, "default" | "secondary" | "outline"> = {
-  inProgress: "default",
-  planned: "secondary",
-  completed: "outline",
-};
+export const PROJECTS_MAP = Object.fromEntries(
+  Object.entries(STATUS_CONFIG).map(([key, val]) => [key, val.shortLabel])
+) as Record<ProjectStatus, string>;
+
+export const PROJECT_STATUS_LABELS = Object.fromEntries(
+  Object.entries(STATUS_CONFIG).map(([key, val]) => [key, val.label])
+) as Record<ProjectStatus, string>;
+
+export const PROJECT_STATUS_VARIANTS = Object.fromEntries(
+  Object.entries(STATUS_CONFIG).map(([key, val]) => [key, val.variant])
+) as Record<ProjectStatus, "default" | "secondary" | "outline">;
 
 export function countValues(materials: Project[], key: "status"): Map<string, number> {
   const counts = new Map<string, number>();
