@@ -99,6 +99,7 @@
 @layer base {
   body {
     @apply bg-background font-sans text-foreground;
+    white-space: pre-line;
   }
   * {
     @apply border-border outline-ring/50;
