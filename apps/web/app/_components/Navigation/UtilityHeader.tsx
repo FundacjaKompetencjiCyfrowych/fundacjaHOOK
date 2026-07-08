@@ -7,20 +7,15 @@ interface UtilityHeaderProps {
     instagram?: string | null;
     linkedin?: string | null;
   } | null;
+  krs?: string | null;
 }
 
-const platformLabels = {
-  facebook: "f",
-  instagram: "ig",
-  linkedin: "in",
-};
-
-export default function UtilityHeader({ SocialLinks }: UtilityHeaderProps) {
+export default function UtilityHeader({ SocialLinks, krs }: UtilityHeaderProps) {
   return (
     <header className="bg-sunken px-6 py-2 border-subtle border-b w-full">
       <div className="flex justify-between items-center mx-auto text-xs sm:text-sm">
         <div className="text-main">
-          KRS: <span className="font-mono">[0000000000]</span>
+          KRS: <span className="font-mono">{krs ?? "[0000000000]"}</span>
         </div>
 
         <div className="flex items-center gap-2">

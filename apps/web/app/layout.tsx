@@ -63,7 +63,7 @@ export default async function RootLayout({
   return (
     <html lang="pl" className={cn("h-full", "antialiased", "font-sans", poppins.variable)}>
       <body className="flex flex-col min-h-full">
-        <UtilityHeader SocialLinks={settingsData?.link?.socialLinks} />
+        <UtilityHeader SocialLinks={settingsData?.link?.socialLinks} krs={krs} />
         <Navbar Logo={logoTop} />
         <main className="flex-1">{children}</main>
         <Toaster />
