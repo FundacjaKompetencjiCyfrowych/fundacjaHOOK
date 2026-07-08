@@ -1,6 +1,5 @@
 import SocialMediaLinks from "@/app/_components/SocialMediaLinks";
 
-//TODO: make krs fetched from sanity and add real links to social media (also fetched from sanity i think?)
 interface UtilityHeaderProps {
   SocialLinks?: {
     facebook?: string | null;
