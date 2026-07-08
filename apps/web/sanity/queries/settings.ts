@@ -2,13 +2,22 @@ import { defineQuery } from "next-sanity";
 
 export const settingsQuery = defineQuery(`
   *[_type == "settings"][0] {
-    logo {
+    logoTop {
       logo {
         asset-> {
           url
         }
       }
     },
+    logoBottom {
+      logo {
+        asset-> {
+          url
+        }
+      }
+    },
+    address,
+    krs,
     link {
       socialLinks {
         facebook,
@@ -21,7 +30,7 @@ export const settingsQuery = defineQuery(`
 
 export const logoQuery = defineQuery(`
   *[_type == "settings"][0] {
-    logo {
+    logoTop {
       logo {
         asset-> {
           url

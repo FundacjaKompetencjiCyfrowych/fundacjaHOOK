@@ -30,10 +30,29 @@ export default defineType({
       group: "seo",
     }),
     defineField({
-      name: "logo",
-      title: "Logo",
+      name: "logoTop",
+      title: "Logo (górne)",
       type: "logo",
       group: "content",
+    }),
+    defineField({
+      name: "logoBottom",
+      title: "Logo (dolne)",
+      type: "logo",
+      group: "content",
+    }),
+    defineField({
+      name: "address",
+      title: "Adres",
+      type: "string",
+      group: "content",
+    }),
+    defineField({
+      name: "krs",
+      title: "Numer KRS",
+      type: "string",
+      group: "content",
+      validation: (Rule) => Rule.required().length(10),
     }),
     defineField({
       name: "link",

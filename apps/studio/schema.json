@@ -2076,11 +2076,33 @@
         },
         "optional": true
       },
-      "logo": {
+      "logoTop": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
           "name": "logo"
+        },
+        "optional": true
+      },
+      "logoBottom": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "logo"
+        },
+        "optional": true
+      },
+      "address": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "krs": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
         },
         "optional": true
       },
