@@ -1,6 +1,4 @@
 import { defineType, defineField, ALL_FIELDS_GROUP } from "sanity";
-import link from "./objects/link";
-import logo from "./objects/logo";
 
 export default defineType({
   name: "settings",
