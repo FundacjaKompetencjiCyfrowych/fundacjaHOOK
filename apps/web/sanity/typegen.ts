@@ -368,7 +368,10 @@ export type Settings = {
   _updatedAt: string;
   _rev: string;
   seo?: Seo;
-  logo?: Logo;
+  logoTop?: Logo;
+  logoBottom?: Logo;
+  address?: string;
+  krs?: string;
   link?: Link;
 };
 
@@ -1000,15 +1003,24 @@ export type ProjectBySlugQueryResult = {
 
 // Source: ../web/sanity/queries/settings.ts
 // Variable: settingsQuery
-// Query: *[_type == "settings"][0] {    logo {      logo {        asset-> {          url        }      }    },    link {      socialLinks {        facebook,        instagram,        linkedin      }    }  }
+// Query: *[_type == "settings"][0] {    logoTop {      logo {        asset-> {          url        }      }    },    logoBottom {      logo {        asset-> {          url        }      }    },    address,    krs,    link {      socialLinks {        facebook,        instagram,        linkedin      }    }  }
 export type SettingsQueryResult = {
-  logo: {
+  logoTop: {
     logo: {
       asset: {
         url: string | null;
       } | null;
     } | null;
   } | null;
+  logoBottom: {
+    logo: {
+      asset: {
+        url: string | null;
+      } | null;
+    } | null;
+  } | null;
+  address: string | null;
+  krs: string | null;
   link: {
     socialLinks: {
       facebook: string | null;
@@ -1020,9 +1032,9 @@ export type SettingsQueryResult = {
 
 // Source: ../web/sanity/queries/settings.ts
 // Variable: logoQuery
-// Query: *[_type == "settings"][0] {    logo {      logo {        asset-> {          url        }      }    },  }
+// Query: *[_type == "settings"][0] {    logoTop {      logo {        asset-> {          url        }      }    },  }
 export type LogoQueryResult = {
-  logo: {
+  logoTop: {
     logo: {
       asset: {
         url: string | null;
@@ -1090,8 +1102,8 @@ declare module "@sanity/client" {
     '\n  *[_type == "project" && defined(slug.current)]{\n    "slug": slug.current\n  }': ProjectSlugsQueryResult;
     '\n  *[_type == "project"] | order(startDate desc, _createdAt desc)': ProjectsQueryResult;
     '\n  *[_type == "project" && slug.current == $slug][0]{\n    ...,\n    events[]->{\n      _id,\n      title,\n      date,\n      location\n    }\n  }': ProjectBySlugQueryResult;
-    '\n  *[_type == "settings"][0] {\n    logo {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n    link {\n      socialLinks {\n        facebook,\n        instagram,\n        linkedin\n      }\n    }\n  }\n': SettingsQueryResult;
-    '\n  *[_type == "settings"][0] {\n    logo {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n  }\n': LogoQueryResult;
+    '\n  *[_type == "settings"][0] {\n    logoTop {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n    logoBottom {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n    address,\n    krs,\n    link {\n      socialLinks {\n        facebook,\n        instagram,\n        linkedin\n      }\n    }\n  }\n': SettingsQueryResult;
+    '\n  *[_type == "settings"][0] {\n    logoTop {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n  }\n': LogoQueryResult;
     '\n  *[_type == "workshop" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    description,\n    datetime,\n    location,\n    duration,\n    group,\n    status,\n    image {\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description\n      },\n      crop,\n      hotspot\n    },\n    signupFormUrl,\n    materials {\n      asset-> {\n        _ref,\n        url,\n        originalFilename\n      }\n    },\n  }\n': WorkshopDetailsQueryResult;
     '\n  *[_type == "workshop"] {\n    "slug": slug.current\n  }\n': WorkshopSlugsQueryResult;
   }

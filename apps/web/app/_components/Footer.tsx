@@ -4,6 +4,7 @@ import ROUTES from "@/constants/routes";
 
 interface FooterProps {
   address: string;
+  krs?: string | null;
   logo?: string | null;
   socialLinks?: {
     facebook?: string | null;
@@ -12,7 +13,7 @@ interface FooterProps {
   } | null;
 }
 
-export default async function Footer({ address, logo, socialLinks }: FooterProps) {
+export default async function Footer({ address, krs, logo, socialLinks }: FooterProps) {
   const mainLinks = [
     ["Warsztaty", ROUTES.WORKSHOPS],
     ["Materiały", ROUTES.MATERIALS],
@@ -48,6 +49,7 @@ export default async function Footer({ address, logo, socialLinks }: FooterProps
               )}
             </div>
             <p className="mt-2">{address}</p>
+            {krs && <p className="mt-1 text-muted">KRS: {krs}</p>}
           </div>
           {/*Main links*/}
           <div>
