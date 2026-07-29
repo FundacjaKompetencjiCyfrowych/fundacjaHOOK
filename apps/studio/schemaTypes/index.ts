@@ -1,6 +1,7 @@
 import category from "./category";
 import post from "./pages/post";
 import material from "./pages/material";
+import supportUs from "./pages/supportUs";
 import author from "./author";
 import home from "./pages/home";
 import settings from "./settings";
@@ -31,6 +32,7 @@ export const schemaTypes = [
   category,
   settings,
   home,
+  supportUs,
   seo,
   richText,
   img,

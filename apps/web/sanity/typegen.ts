@@ -227,16 +227,6 @@ export type Cardswithredirect = {
   button?: RedirectButtonReference;
 };
 
-export type RedirectButton = {
-  _id: string;
-  _type: "redirectButton";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  text?: string;
-  href?: string;
-};
-
 export type CardLandingPageReference = {
   _ref: string;
   _type: "reference";
@@ -307,6 +297,30 @@ export type Seo = {
   ogImage?: Img;
   twitterCreator?: string;
   robots?: Robots;
+};
+
+export type SupportUs = {
+  _id: string;
+  _type: "supportUs";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  seo?: Seo;
+  documentName?: string;
+  volunteerDescription?: string;
+  volunteerButton?: RedirectButtonReference;
+  accountNumber?: string;
+  transferTitle?: string;
+};
+
+export type RedirectButton = {
+  _id: string;
+  _type: "redirectButton";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  text?: string;
+  href?: string;
 };
 
 export type Home = {
@@ -620,7 +634,6 @@ export type AllSanitySchemaTypes =
   | SupportSection
   | CardWithRedirectReference
   | Cardswithredirect
-  | RedirectButton
   | CardLandingPageReference
   | Cardswithbackground
   | HeroSection
@@ -628,6 +641,8 @@ export type AllSanitySchemaTypes =
   | LeadSection
   | RichText
   | Seo
+  | SupportUs
+  | RedirectButton
   | Home
   | SanityImageCrop
   | SanityImageHotspot
@@ -1043,6 +1058,21 @@ export type LogoQueryResult = {
   } | null;
 } | null;
 
+// Source: ../web/sanity/queries/supportUs.ts
+// Variable: supportUsQuery
+// Query: *[_type == "supportUs"][0] {    seo,    volunteerDescription,    accountNumber,    transferTitle,    volunteerButton->{      _id,      text,      href    }  }
+export type SupportUsQueryResult = {
+  seo: Seo | null;
+  volunteerDescription: string | null;
+  accountNumber: string | null;
+  transferTitle: string | null;
+  volunteerButton: {
+    _id: string;
+    text: string | null;
+    href: string | null;
+  } | null;
+} | null;
+
 // Source: ../web/sanity/queries/workshopDetails.ts
 // Variable: workshopDetailsQuery
 // Query: *[_type == "workshop" && slug.current == $slug][0] {    _id,    title,    slug,    description,    datetime,    location,    duration,    group,    status,    image {      asset-> {        _id,        _ref,        url,        metadata {          lqip,          dimensions        },        altText,        title,        description      },      crop,      hotspot    },    signupFormUrl,    materials {      asset-> {        _ref,        url,        originalFilename      }    },  }
@@ -1104,6 +1134,7 @@ declare module "@sanity/client" {
     '\n  *[_type == "project" && slug.current == $slug][0]{\n    ...,\n    events[]->{\n      _id,\n      title,\n      date,\n      location\n    }\n  }': ProjectBySlugQueryResult;
     '\n  *[_type == "settings"][0] {\n    logoTop {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n    logoBottom {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n    address,\n    krs,\n    link {\n      socialLinks {\n        facebook,\n        instagram,\n        linkedin\n      }\n    }\n  }\n': SettingsQueryResult;
     '\n  *[_type == "settings"][0] {\n    logoTop {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n  }\n': LogoQueryResult;
+    '\n  *[_type == "supportUs"][0] {\n    seo,\n    volunteerDescription,\n    accountNumber,\n    transferTitle,\n    volunteerButton->{\n      _id,\n      text,\n      href\n    }\n  }\n': SupportUsQueryResult;
     '\n  *[_type == "workshop" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    description,\n    datetime,\n    location,\n    duration,\n    group,\n    status,\n    image {\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description\n      },\n      crop,\n      hotspot\n    },\n    signupFormUrl,\n    materials {\n      asset-> {\n        _ref,\n        url,\n        originalFilename\n      }\n    },\n  }\n': WorkshopDetailsQueryResult;
     '\n  *[_type == "workshop"] {\n    "slug": slug.current\n  }\n': WorkshopSlugsQueryResult;
   }
