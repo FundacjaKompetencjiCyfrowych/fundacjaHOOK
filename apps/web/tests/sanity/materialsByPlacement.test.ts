@@ -21,35 +21,35 @@ const makeMaterial = (overrides: Partial<MaterialQueryItem> = {}): MaterialQuery
 
 describe("getMaterialsByPlacement", () => {
   it("returns only materials matching the requested placement", () => {
-    const foundationOnly = makeMaterial({
-      _id: "foundation",
-      placements: [MATERIAL_PLACEMENTS.FOUNDATION_DOCS],
+    const aboutUsDocsOnly = makeMaterial({
+      _id: "about-us-docs",
+      placements: [MATERIAL_PLACEMENTS.ABOUT_US_DOCS],
     });
-    const mediaOnly = makeMaterial({
-      _id: "media",
-      placements: [MATERIAL_PLACEMENTS.MEDIA_PARTNERS],
+    const aboutUsMediaOnly = makeMaterial({
+      _id: "about-us-media",
+      placements: [MATERIAL_PLACEMENTS.ABOUT_US_MEDIA],
     });
     const both = makeMaterial({
       _id: "both",
-      placements: [MATERIAL_PLACEMENTS.FOUNDATION_DOCS, MATERIAL_PLACEMENTS.MEDIA_PARTNERS],
+      placements: [MATERIAL_PLACEMENTS.ABOUT_US_DOCS, MATERIAL_PLACEMENTS.ABOUT_US_MEDIA],
     });
     const none = makeMaterial({ _id: "none", placements: [] });
 
-    const foundationDocs = getMaterialsByPlacement(
-      [foundationOnly, mediaOnly, both, none],
-      MATERIAL_PLACEMENTS.FOUNDATION_DOCS
+    const aboutUsDocs = getMaterialsByPlacement(
+      [aboutUsDocsOnly, aboutUsMediaOnly, both, none],
+      MATERIAL_PLACEMENTS.ABOUT_US_DOCS
     );
-    const mediaPartners = getMaterialsByPlacement(
-      [foundationOnly, mediaOnly, both, none],
-      MATERIAL_PLACEMENTS.MEDIA_PARTNERS
+    const aboutUsMedia = getMaterialsByPlacement(
+      [aboutUsDocsOnly, aboutUsMediaOnly, both, none],
+      MATERIAL_PLACEMENTS.ABOUT_US_MEDIA
     );
 
-    expect(foundationDocs.map((item) => item._id)).toEqual(["foundation", "both"]);
-    expect(mediaPartners.map((item) => item._id)).toEqual(["media", "both"]);
+    expect(aboutUsDocs.map((item) => item._id)).toEqual(["about-us-docs", "both"]);
+    expect(aboutUsMedia.map((item) => item._id)).toEqual(["about-us-media", "both"]);
   });
 
   it("returns an empty list when input is nullish", () => {
-    expect(getMaterialsByPlacement(undefined, MATERIAL_PLACEMENTS.FOUNDATION_DOCS)).toEqual([]);
-    expect(getMaterialsByPlacement(null, MATERIAL_PLACEMENTS.MEDIA_PARTNERS)).toEqual([]);
+    expect(getMaterialsByPlacement(undefined, MATERIAL_PLACEMENTS.ABOUT_US_DOCS)).toEqual([]);
+    expect(getMaterialsByPlacement(null, MATERIAL_PLACEMENTS.ABOUT_US_MEDIA)).toEqual([]);
   });
 });

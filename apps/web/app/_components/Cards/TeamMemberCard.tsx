@@ -26,17 +26,17 @@ export default function TeamMemberCard({
       )}
     >
       {photo ? (
-        <div className="mb-1 rounded-full ring-1 ring-primary-foreground/30 w-20 h-20 overflow-hidden">
+        <div className="mb-1 rounded-full w-24 h-24 overflow-hidden">
           <SanityImage
             image={photo}
             alt={photoAlt ?? name}
-            width={80}
-            height={80}
-            className="w-20 h-20 object-cover"
+            width={96}
+            height={96}
+            className="w-24 h-24 object-cover"
           />
         </div>
       ) : (
-        <div className="flex justify-center items-center bg-primary-foreground/10 mb-1 border border-primary-foreground/50 border-dashed rounded-full w-20 h-20 font-semibold text-[10px] text-primary-foreground/90 uppercase tracking-wide">
+        <div className="flex justify-center items-center bg-primary-foreground/10 mb-1 rounded-full w-24 h-24 font-semibold text-[10px] text-primary-foreground/90 uppercase tracking-wide">
           photo
         </div>
       )}
