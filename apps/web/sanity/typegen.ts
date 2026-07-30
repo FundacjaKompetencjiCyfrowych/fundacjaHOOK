@@ -407,6 +407,36 @@ export type IconPicker = {
   svg?: string;
 };
 
+export type AboutUs = {
+  _id: string;
+  _type: "aboutUs";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  seo?: Seo;
+  documentName?: string;
+  missionDescription?: string;
+  missionImage?: Img;
+  meaningCards?: Array<{
+    image?: Img;
+    description?: string;
+    _type: "meaningCard";
+    _key: string;
+  }>;
+  galleryImages?: Array<
+    {
+      _key: string;
+    } & Img
+  >;
+  teamMembers?: Array<{
+    name?: string;
+    role?: string;
+    photo?: Img;
+    _type: "teamMember";
+    _key: string;
+  }>;
+};
+
 export type Material = {
   _id: string;
   _type: "material";
@@ -649,6 +679,7 @@ export type AllSanitySchemaTypes =
   | Settings
   | Category
   | IconPicker
+  | AboutUs
   | Material
   | AuthorReference
   | CategoryReference
@@ -828,6 +859,32 @@ export type HomeQueryResult = {
         } | null;
       }
   > | null;
+} | null;
+
+// Source: ../web/sanity/queries/aboutUs.ts
+// Variable: aboutUsQuery
+// Query: *[_type == "aboutUs"][0] {    seo,    missionDescription,    missionImage,    meaningDescription,    meaningCards[]{      _key,      image,      description    },    galleryImages,    teamMembers[]{      _key,      name,      role,      photo    }  }
+export type AboutUsQueryResult = {
+  seo: Seo | null;
+  missionDescription: string | null;
+  missionImage: Img | null;
+  meaningDescription: null;
+  meaningCards: Array<{
+    _key: string;
+    image: Img | null;
+    description: string | null;
+  }> | null;
+  galleryImages: Array<
+    {
+      _key: string;
+    } & Img
+  > | null;
+  teamMembers: Array<{
+    _key: string;
+    name: string | null;
+    role: string | null;
+    photo: Img | null;
+  }> | null;
 } | null;
 
 // Source: ../web/sanity/queries/groq.example.ts
@@ -1125,6 +1182,7 @@ declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_type == "workshop"] | order(_createdAt desc)': WorkshopsQueryResult;
     '\n  *[_type == "home"][0]{\n    _id,\n    sections[]{\n      ...,\n      _type in ["cardswithbackground", "sectionCardsWithBackground"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          image\n        }\n      },\n      _type in ["cardswithredirect", "sectionCardsWithRedirect"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          href,\n          hrefText,\n          image\n        },\n        button->{\n          _id,\n          text,\n          href\n        }\n      },\n      _type in ["supportSection", "sectionSupport"] => {\n        ...,\n        button->{\n          _id,\n          text,\n          href\n        }\n      },\n      _type in ["cooperationSection", "sectionCooperation"] => {\n        ...,\n        button->{\n          _id,\n          text,\n          href\n        }\n      }\n    }\n  }\n': HomeQueryResult;
+    '\n  *[_type == "aboutUs"][0] {\n    seo,\n    missionDescription,\n    missionImage,\n    meaningDescription,\n    meaningCards[]{\n      _key,\n      image,\n      description\n    },\n    galleryImages,\n    teamMembers[]{\n      _key,\n      name,\n      role,\n      photo\n    }\n  }\n': AboutUsQueryResult;
     '\n  *[_type == "post"] | order(_createdAt desc) {\n    _id,\n    _createdAt,\n    title,\n    "slug": slug.current,\n    "author": author->name,\n    "image": mainImage.asset->url,\n    description,\n    "categories": categories[]->title,\n    body\n  }\n': PostsQueryResult;
     '\n  *[_type == "material"] | order(date desc) {\n    _id,\n    title,\n    description,\n    date,\n    event,\n    type,\n    area,\n    format,\n    size,\n    placements,\n    "fileAsset": file.asset->{\n      url,\n      extension,\n      size\n    }\n  }\n': MaterialsQueryResult;
     '\n  *[_type == "news"] | order(_createdAt desc)': NewsQueryResult;
