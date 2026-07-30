@@ -122,8 +122,8 @@ export default defineType({
       of: [{ type: "string" }],
       options: {
         list: [
-          { title: "Dokumenty fundacji", value: "foundationDocs" },
-          { title: "Dla mediów i partnerów", value: "mediaPartners" },
+          { title: "O nas: dla mediów i partnerów", value: "aboutUsMedia" },
+          { title: "O nas: dokumenty fundacji", value: "aboutUsDocs" },
         ],
       },
     }),

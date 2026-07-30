@@ -1,4 +1,5 @@
 import category from "./category";
+import aboutUs from "./pages/aboutUs";
 import post from "./pages/post";
 import material from "./pages/material";
 import supportUs from "./pages/supportUs";
@@ -28,6 +29,7 @@ import event from "./objects/events";
 export const schemaTypes = [
   post,
   material,
+  aboutUs,
   author,
   category,
   settings,

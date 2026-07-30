@@ -1,11 +1,11 @@
 export const MATERIAL_PLACEMENTS = {
-  FOUNDATION_DOCS: "foundationDocs",
-  MEDIA_PARTNERS: "mediaPartners",
+  ABOUT_US_MEDIA: "aboutUsMedia",
+  ABOUT_US_DOCS: "aboutUsDocs",
 } as const;
 
 export type MaterialPlacement = (typeof MATERIAL_PLACEMENTS)[keyof typeof MATERIAL_PLACEMENTS];
 
 export const MATERIAL_PLACEMENT_VALUES: MaterialPlacement[] = [
-  MATERIAL_PLACEMENTS.FOUNDATION_DOCS,
-  MATERIAL_PLACEMENTS.MEDIA_PARTNERS,
+  MATERIAL_PLACEMENTS.ABOUT_US_MEDIA,
+  MATERIAL_PLACEMENTS.ABOUT_US_DOCS,
 ];
