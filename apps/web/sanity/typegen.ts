@@ -24,6 +24,22 @@ export type SocialLinks = {
   linkedin?: string;
 };
 
+export type OrganizationDetails = {
+  _type: "organizationDetails";
+  fullName?: string;
+  address?: string;
+  krs?: string;
+  nip?: string;
+  regon?: string;
+};
+
+export type DepartmentCard = {
+  _type: "departmentCard";
+  name?: string;
+  email?: string;
+  phone?: string;
+};
+
 export type Event = {
   _id: string;
   _type: "event";
@@ -414,8 +430,12 @@ export type ContactPage = {
   _updatedAt: string;
   _rev: string;
   title?: string;
-  departments?: string;
-  emailRecipient?: string;
+  departments?: Array<
+    {
+      _key: string;
+    } & DepartmentCard
+  >;
+  orgDetails?: OrganizationDetails;
 };
 
 export type AboutUs = {
@@ -657,6 +677,8 @@ export type Geopoint = {
 export type AllSanitySchemaTypes =
   | Robots
   | SocialLinks
+  | OrganizationDetails
+  | DepartmentCard
   | Event
   | EventReference
   | Project
@@ -904,8 +926,18 @@ export type AboutUsQueryResult = {
 // Query: *[_type == "contactPage"][0]{      title,      departments[] {        name,        email,        phone      },      orgDetails {        fullName,        address,        krs,        nip,        regon      }    }
 export type ContactPageQueryResult = {
   title: string | null;
-  departments: null;
-  orgDetails: null;
+  departments: Array<{
+    name: string | null;
+    email: string | null;
+    phone: string | null;
+  }> | null;
+  orgDetails: {
+    fullName: string | null;
+    address: string | null;
+    krs: string | null;
+    nip: string | null;
+    regon: string | null;
+  } | null;
 } | null;
 
 // Source: ../web/sanity/queries/groq.example.ts

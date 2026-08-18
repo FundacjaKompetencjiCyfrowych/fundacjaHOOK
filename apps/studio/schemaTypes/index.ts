@@ -26,6 +26,8 @@ import news from "./objects/news";
 import project from "./objects/projects";
 import event from "./objects/events";
 import contactPage from "./pages/contactPage";
+import departmentCard from "./objects/departmentCard";
+import organizationDetails from "./objects/organizationDetails";
 
 export const schemaTypes = [
   post,
@@ -56,4 +58,6 @@ export const schemaTypes = [
   news,
   project,
   event,
+  departmentCard,
+  organizationDetails,
 ];
