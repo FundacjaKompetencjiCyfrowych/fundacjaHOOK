@@ -407,6 +407,17 @@ export type IconPicker = {
   svg?: string;
 };
 
+export type ContactPage = {
+  _id: string;
+  _type: "contactPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  description?: string;
+  emailRecipient?: string;
+};
+
 export type AboutUs = {
   _id: string;
   _type: "aboutUs";
@@ -679,6 +690,7 @@ export type AllSanitySchemaTypes =
   | Settings
   | Category
   | IconPicker
+  | ContactPage
   | AboutUs
   | Material
   | AuthorReference
@@ -885,6 +897,15 @@ export type AboutUsQueryResult = {
     role: string | null;
     photo: Img | null;
   }> | null;
+} | null;
+
+// Source: ../web/sanity/queries/contactPage.ts
+// Variable: contactPageQuery
+// Query: *[_type == "contactPage"][0]{    title,    description,    emailRecipient    }
+export type ContactPageQueryResult = {
+  title: string | null;
+  description: string | null;
+  emailRecipient: string | null;
 } | null;
 
 // Source: ../web/sanity/queries/groq.example.ts
@@ -1183,6 +1204,7 @@ declare module "@sanity/client" {
     '\n  *[_type == "workshop"] | order(_createdAt desc)': WorkshopsQueryResult;
     '\n  *[_type == "home"][0]{\n    _id,\n    sections[]{\n      ...,\n      _type in ["cardswithbackground", "sectionCardsWithBackground"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          image\n        }\n      },\n      _type in ["cardswithredirect", "sectionCardsWithRedirect"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          href,\n          hrefText,\n          image\n        },\n        button->{\n          _id,\n          text,\n          href\n        }\n      },\n      _type in ["supportSection", "sectionSupport"] => {\n        ...,\n        button->{\n          _id,\n          text,\n          href\n        }\n      },\n      _type in ["cooperationSection", "sectionCooperation"] => {\n        ...,\n        button->{\n          _id,\n          text,\n          href\n        }\n      }\n    }\n  }\n': HomeQueryResult;
     '\n  *[_type == "aboutUs"][0] {\n    seo,\n    missionDescription,\n    missionImage,\n    meaningDescription,\n    meaningCards[]{\n      _key,\n      image,\n      description\n    },\n    galleryImages,\n    teamMembers[]{\n      _key,\n      name,\n      role,\n      photo\n    }\n  }\n': AboutUsQueryResult;
+    '\n    *[_type == "contactPage"][0]{\n    title,\n    description,\n    emailRecipient\n    }\n    ': ContactPageQueryResult;
     '\n  *[_type == "post"] | order(_createdAt desc) {\n    _id,\n    _createdAt,\n    title,\n    "slug": slug.current,\n    "author": author->name,\n    "image": mainImage.asset->url,\n    description,\n    "categories": categories[]->title,\n    body\n  }\n': PostsQueryResult;
     '\n  *[_type == "material"] | order(date desc) {\n    _id,\n    title,\n    description,\n    date,\n    event,\n    type,\n    area,\n    format,\n    size,\n    placements,\n    "fileAsset": file.asset->{\n      url,\n      extension,\n      size\n    }\n  }\n': MaterialsQueryResult;
     '\n  *[_type == "news"] | order(_createdAt desc)': NewsQueryResult;

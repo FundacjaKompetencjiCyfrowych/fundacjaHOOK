@@ -25,11 +25,13 @@ import link from "./objects/link";
 import news from "./objects/news";
 import project from "./objects/projects";
 import event from "./objects/events";
+import contactPage from "./pages/contactPage";
 
 export const schemaTypes = [
   post,
   material,
   aboutUs,
+  contactPage,
   author,
   category,
   settings,
