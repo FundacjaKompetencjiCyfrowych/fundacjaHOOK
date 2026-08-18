@@ -2335,7 +2335,7 @@
         },
         "optional": true
       },
-      "description": {
+      "departments": {
         "type": "objectAttribute",
         "value": {
           "type": "string"

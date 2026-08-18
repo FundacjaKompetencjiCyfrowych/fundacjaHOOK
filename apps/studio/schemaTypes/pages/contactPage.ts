@@ -12,16 +12,15 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "description",
-      title: "Opis",
-      type: "text",
-      rows: 3,
+      name: "departments",
+      title: "Działy kontaktowe",
+      type: "array",
+      of: [{ type: "departmentCard" }],
     }),
     defineField({
-      name: "emailRecipient",
-      title: "Email odbiorcy",
-      type: "string",
-      description: "Do kogo będą wysyłane wiadomości",
+      name: "orgDetails",
+      title: "Dane fundacji",
+      type: "organizationDetails",
     }),
   ],
 });
