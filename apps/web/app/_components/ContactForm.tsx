@@ -10,10 +10,7 @@ import { Button } from "./ui/button";
 const initialState: ContactState = {};
 
 export default function ContactForm() {
-  const [state, formAction, isPending] = useActionState(
-    submitContactForm,
-    initialState
-  );
+  const [state, formAction, isPending] = useActionState(submitContactForm, initialState);
 
   return (
     <form action={formAction} noValidate className="space-y-5">
@@ -41,9 +38,7 @@ export default function ContactForm() {
           className="rounded-xl border-subtle focus-visible:ring-brand-primary h-10"
         />
         {state.errors?.name && (
-          <p className="text-destructive text-xs font-medium mt-1">
-            {state.errors.name[0]}
-          </p>
+          <p className="text-destructive text-xs font-medium mt-1">{state.errors.name[0]}</p>
         )}
       </div>
 
@@ -59,9 +54,7 @@ export default function ContactForm() {
           className="rounded-xl border-subtle focus-visible:ring-brand-primary h-10"
         />
         {state.errors?.surname && (
-          <p className="text-destructive text-xs font-medium mt-1">
-            {state.errors.surname[0]}
-          </p>
+          <p className="text-destructive text-xs font-medium mt-1">{state.errors.surname[0]}</p>
         )}
       </div>
 
@@ -78,9 +71,7 @@ export default function ContactForm() {
           className="rounded-xl border-subtle focus-visible:ring-brand-primary h-10"
         />
         {state.errors?.email && (
-          <p className="text-destructive text-xs font-medium mt-1">
-            {state.errors.email[0]}
-          </p>
+          <p className="text-destructive text-xs font-medium mt-1">{state.errors.email[0]}</p>
         )}
       </div>
 
@@ -97,9 +88,7 @@ export default function ContactForm() {
           className="rounded-xl border-subtle focus-visible:ring-brand-primary resize-y min-h-[120px]"
         />
         {state.errors?.message && (
-          <p className="text-destructive text-xs font-medium mt-1">
-            {state.errors.message[0]}
-          </p>
+          <p className="text-destructive text-xs font-medium mt-1">{state.errors.message[0]}</p>
         )}
       </div>
 
