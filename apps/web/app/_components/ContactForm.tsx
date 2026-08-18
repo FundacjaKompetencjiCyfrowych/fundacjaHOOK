@@ -34,6 +34,7 @@ export default function ContactForm() {
           id="name"
           name="name"
           placeholder="Imię"
+          defaultValue={state.values?.name}
           disabled={isPending}
           className="rounded-xl border-subtle focus-visible:ring-brand-primary h-10"
         />
@@ -50,6 +51,7 @@ export default function ContactForm() {
           id="surname"
           name="surname"
           placeholder="Nazwisko"
+          defaultValue={state.values?.surname}
           disabled={isPending}
           className="rounded-xl border-subtle focus-visible:ring-brand-primary h-10"
         />
@@ -67,6 +69,7 @@ export default function ContactForm() {
           name="email"
           type="email"
           placeholder="Email"
+          defaultValue={state.values?.email}
           disabled={isPending}
           className="rounded-xl border-subtle focus-visible:ring-brand-primary h-10"
         />
@@ -83,6 +86,7 @@ export default function ContactForm() {
           id="message"
           name="message"
           placeholder="Twoja wiadomość"
+          defaultValue={state.values?.message}
           rows={5}
           disabled={isPending}
           className="rounded-xl border-subtle focus-visible:ring-brand-primary resize-y min-h-[120px]"

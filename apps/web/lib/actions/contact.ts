@@ -13,6 +13,12 @@ export type ContactState = {
   success?: boolean;
   errors?: Record<string, string[]>;
   message?: string;
+  values?: {
+    name?: string;
+    surname?: string;
+    email?: string;
+    message?: string;
+  };
 };
 
 export async function submitContactForm(
@@ -29,6 +35,12 @@ export async function submitContactForm(
     return {
       success: false,
       errors: validated.error.flatten().fieldErrors,
+      values: {
+        name: formData.get("name") as string,
+        surname: formData.get("surname") as string,
+        email: formData.get("email") as string,
+        message: formData.get("message") as string,
+      },
     };
   }
 
