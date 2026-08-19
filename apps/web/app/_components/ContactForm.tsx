@@ -6,6 +6,7 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
+import { cn } from "@/lib/utils";
 
 const initialState: ContactState = {};
 
@@ -16,11 +17,12 @@ export default function ContactForm() {
     <form action={formAction} noValidate className="space-y-5">
       {state.message && (
         <div
-          className={`p-3 rounded-xl text-sm font-medium ${
+          className={cn(
+            "p-3 rounded-xl text-sm font-medium border",
             state.success
-              ? "bg-green-50 text-green-800 border border-green-200"
-              : "bg-destructive/10 text-destructive border border-destructive/20"
-          }`}
+              ? "bg-green-800 border-green-200"
+              : "bg-destructive/10 text-destructive border-destructive/20"
+          )}
         >
           {state.message}
         </div>
