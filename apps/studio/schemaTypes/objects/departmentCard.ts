@@ -2,7 +2,7 @@ import { defineType, defineField } from "sanity";
 
 export default defineType({
   name: "departmentCard",
-  title: "Karta Działu",
+  title: "Karta działu",
   type: "object",
   fields: [
     defineField({
