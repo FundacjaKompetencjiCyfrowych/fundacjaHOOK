@@ -20,7 +20,8 @@
     "NEXT_PUBLIC_SANITY_IMAGE_QUALITY",
     "NEXT_PUBLIC_SANITY_STUDIO_URL",
     "SANITY_AUTH_TOKEN",
-    "CI"
+    "CI",
+    "RESEND_API_KEY"
   ],
   "tasks": {
     "build": {
