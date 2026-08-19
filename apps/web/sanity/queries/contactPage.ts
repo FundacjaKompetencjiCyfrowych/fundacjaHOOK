@@ -2,14 +2,16 @@ import { defineQuery } from "next-sanity";
 
 export const contactPageQuery = defineQuery(
   `
-    *[_type == "contactPage"][0]{
-      title,
-      departments[] {
-        name,
-        email,
-        phone
+    {
+      "page": *[_type == "contactPage"][0]{
+        title,
+        departments[] {
+          name,
+          email,
+          phone
+        }
       },
-      orgDetails {
+      "orgDetails": *[_type == "organizationDetails"][0]{
         fullName,
         address,
         krs,

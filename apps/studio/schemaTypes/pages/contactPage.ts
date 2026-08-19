@@ -17,10 +17,5 @@ export default defineType({
       type: "array",
       of: [{ type: "departmentCard" }],
     }),
-    defineField({
-      name: "orgDetails",
-      title: "Dane fundacji",
-      type: "organizationDetails",
-    }),
   ],
 });

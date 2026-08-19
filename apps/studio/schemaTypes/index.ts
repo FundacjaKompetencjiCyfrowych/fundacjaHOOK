@@ -27,7 +27,7 @@ import project from "./objects/projects";
 import event from "./objects/events";
 import contactPage from "./pages/contactPage";
 import departmentCard from "./objects/departmentCard";
-import organizationDetails from "./objects/organizationDetails";
+import organizationDetails from "./organizationDetails";
 
 export const schemaTypes = [
   post,

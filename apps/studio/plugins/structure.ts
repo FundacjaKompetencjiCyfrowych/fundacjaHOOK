@@ -39,6 +39,10 @@ export const structure: StructureToolOptions = {
         S.documentTypeListItem("event").title("Wydarzenia").icon(DocumentIcon),
         S.divider().title("Ustawienia"),
         S.listItem()
+          .title("Dane Fundacji")
+          .icon(DocumentIcon)
+          .child(S.document().schemaType("organizationDetails").documentId("organizationDetails")),
+        S.listItem()
           .title("Ustawienia")
           .icon(CogIcon)
           .child(S.document().schemaType("settings").documentId("settings")),
