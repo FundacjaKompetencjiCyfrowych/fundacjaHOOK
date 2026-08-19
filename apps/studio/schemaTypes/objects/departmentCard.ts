@@ -7,18 +7,18 @@ export default defineType({
   fields: [
     defineField({
       name: "name",
-      title: "Nazwa działu",
+      title: "Nazwa",
       type: "string",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "email",
-      title: "Email działu",
+      title: "Email",
       type: "string",
     }),
     defineField({
       name: "phone",
-      title: "Telefon działu",
+      title: "Telefon",
       type: "string",
     }),
   ],
