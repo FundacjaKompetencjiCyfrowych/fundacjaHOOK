@@ -44,8 +44,6 @@ export async function submitContactForm(
     };
   }
 
-  console.log("Contact subbmission received:", validated.data);
-
   return {
     success: true,
     message: "Dziękujemy! Wiadomość została wysłana",
