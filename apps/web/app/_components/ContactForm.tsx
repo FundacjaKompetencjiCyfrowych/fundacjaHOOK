@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { ContactState, submitContactForm } from "@/lib/actions/contact";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
@@ -13,14 +13,27 @@ const initialState: ContactState = {};
 export default function ContactForm() {
   const [state, formAction, isPending] = useActionState(submitContactForm, initialState);
 
+  const [startedAt, setStartedAt] = useState<number | null>(null);
+
+  const handleFirstInteraction = () => {
+    if (!startedAt) {
+      setStartedAt(Date.now());
+    }
+  };
+
   return (
-    <form action={formAction} noValidate className="space-y-5">
+    <form
+      action={formAction}
+      noValidate
+      onFocusCapture={handleFirstInteraction}
+      className="space-y-5"
+    >
       {state.message && (
         <div
           className={cn(
             "p-3 rounded-xl text-sm font-medium border",
             state.success
-              ? "bg-green-800 border-green-200"
+              ? "bg-green-800 border-green-200 text-white"
               : "bg-destructive/10 text-destructive border-destructive/20"
           )}
         >
@@ -97,6 +110,12 @@ export default function ContactForm() {
           <p className="text-destructive text-xs font-medium mt-1">{state.errors.message[0]}</p>
         )}
       </div>
+
+      {/* Honeypot input  */}
+      <input name="website" tabIndex={-1} className="hidden"></input>
+
+      {/* Hidden input sends startedAt value to server action */}
+      <input type="hidden" name="startedAt" value={startedAt ?? ""}></input>
 
       <Button
         type="submit"
