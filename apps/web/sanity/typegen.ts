@@ -926,7 +926,7 @@ export type AboutUsQueryResult = {
 
 // Source: ../web/sanity/queries/contactPage.ts
 // Variable: contactPageQuery
-// Query: {      "page": *[_type == "contactPage"][0]{        title,        departments[] {          name,          email,          phone        }      },      "orgDetails": *[_type == "organizationDetails"][0]{        fullName,        address,        krs,        nip,        regon      }    }
+// Query: {      "page": *[_type == "contactPage"][0]{        title,        departments[] {          name,          email,          phone        }      },      "orgDetails": *[_type == "organizationDetails" || _id == "organizationDetails"] | order(_updatedAt desc)[0]{        fullName,        address,        krs,        nip,        regon      }    }
 export type ContactPageQueryResult = {
   page: {
     title: string | null;
@@ -936,13 +936,29 @@ export type ContactPageQueryResult = {
       phone: string | null;
     }> | null;
   } | null;
-  orgDetails: {
-    fullName: string | null;
-    address: string | null;
-    krs: string | null;
-    nip: string | null;
-    regon: string | null;
-  } | null;
+  orgDetails:
+    | {
+        fullName: null;
+        address: null;
+        krs: null;
+        nip: null;
+        regon: null;
+      }
+    | {
+        fullName: null;
+        address: string | null;
+        krs: string | null;
+        nip: null;
+        regon: null;
+      }
+    | {
+        fullName: string | null;
+        address: string | null;
+        krs: string | null;
+        nip: string | null;
+        regon: string | null;
+      }
+    | null;
 };
 
 // Source: ../web/sanity/queries/groq.example.ts
@@ -1241,7 +1257,7 @@ declare module "@sanity/client" {
     '\n  *[_type == "workshop"] | order(_createdAt desc)': WorkshopsQueryResult;
     '\n  *[_type == "home"][0]{\n    _id,\n    sections[]{\n      ...,\n      _type in ["cardswithbackground", "sectionCardsWithBackground"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          image\n        }\n      },\n      _type in ["cardswithredirect", "sectionCardsWithRedirect"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          href,\n          hrefText,\n          image\n        },\n        button->{\n          _id,\n          text,\n          href\n        }\n      },\n      _type in ["supportSection", "sectionSupport"] => {\n        ...,\n        button->{\n          _id,\n          text,\n          href\n        }\n      },\n      _type in ["cooperationSection", "sectionCooperation"] => {\n        ...,\n        button->{\n          _id,\n          text,\n          href\n        }\n      }\n    }\n  }\n': HomeQueryResult;
     '\n  *[_type == "aboutUs"][0] {\n    seo,\n    missionDescription,\n    missionImage,\n    meaningDescription,\n    meaningCards[]{\n      _key,\n      image,\n      description\n    },\n    galleryImages,\n    teamMembers[]{\n      _key,\n      name,\n      role,\n      photo\n    }\n  }\n': AboutUsQueryResult;
-    '\n    {\n      "page": *[_type == "contactPage"][0]{\n        title,\n        departments[] {\n          name,\n          email,\n          phone\n        }\n      },\n      "orgDetails": *[_type == "organizationDetails"][0]{\n        fullName,\n        address,\n        krs,\n        nip,\n        regon\n      }\n    }\n  ': ContactPageQueryResult;
+    '\n    {\n      "page": *[_type == "contactPage"][0]{\n        title,\n        departments[] {\n          name,\n          email,\n          phone\n        }\n      },\n      "orgDetails": *[_type == "organizationDetails" || _id == "organizationDetails"] | order(_updatedAt desc)[0]{\n        fullName,\n        address,\n        krs,\n        nip,\n        regon\n      }\n    }\n  ': ContactPageQueryResult;
     '\n  *[_type == "post"] | order(_createdAt desc) {\n    _id,\n    _createdAt,\n    title,\n    "slug": slug.current,\n    "author": author->name,\n    "image": mainImage.asset->url,\n    description,\n    "categories": categories[]->title,\n    body\n  }\n': PostsQueryResult;
     '\n  *[_type == "material"] | order(date desc) {\n    _id,\n    title,\n    description,\n    date,\n    event,\n    type,\n    area,\n    format,\n    size,\n    placements,\n    "fileAsset": file.asset->{\n      url,\n      extension,\n      size\n    }\n  }\n': MaterialsQueryResult;
     '\n  *[_type == "news"] | order(_createdAt desc)': NewsQueryResult;

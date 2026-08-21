@@ -11,7 +11,7 @@ export const contactPageQuery = defineQuery(
           phone
         }
       },
-      "orgDetails": *[_type == "organizationDetails"][0]{
+      "orgDetails": *[_type == "organizationDetails" || _id == "organizationDetails"] | order(_updatedAt desc)[0]{
         fullName,
         address,
         krs,
