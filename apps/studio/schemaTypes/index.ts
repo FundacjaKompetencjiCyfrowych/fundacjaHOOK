@@ -25,11 +25,15 @@ import link from "./objects/link";
 import news from "./objects/news";
 import project from "./objects/projects";
 import event from "./objects/events";
+import contactPage from "./pages/contactPage";
+import departmentCard from "./objects/departmentCard";
+import organizationDetails from "./organizationDetails";
 
 export const schemaTypes = [
   post,
   material,
   aboutUs,
+  contactPage,
   author,
   category,
   settings,
@@ -54,4 +58,6 @@ export const schemaTypes = [
   news,
   project,
   event,
+  departmentCard,
+  organizationDetails,
 ];
