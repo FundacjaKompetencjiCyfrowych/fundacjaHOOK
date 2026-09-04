@@ -5,20 +5,20 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-brand-primary: #0091a5;
-  --color-brand-onhover: #007a8c;
-  --color-brand-soft: #ffd6e0;
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-onhover: var(--brand-onhover);
+  --color-brand-soft: var(--brand-soft);
 
-  --color-page: #ffffff;
-  --color-elevated: #f4f4f4;
-  --color-placeholder: #ebebeb;
-  --color-sunken: #f8f8f8;
+  --color-page: var(--page);
+  --color-elevated: var(--elevated);
+  --color-placeholder: var(--placeholder);
+  --color-sunken: var(--sunken);
 
-  --color-subtle: #e5e5e5;
+  --color-subtle: var(--subtle);
 
-  --color-main: #111111;
-  --color-navbar: oklch(20.5% 0 0);
-  --color-muted: #666666;
+  --color-main: var(--main);
+  --color-navbar: var(--navbar);
+  --color-muted: var(--muted-custom);
 
   --radius-card: 1rem;
 
@@ -94,6 +94,17 @@
   --radius-2xl: calc(var(--radius) * 2);
   --radius-3xl: calc(var(--radius) * 3);
   --radius-4xl: calc(var(--radius) * 4);
+
+  --color-gray-100: var(--gray-100);
+  --color-gray-200: var(--gray-200);
+  --color-gray-300: var(--gray-300);
+  --color-gray-400: var(--gray-400);
+  --color-gray-500: var(--gray-500);
+  --color-gray-600: var(--gray-600);
+  --color-gray-700: var(--gray-700);
+  --color-gray-800: var(--gray-800);
+  --color-gray-900: var(--gray-900);
+  --color-gray-1000: var(--gray-1000);
 }
 
 @layer base {
@@ -110,6 +121,32 @@
 }
 
 :root {
+  --brand-primary: #0091a5;
+  --brand-onhover: #007a8c;
+  --brand-soft: #ffd6e0;
+
+  --brand-secondary: #eeaace;
+
+  --gray-100: #ffffff;
+  --gray-200: #f5f5f5;
+  --gray-300: #ebebeb;
+  --gray-400: #d7d7d7;
+  --gray-500: #afafaf;
+  --gray-600: #9b9b9b;
+  --gray-700: #606060;
+  --gray-800: #424242;
+  --gray-900: #252525;
+  --gray-1000: #161616;
+
+  --page: #ffffff;
+  --elevated: #f4f4f4;
+  --placeholder: #ebebeb;
+  --sunken: #f8f8f8;
+  --subtle: #d1c9bd;
+  --main: #111111;
+  --navbar: oklch(20.5% 0 0);
+  --muted-custom: #666666;
+
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(97.015% 0.00011 271.152);

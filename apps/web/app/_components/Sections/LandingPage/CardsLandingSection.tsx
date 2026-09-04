@@ -2,6 +2,7 @@ import CardLandingPage from "@/app/_components/Cards/CardLandingPage";
 import { sanityFetch } from "@/sanity/live";
 import { SanityImage } from "@/sanity/image/SanityImage";
 import type { Img } from "@/sanity/typegen";
+import { Typography } from "../../ui/typography";
 
 type CardsLandingItem = {
   _id: string;
@@ -36,14 +37,16 @@ export default async function CardsLandingSection({
     : (cards as CardsLandingItem[]);
 
   return (
-    <section className="wire-section relative overflow-hidden px-4 py-12 sm:py-16 border-b border-subtle">
+    <section className="wire-section relative overflow-hidden px-12 py-12 sm:py-16 border-b border-subtle">
       <div className="pointer-events-none absolute inset-0">
         <SanityImage image={backgroundImage} fill className="object-cover" />
       </div>
       <div className="pointer-events-none absolute inset-0 bg-page/80" />
 
       <div className="container mx-auto relative z-10">
-        <h2 className="mb-6 text-xl font-bold sm:text-2xl">{title}</h2>
+        <Typography variant={"h4"} weight={"bold"} className="mb-6 ">
+          {title}
+        </Typography>
         {subtitle ? <p className="mb-6 text-sm text-muted">{subtitle}</p> : null}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
           {resolvedCards.map((card, index) => (

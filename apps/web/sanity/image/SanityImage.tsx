@@ -22,13 +22,15 @@ export function SanityImage({ image, preview, ...props }: SanityImageProps) {
     console.warn("Missing Sanity image object in SanityImage component");
     return null;
   }
-  const id = image.asset?._ref ?? image.asset?._id;
+  const id = image.asset?._ref ?? image.asset?._id ?? "";
   const alt = props.alt ?? image.asset?.altText ?? image.alt ?? "";
-  const { fill, style, ...restProps } = props;
+  const { fill, style, width, height, ...restProps } = props;
 
   if (preview && typeof window === "undefined") {
     throw new Error("Image preview can only be used in client components");
   }
+
+  const isSvg = id.toLowerCase().includes("svg") || image.asset?.extension === "svg";
 
   const mergedStyle = fill
     ? {
@@ -39,18 +41,24 @@ export function SanityImage({ image, preview, ...props }: SanityImageProps) {
         objectFit: "cover" as const,
         ...style,
       }
-    : style;
+    : {
+        ...(width ? { width: `${width}px`, maxWidth: `${width}px` } : {}),
+        ...(height ? { height: `${height}px`, maxHeight: `${height}px` } : {}),
+        ...style,
+      };
 
   return (
     <Image
       id={id}
       alt={alt}
+      width={width}
+      height={height}
       hotspot={image.hotspot}
       crop={image.crop}
       preview={preview && image.asset?.metadata?.lqip}
       projectId={process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}
       dataset={process.env.NEXT_PUBLIC_SANITY_DATASET}
-      queryParams={{ fm: "webp" }}
+      queryParams={isSvg ? {} : { fm: "webp" }}
       style={mergedStyle}
       {...restProps}
     ></Image>
