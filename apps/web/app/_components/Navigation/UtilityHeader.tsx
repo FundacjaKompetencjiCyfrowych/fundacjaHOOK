@@ -11,16 +11,16 @@ interface UtilityHeaderProps {
 
 export default function UtilityHeader({ SocialLinks, krs }: UtilityHeaderProps) {
   return (
-    <header className="bg-sunken px-6 py-2 border-subtle border-b w-full">
+    <header className="bg-sunken px-4 py-2 border-subtle border-b w-full">
       <div className="flex justify-between items-center mx-auto text-xs sm:text-sm">
         <div className="text-main">
           KRS: <span className="font-mono">{krs ?? "[0000000000]"}</span>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
           <SocialMediaLinks SocialLinks={SocialLinks} />
 
-          <button className="bg-elevated hover:bg-brand-primary ml-2 px-4 py-1.5 rounded-md font-medium text-main hover:text-white transition-all cursor-pointer">
+          <button className="sm:ml-2 px-2 sm:px-4 py-1.5 rounded-md font-medium text-main hover:text-white transition-all cursor-pointer">
             Wesprzyj nas
           </button>
         </div>

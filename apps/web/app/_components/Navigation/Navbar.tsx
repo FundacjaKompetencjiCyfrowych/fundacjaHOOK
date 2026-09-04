@@ -24,7 +24,7 @@ export default function Navbar({ Logo }: { Logo?: string | null }) {
 
   return (
     <div className="top-0 z-40 sticky flex justify-center px-4 py-3">
-      <nav className="relative flex items-center gap-6 bg-brand-soft shadow-md px-6 py-2 border-0 border-secondary rounded-full">
+      <nav className="relative flex items-center gap-6 bg-gray-200 shadow-md px-10 py-2 border-0 border-secondary rounded-full">
         <Link href={ROUTES.HOME} className="" aria-label="Fundacja HOOK - strona główna">
           <Image
             src={Logo || "/logo.png"}
@@ -49,11 +49,11 @@ export default function Navbar({ Logo }: { Logo?: string | null }) {
 
         {/* Mobile navigation */}
         <button
-          className="md:hidden flex p-1 focus:outline-none text-foreground cursor-pointer"
+          className=" md:hidden flex p-1 focus:outline-none text-foreground cursor-pointer"
           aria-label={isMobileMenuOpen ? "Zamknij menu" : "Otwórz menu"}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
-          {isMobileMenuOpen ? <X /> : <Menu />}
+          {isMobileMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
         </button>
       </nav>
       {isMobileMenuOpen && (
