@@ -8,7 +8,7 @@
   --color-brand-primary: var(--brand-primary);
   --color-brand-onhover: var(--brand-onhover);
   --color-brand-soft: var(--brand-soft);
-
+  --color-brand-focus: var(--brand-focus);
   --color-page: var(--page);
   --color-elevated: var(--elevated);
   --color-placeholder: var(--placeholder);
@@ -123,6 +123,7 @@
 :root {
   --brand-primary: #0091a5;
   --brand-onhover: #007a8c;
+  --brand-focus: #9dc8cd;
   --brand-soft: #ffd6e0;
 
   --brand-secondary: #eeaace;
@@ -164,7 +165,7 @@
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --ring: var(--brand-focus);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);

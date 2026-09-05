@@ -1,16 +1,87 @@
 import React from "react";
 import { Button } from "@/app/_components/ui/button";
+import { Input } from "@/app/_components/ui/input";
+import { Label } from "@/app/_components/ui/label";
+import { cn } from "@/lib/utils";
 import { Mail, ChevronRight, ChevronUp } from "lucide-react";
+import { Typography } from "../_components/ui/typography";
 
 export const metadata = {
-  title: "Button Design System Matrix | Fundacja HOOK",
-  description: "Pure Component Matrix for Button System",
+  title: "Design System Matrix | Fundacja HOOK",
+  description: "Pure Component Matrix for the Button and Input systems",
 };
+
+type FieldState = "rest" | "hover" | "focus" | "filled" | "disabled";
+
+/**
+ * A static matrix cannot put :hover and :focus-visible on screen next to each
+ * other, so those two columns re-apply the exact utilities <Input /> uses for
+ * those states. Every field below is a real <Input />, so the live states can
+ * still be checked by hovering and tabbing through the matrix.
+ */
+const fieldStateOverrides: Record<FieldState, string> = {
+  rest: "",
+  hover: "border-gray-900",
+  focus: "border-gray-900 ring-3 ring-gray-300",
+  filled: "",
+  disabled: "",
+};
+
+const errorFieldStateOverrides: Record<FieldState, string> = {
+  rest: "",
+  hover: "aria-invalid:border-destructive",
+  focus: "aria-invalid:border-destructive ring-3 ring-destructive/20",
+  filled: "",
+  disabled: "",
+};
+
+function InputField({
+  id,
+  state,
+  error = false,
+}: {
+  id: string;
+  state: FieldState;
+  error?: boolean;
+}) {
+  return (
+    <div className="space-y-1.5">
+      <Label htmlFor={id} className="text-gray-900">
+        Email
+      </Label>
+      <Input
+        id={id}
+        type="email"
+        placeholder="nazwa@hook.pl"
+        defaultValue={state === "filled" ? "nazwa@hook.pl" : undefined}
+        disabled={state === "disabled"}
+        aria-invalid={error || undefined}
+        className={
+          error ? errorFieldStateOverrides[state] : fieldStateOverrides[state]
+        }
+      />
+      <p
+        className={cn("text-xs", error ? "text-destructive" : "text-gray-700")}
+      >
+        Helping text for user
+      </p>
+    </div>
+  );
+}
+
+const FIELD_STATES: FieldState[] = [
+  "rest",
+  "hover",
+  "focus",
+  "filled",
+  "disabled",
+];
+const FIELD_GRID = "grid grid-cols-[100px_repeat(5,minmax(180px,1fr))] gap-6";
 
 export default function DesignSystemPage() {
   return (
     <div className="min-h-screen bg-[#f5f5f7] py-16 px-4 sm:px-8 font-sans text-gray-900 overflow-x-auto">
-      <div className="max-w-[1280px] mx-auto space-y-8 min-w-[900px]">
+      <div className="max-w-[1280px] mx-auto space-y-8 min-w-[1180px]">
         {/* Column Headers */}
         <div className="grid grid-cols-[140px_100px_repeat(2,1fr)] gap-4 items-center text-center font-mono text-sm text-gray-700 font-medium pl-4">
           <div className="col-span-2 text-left"></div>
@@ -34,16 +105,20 @@ export default function DesignSystemPage() {
           <div className="space-y-6 border-b border-gray-100 pb-10">
             {/* Row Small */}
             <div className="grid grid-cols-[140px_100px_repeat(2,1fr)] gap-4 items-center">
-              <div className="font-mono text-sm font-semibold text-gray-800">Primary</div>
+              <div className="font-mono text-sm font-semibold text-gray-800">
+                Primary
+              </div>
               <div className="font-mono text-xs text-gray-500">Small</div>
               <div className="flex justify-center">
                 <Button variant="default" size="sm">
-                  <Mail className="size-3.5" /> Button <ChevronRight className="size-3.5" />
+                  <Mail className="size-3.5" /> Button{" "}
+                  <ChevronRight className="size-3.5" />
                 </Button>
               </div>
               <div className="flex justify-center">
                 <Button variant="default" size="sm" disabled>
-                  <Mail className="size-3.5" /> Button <ChevronRight className="size-3.5" />
+                  <Mail className="size-3.5" /> Button{" "}
+                  <ChevronRight className="size-3.5" />
                 </Button>
               </div>
             </div>
@@ -54,12 +129,14 @@ export default function DesignSystemPage() {
               <div className="font-mono text-xs text-gray-500">Medium</div>
               <div className="flex justify-center">
                 <Button variant="default" size="default">
-                  <Mail className="size-4" /> Button <ChevronRight className="size-4" />
+                  <Mail className="size-4" /> Button{" "}
+                  <ChevronRight className="size-4" />
                 </Button>
               </div>
               <div className="flex justify-center">
                 <Button variant="default" size="default" disabled>
-                  <Mail className="size-4" /> Button <ChevronRight className="size-4" />
+                  <Mail className="size-4" /> Button{" "}
+                  <ChevronRight className="size-4" />
                 </Button>
               </div>
             </div>
@@ -70,12 +147,14 @@ export default function DesignSystemPage() {
               <div className="font-mono text-xs text-gray-500">Large</div>
               <div className="flex justify-center">
                 <Button variant="default" size="lg">
-                  <Mail className="size-4.5" /> Button <ChevronRight className="size-4.5" />
+                  <Mail className="size-4.5" /> Button{" "}
+                  <ChevronRight className="size-4.5" />
                 </Button>
               </div>
               <div className="flex justify-center">
                 <Button variant="default" size="lg" disabled>
-                  <Mail className="size-4.5" /> Button <ChevronRight className="size-4.5" />
+                  <Mail className="size-4.5" /> Button{" "}
+                  <ChevronRight className="size-4.5" />
                 </Button>
               </div>
             </div>
@@ -87,16 +166,20 @@ export default function DesignSystemPage() {
           <div className="space-y-6 border-b border-gray-100 pb-10">
             {/* Row Small */}
             <div className="grid grid-cols-[140px_100px_repeat(2,1fr)] gap-4 items-center">
-              <div className="font-mono text-sm font-semibold text-gray-800">Secondary</div>
+              <div className="font-mono text-sm font-semibold text-gray-800">
+                Secondary
+              </div>
               <div className="font-mono text-xs text-gray-500">Small</div>
               <div className="flex justify-center">
                 <Button variant="secondary" size="sm">
-                  <Mail className="size-3.5" /> Button <ChevronRight className="size-3.5" />
+                  <Mail className="size-3.5" /> Button{" "}
+                  <ChevronRight className="size-3.5" />
                 </Button>
               </div>
               <div className="flex justify-center">
                 <Button variant="secondary" size="sm" disabled>
-                  <Mail className="size-3.5" /> Button <ChevronRight className="size-3.5" />
+                  <Mail className="size-3.5" /> Button{" "}
+                  <ChevronRight className="size-3.5" />
                 </Button>
               </div>
             </div>
@@ -107,12 +190,14 @@ export default function DesignSystemPage() {
               <div className="font-mono text-xs text-gray-500">Medium</div>
               <div className="flex justify-center">
                 <Button variant="secondary" size="default">
-                  <Mail className="size-4" /> Button <ChevronRight className="size-4" />
+                  <Mail className="size-4" /> Button{" "}
+                  <ChevronRight className="size-4" />
                 </Button>
               </div>
               <div className="flex justify-center">
                 <Button variant="secondary" size="default" disabled>
-                  <Mail className="size-4" /> Button <ChevronRight className="size-4" />
+                  <Mail className="size-4" /> Button{" "}
+                  <ChevronRight className="size-4" />
                 </Button>
               </div>
             </div>
@@ -123,12 +208,14 @@ export default function DesignSystemPage() {
               <div className="font-mono text-xs text-gray-500">Large</div>
               <div className="flex justify-center">
                 <Button variant="secondary" size="lg">
-                  <Mail className="size-4.5" /> Button <ChevronRight className="size-4.5" />
+                  <Mail className="size-4.5" /> Button{" "}
+                  <ChevronRight className="size-4.5" />
                 </Button>
               </div>
               <div className="flex justify-center">
                 <Button variant="secondary" size="lg" disabled>
-                  <Mail className="size-4.5" /> Button <ChevronRight className="size-4.5" />
+                  <Mail className="size-4.5" /> Button{" "}
+                  <ChevronRight className="size-4.5" />
                 </Button>
               </div>
             </div>
@@ -140,16 +227,20 @@ export default function DesignSystemPage() {
           <div className="space-y-6 border-b border-gray-100 pb-10">
             {/* Row Small */}
             <div className="grid grid-cols-[140px_100px_repeat(2,1fr)] gap-4 items-center">
-              <div className="font-mono text-sm font-semibold text-gray-800">Ghost / Text</div>
+              <div className="font-mono text-sm font-semibold text-gray-800">
+                Ghost / Text
+              </div>
               <div className="font-mono text-xs text-gray-500">Small</div>
               <div className="flex justify-center">
                 <Button variant="ghost" size="sm">
-                  <Mail className="size-3.5" /> Button <ChevronRight className="size-3.5" />
+                  <Mail className="size-3.5" /> Button{" "}
+                  <ChevronRight className="size-3.5" />
                 </Button>
               </div>
               <div className="flex justify-center">
                 <Button variant="ghost" size="sm" disabled>
-                  <Mail className="size-3.5" /> Button <ChevronRight className="size-3.5" />
+                  <Mail className="size-3.5" /> Button{" "}
+                  <ChevronRight className="size-3.5" />
                 </Button>
               </div>
             </div>
@@ -160,12 +251,14 @@ export default function DesignSystemPage() {
               <div className="font-mono text-xs text-gray-500">Medium</div>
               <div className="flex justify-center">
                 <Button variant="ghost" size="default">
-                  <Mail className="size-4" /> Button <ChevronRight className="size-4" />
+                  <Mail className="size-4" /> Button{" "}
+                  <ChevronRight className="size-4" />
                 </Button>
               </div>
               <div className="flex justify-center">
                 <Button variant="ghost" size="default" disabled>
-                  <Mail className="size-4" /> Button <ChevronRight className="size-4" />
+                  <Mail className="size-4" /> Button{" "}
+                  <ChevronRight className="size-4" />
                 </Button>
               </div>
             </div>
@@ -176,12 +269,14 @@ export default function DesignSystemPage() {
               <div className="font-mono text-xs text-gray-500">Large</div>
               <div className="flex justify-center">
                 <Button variant="ghost" size="lg">
-                  <Mail className="size-4.5" /> Button <ChevronRight className="size-4.5" />
+                  <Mail className="size-4.5" /> Button{" "}
+                  <ChevronRight className="size-4.5" />
                 </Button>
               </div>
               <div className="flex justify-center">
                 <Button variant="ghost" size="lg" disabled>
-                  <Mail className="size-4.5" /> Button <ChevronRight className="size-4.5" />
+                  <Mail className="size-4.5" /> Button{" "}
+                  <ChevronRight className="size-4.5" />
                 </Button>
               </div>
             </div>
@@ -193,7 +288,9 @@ export default function DesignSystemPage() {
           <div className="space-y-6">
             {/* Row Small */}
             <div className="grid grid-cols-[140px_100px_repeat(2,1fr)] gap-4 items-center">
-              <div className="font-mono text-sm font-semibold text-gray-800">Icon Only</div>
+              <div className="font-mono text-sm font-semibold text-gray-800">
+                Icon Only
+              </div>
               <div className="font-mono text-xs text-gray-500">Small</div>
               <div className="flex justify-center">
                 <Button variant="default" size="icon-sm">
@@ -238,6 +335,25 @@ export default function DesignSystemPage() {
                 </Button>
               </div>
             </div>
+          </div>
+        </div>
+        <Typography variant={"h2"}>Inputs</Typography>
+        <div className="flex justify-evenly">
+          <div className="flex flex-col gap-2">
+            <Typography>Input normal</Typography>
+            <Input placeholder="fundacja@hook.pl" />
+            <Typography>Input disabled</Typography>
+            <Input placeholder="fundacja@hook.pl" disabled />
+          </div>
+          <div className="flex flex-col gap-2">
+            <Typography>Input error</Typography>
+            <Input placeholder="fundacja@hook.pl" aria-invalid="true" />
+            <Typography>Input error disabled</Typography>
+            <Input
+              placeholder="fundacja@hook.pl"
+              aria-invalid="true"
+              disabled
+            />
           </div>
         </div>
       </div>
