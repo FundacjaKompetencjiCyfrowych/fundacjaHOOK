@@ -1,6 +1,8 @@
 import React from "react";
 import { Button } from "@/app/_components/ui/button";
 import { Mail, ChevronRight, ChevronUp } from "lucide-react";
+import { Input } from "../_components/ui/input";
+import { Typography } from "../_components/ui/typography";
 
 export const metadata = {
   title: "Button Design System Matrix | Fundacja HOOK",
@@ -278,11 +280,7 @@ export default function DesignSystemPage() {
             <Typography>Input error</Typography>
             <Input placeholder="fundacja@hook.pl" aria-invalid="true" />
             <Typography>Input error disabled</Typography>
-            <Input
-              placeholder="fundacja@hook.pl"
-              aria-invalid="true"
-              disabled
-            />
+            <Input placeholder="fundacja@hook.pl" aria-invalid="true" disabled />
           </div>
         </div>
       </div>
