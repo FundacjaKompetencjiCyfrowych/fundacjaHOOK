@@ -33,7 +33,7 @@ export default function MaterialyFiltersTopBar({
 
       <CollapsibleTrigger asChild>
         <Button
-          variant="outline"
+          variant="secondary"
           className="justify-between gap-2 bg-elevated aria-expanded:bg-elevated aria-expanded:hover:bg-muted border-subtle rounded-xl w-full sm:w-[200px] h-11 cursor-pointer"
         >
           <span className="flex items-center gap-2">

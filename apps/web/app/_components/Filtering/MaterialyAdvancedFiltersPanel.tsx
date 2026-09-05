@@ -98,7 +98,7 @@ export default function MaterialyAdvancedFiltersPanel({
             <Popover>
               <PopoverTrigger asChild>
                 <Button
-                  variant="outline"
+                  variant="secondary"
                   className={cn(
                     "justify-start bg-elevated border-subtle w-[160px] h-10 font-normal text-left",
                     !dateFrom && "text-muted-foreground"
@@ -123,7 +123,7 @@ export default function MaterialyAdvancedFiltersPanel({
             <Popover>
               <PopoverTrigger asChild>
                 <Button
-                  variant="outline"
+                  variant="secondary"
                   className={cn(
                     "justify-start bg-elevated border-subtle w-[160px] h-10 font-normal text-left",
                     !dateTo && "text-muted-foreground"
