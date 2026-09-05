@@ -36,16 +36,20 @@ export default function DesignSystemPage() {
           <div className="space-y-6 border-b border-gray-100 pb-10">
             {/* Row Small */}
             <div className="grid grid-cols-[140px_100px_repeat(2,1fr)] gap-4 items-center">
-              <div className="font-mono text-sm font-semibold text-gray-800">Primary</div>
+              <div className="font-mono text-sm font-semibold text-gray-800">
+                Primary
+              </div>
               <div className="font-mono text-xs text-gray-500">Small</div>
               <div className="flex justify-center">
                 <Button variant="default" size="sm">
-                  <Mail className="size-3.5" /> Button <ChevronRight className="size-3.5" />
+                  <Mail className="size-3.5" /> Button{" "}
+                  <ChevronRight className="size-3.5" />
                 </Button>
               </div>
               <div className="flex justify-center">
                 <Button variant="default" size="sm" disabled>
-                  <Mail className="size-3.5" /> Button <ChevronRight className="size-3.5" />
+                  <Mail className="size-3.5" /> Button{" "}
+                  <ChevronRight className="size-3.5" />
                 </Button>
               </div>
             </div>
@@ -56,12 +60,14 @@ export default function DesignSystemPage() {
               <div className="font-mono text-xs text-gray-500">Medium</div>
               <div className="flex justify-center">
                 <Button variant="default" size="default">
-                  <Mail className="size-4" /> Button <ChevronRight className="size-4" />
+                  <Mail className="size-4" /> Button{" "}
+                  <ChevronRight className="size-4" />
                 </Button>
               </div>
               <div className="flex justify-center">
                 <Button variant="default" size="default" disabled>
-                  <Mail className="size-4" /> Button <ChevronRight className="size-4" />
+                  <Mail className="size-4" /> Button{" "}
+                  <ChevronRight className="size-4" />
                 </Button>
               </div>
             </div>
@@ -72,12 +78,14 @@ export default function DesignSystemPage() {
               <div className="font-mono text-xs text-gray-500">Large</div>
               <div className="flex justify-center">
                 <Button variant="default" size="lg">
-                  <Mail className="size-4.5" /> Button <ChevronRight className="size-4.5" />
+                  <Mail className="size-4.5" /> Button{" "}
+                  <ChevronRight className="size-4.5" />
                 </Button>
               </div>
               <div className="flex justify-center">
                 <Button variant="default" size="lg" disabled>
-                  <Mail className="size-4.5" /> Button <ChevronRight className="size-4.5" />
+                  <Mail className="size-4.5" /> Button{" "}
+                  <ChevronRight className="size-4.5" />
                 </Button>
               </div>
             </div>
@@ -89,16 +97,20 @@ export default function DesignSystemPage() {
           <div className="space-y-6 border-b border-gray-100 pb-10">
             {/* Row Small */}
             <div className="grid grid-cols-[140px_100px_repeat(2,1fr)] gap-4 items-center">
-              <div className="font-mono text-sm font-semibold text-gray-800">Secondary</div>
+              <div className="font-mono text-sm font-semibold text-gray-800">
+                Secondary
+              </div>
               <div className="font-mono text-xs text-gray-500">Small</div>
               <div className="flex justify-center">
                 <Button variant="secondary" size="sm">
-                  <Mail className="size-3.5" /> Button <ChevronRight className="size-3.5" />
+                  <Mail className="size-3.5" /> Button{" "}
+                  <ChevronRight className="size-3.5" />
                 </Button>
               </div>
               <div className="flex justify-center">
                 <Button variant="secondary" size="sm" disabled>
-                  <Mail className="size-3.5" /> Button <ChevronRight className="size-3.5" />
+                  <Mail className="size-3.5" /> Button{" "}
+                  <ChevronRight className="size-3.5" />
                 </Button>
               </div>
             </div>
@@ -109,12 +121,14 @@ export default function DesignSystemPage() {
               <div className="font-mono text-xs text-gray-500">Medium</div>
               <div className="flex justify-center">
                 <Button variant="secondary" size="default">
-                  <Mail className="size-4" /> Button <ChevronRight className="size-4" />
+                  <Mail className="size-4" /> Button{" "}
+                  <ChevronRight className="size-4" />
                 </Button>
               </div>
               <div className="flex justify-center">
                 <Button variant="secondary" size="default" disabled>
-                  <Mail className="size-4" /> Button <ChevronRight className="size-4" />
+                  <Mail className="size-4" /> Button{" "}
+                  <ChevronRight className="size-4" />
                 </Button>
               </div>
             </div>
@@ -125,12 +139,14 @@ export default function DesignSystemPage() {
               <div className="font-mono text-xs text-gray-500">Large</div>
               <div className="flex justify-center">
                 <Button variant="secondary" size="lg">
-                  <Mail className="size-4.5" /> Button <ChevronRight className="size-4.5" />
+                  <Mail className="size-4.5" /> Button{" "}
+                  <ChevronRight className="size-4.5" />
                 </Button>
               </div>
               <div className="flex justify-center">
                 <Button variant="secondary" size="lg" disabled>
-                  <Mail className="size-4.5" /> Button <ChevronRight className="size-4.5" />
+                  <Mail className="size-4.5" /> Button{" "}
+                  <ChevronRight className="size-4.5" />
                 </Button>
               </div>
             </div>
@@ -142,16 +158,20 @@ export default function DesignSystemPage() {
           <div className="space-y-6 border-b border-gray-100 pb-10">
             {/* Row Small */}
             <div className="grid grid-cols-[140px_100px_repeat(2,1fr)] gap-4 items-center">
-              <div className="font-mono text-sm font-semibold text-gray-800">Ghost / Text</div>
+              <div className="font-mono text-sm font-semibold text-gray-800">
+                Ghost / Text
+              </div>
               <div className="font-mono text-xs text-gray-500">Small</div>
               <div className="flex justify-center">
                 <Button variant="ghost" size="sm">
-                  <Mail className="size-3.5" /> Button <ChevronRight className="size-3.5" />
+                  <Mail className="size-3.5" /> Button{" "}
+                  <ChevronRight className="size-3.5" />
                 </Button>
               </div>
               <div className="flex justify-center">
                 <Button variant="ghost" size="sm" disabled>
-                  <Mail className="size-3.5" /> Button <ChevronRight className="size-3.5" />
+                  <Mail className="size-3.5" /> Button{" "}
+                  <ChevronRight className="size-3.5" />
                 </Button>
               </div>
             </div>
@@ -162,12 +182,14 @@ export default function DesignSystemPage() {
               <div className="font-mono text-xs text-gray-500">Medium</div>
               <div className="flex justify-center">
                 <Button variant="ghost" size="default">
-                  <Mail className="size-4" /> Button <ChevronRight className="size-4" />
+                  <Mail className="size-4" /> Button{" "}
+                  <ChevronRight className="size-4" />
                 </Button>
               </div>
               <div className="flex justify-center">
                 <Button variant="ghost" size="default" disabled>
-                  <Mail className="size-4" /> Button <ChevronRight className="size-4" />
+                  <Mail className="size-4" /> Button{" "}
+                  <ChevronRight className="size-4" />
                 </Button>
               </div>
             </div>
@@ -178,12 +200,14 @@ export default function DesignSystemPage() {
               <div className="font-mono text-xs text-gray-500">Large</div>
               <div className="flex justify-center">
                 <Button variant="ghost" size="lg">
-                  <Mail className="size-4.5" /> Button <ChevronRight className="size-4.5" />
+                  <Mail className="size-4.5" /> Button{" "}
+                  <ChevronRight className="size-4.5" />
                 </Button>
               </div>
               <div className="flex justify-center">
                 <Button variant="ghost" size="lg" disabled>
-                  <Mail className="size-4.5" /> Button <ChevronRight className="size-4.5" />
+                  <Mail className="size-4.5" /> Button{" "}
+                  <ChevronRight className="size-4.5" />
                 </Button>
               </div>
             </div>
@@ -195,7 +219,9 @@ export default function DesignSystemPage() {
           <div className="space-y-6">
             {/* Row Small */}
             <div className="grid grid-cols-[140px_100px_repeat(2,1fr)] gap-4 items-center">
-              <div className="font-mono text-sm font-semibold text-gray-800">Icon Only</div>
+              <div className="font-mono text-sm font-semibold text-gray-800">
+                Icon Only
+              </div>
               <div className="font-mono text-xs text-gray-500">Small</div>
               <div className="flex justify-center">
                 <Button variant="default" size="icon-sm">
