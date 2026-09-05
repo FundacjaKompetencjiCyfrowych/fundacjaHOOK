@@ -1,87 +1,16 @@
 import React from "react";
 import { Button } from "@/app/_components/ui/button";
-import { Input } from "@/app/_components/ui/input";
-import { Label } from "@/app/_components/ui/label";
-import { cn } from "@/lib/utils";
 import { Mail, ChevronRight, ChevronUp } from "lucide-react";
-import { Typography } from "../_components/ui/typography";
 
 export const metadata = {
-  title: "Design System Matrix | Fundacja HOOK",
-  description: "Pure Component Matrix for the Button and Input systems",
+  title: "Button Design System Matrix | Fundacja HOOK",
+  description: "Pure Component Matrix for Button System",
 };
-
-type FieldState = "rest" | "hover" | "focus" | "filled" | "disabled";
-
-/**
- * A static matrix cannot put :hover and :focus-visible on screen next to each
- * other, so those two columns re-apply the exact utilities <Input /> uses for
- * those states. Every field below is a real <Input />, so the live states can
- * still be checked by hovering and tabbing through the matrix.
- */
-const fieldStateOverrides: Record<FieldState, string> = {
-  rest: "",
-  hover: "border-gray-900",
-  focus: "border-gray-900 ring-3 ring-gray-300",
-  filled: "",
-  disabled: "",
-};
-
-const errorFieldStateOverrides: Record<FieldState, string> = {
-  rest: "",
-  hover: "aria-invalid:border-destructive",
-  focus: "aria-invalid:border-destructive ring-3 ring-destructive/20",
-  filled: "",
-  disabled: "",
-};
-
-function InputField({
-  id,
-  state,
-  error = false,
-}: {
-  id: string;
-  state: FieldState;
-  error?: boolean;
-}) {
-  return (
-    <div className="space-y-1.5">
-      <Label htmlFor={id} className="text-gray-900">
-        Email
-      </Label>
-      <Input
-        id={id}
-        type="email"
-        placeholder="nazwa@hook.pl"
-        defaultValue={state === "filled" ? "nazwa@hook.pl" : undefined}
-        disabled={state === "disabled"}
-        aria-invalid={error || undefined}
-        className={
-          error ? errorFieldStateOverrides[state] : fieldStateOverrides[state]
-        }
-      />
-      <p
-        className={cn("text-xs", error ? "text-destructive" : "text-gray-700")}
-      >
-        Helping text for user
-      </p>
-    </div>
-  );
-}
-
-const FIELD_STATES: FieldState[] = [
-  "rest",
-  "hover",
-  "focus",
-  "filled",
-  "disabled",
-];
-const FIELD_GRID = "grid grid-cols-[100px_repeat(5,minmax(180px,1fr))] gap-6";
 
 export default function DesignSystemPage() {
   return (
     <div className="min-h-screen bg-[#f5f5f7] py-16 px-4 sm:px-8 font-sans text-gray-900 overflow-x-auto">
-      <div className="max-w-[1280px] mx-auto space-y-8 min-w-[1180px]">
+      <div className="max-w-[1280px] mx-auto space-y-8 min-w-[900px]">
         {/* Column Headers */}
         <div className="grid grid-cols-[140px_100px_repeat(2,1fr)] gap-4 items-center text-center font-mono text-sm text-gray-700 font-medium pl-4">
           <div className="col-span-2 text-left"></div>
