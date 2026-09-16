@@ -48,9 +48,19 @@ export default function SupportSection({
 
         <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center gap-8">
           <div className="flex flex-col items-center gap-4 w-[95%] ">
-            <Typography variant="h3" weight="bold" className="text-white">{title}</Typography>
-            {description ? <Typography variant="body" weight="medium" className="text-white md:text-justify">{description}</Typography> : null}
-            {krsNumber ? <Typography variant="body" weight="bold" className=" text-white">KRS: [{krsNumber}]</Typography>: null}
+            <Typography variant="h3" weight="bold" className="text-white">
+              {title}
+            </Typography>
+            {description ? (
+              <Typography variant="body" weight="medium" className="text-white md:text-justify">
+                {description}
+              </Typography>
+            ) : null}
+            {krsNumber ? (
+              <Typography variant="body" weight="bold" className=" text-white">
+                KRS: [{krsNumber}]
+              </Typography>
+            ) : null}
           </div>
 
           {button?.href && button.text ? (
