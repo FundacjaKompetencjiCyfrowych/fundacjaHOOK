@@ -16,7 +16,7 @@ export default function CardLandingPage({
       <div className="p-2 mb-3 h-12 w-12 overflow-hidden rounded-xl border border-subtle bg-[#eae7e1] flex items-center justify-center">
         <SanityImage
           image={image}
-          width={1920}         
+          width={1920}
           className="object-contain "
           style={{
             width: "100%",
