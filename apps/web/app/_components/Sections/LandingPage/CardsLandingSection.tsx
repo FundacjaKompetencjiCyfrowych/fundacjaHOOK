@@ -38,10 +38,22 @@ export default async function CardsLandingSection({
 
   return (
     <section className="wire-section relative overflow-hidden px-12 py-12 sm:py-16 border-b border-subtle">
-      <div className="pointer-events-none absolute inset-0">
-        <SanityImage image={backgroundImage} fill className="object-cover" />
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 
+      w-[270%] h-[200%] -translate-x-[25%] -translate-y-[-5%]
+      md:w-[112%] md:h-auto md:-translate-x-[12%] md:-translate-y-[4.5%]"
+      >
+        <SanityImage
+          image={backgroundImage}
+          width={1920}
+          style={{
+            width: "100%",
+            height: "auto",
+            maxWidth: "none",
+          }}
+        />
       </div>
-      <div className="pointer-events-none absolute inset-0 bg-page/80" />
+      <div className="pointer-events-none absolute inset-0 bg-page/30" />
 
       <div className="container mx-auto relative z-10">
         <Typography variant={"h4"} weight={"bold"} className="mb-6 ">
