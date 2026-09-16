@@ -14,7 +14,12 @@ export default function CardLandingPage({
   return (
     <div className="p-4 rounded-xl  bg-elevated shadow-md transition-all duration-200 hover:-translate-y-0.5">
       <div className="p-2 mb-3 h-12 w-12 overflow-hidden rounded-xl border border-subtle bg-[#eae7e1] flex items-center justify-center">
-        <SanityImage image={image} width={30} height={30} className="object-cover " />
+        <SanityImage image={image} width={96} height={96} className="object-contain " style={{
+          width:"100%",
+          height:"100%",
+          maxWidth:"100%",
+          maxHeight:"100%"
+        }} />
       </div>
       <Typography variant="body" weight="medium" className="mb-1 ">
         {title}
