@@ -3,20 +3,91 @@ import { defineQuery } from "next-sanity";
 export const aboutUsQuery = defineQuery(`
   *[_type == "aboutUs"][0] {
     seo,
-    missionDescription,
-    missionImage,
-    meaningDescription,
+    mission{
+      description,
+      image {
+        _type,
+        asset-> {
+          _id,
+          _ref,
+          url,
+          metadata {
+            lqip,
+            dimensions
+          },
+          altText,
+          title,
+          description,
+          extension
+        },
+        crop,
+        hotspot
+      }
+    },
     meaningCards[]{
       _key,
-      image,
+      title,
+      image {
+        _type,
+        asset-> {
+          _id,
+          _ref,
+          url,
+          metadata {
+            lqip,
+            dimensions
+          },
+          altText,
+          title,
+          description,
+          extension
+        },
+        crop,
+        hotspot
+      },
       description
     },
-    galleryImages,
+    galleryImages[]{
+      _key,
+      _type,
+      asset-> {
+        _id,
+        _ref,
+        url,
+        metadata {
+          lqip,
+          dimensions
+        },
+        altText,
+        title,
+        description,
+        extension
+      },
+      crop,
+      hotspot
+    },
     teamMembers[]{
       _key,
       name,
       role,
-      photo
+      photo {
+        _type,
+        asset-> {
+          _id,
+          _ref,
+          url,
+          metadata {
+            lqip,
+            dimensions
+          },
+          altText,
+          title,
+          description,
+          extension
+        },
+        crop,
+        hotspot
+      }
     }
   }
 `);

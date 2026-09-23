@@ -2518,18 +2518,27 @@
         },
         "optional": true
       },
-      "missionDescription": {
+      "mission": {
         "type": "objectAttribute",
         "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "missionImage": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "img"
+          "type": "object",
+          "attributes": {
+            "description": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              },
+              "optional": true
+            },
+            "image": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "img"
+              },
+              "optional": true
+            }
+          }
         },
         "optional": true
       },
@@ -2540,6 +2549,13 @@
           "of": {
             "type": "object",
             "attributes": {
+              "title": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                },
+                "optional": true
+              },
               "image": {
                 "type": "objectAttribute",
                 "value": {

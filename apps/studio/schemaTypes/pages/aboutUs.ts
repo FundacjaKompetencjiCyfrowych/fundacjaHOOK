@@ -11,19 +11,25 @@ export default defineType({
     seoField,
     documentNameField,
     defineField({
-      name: "missionDescription",
-      title: "Misja i wizja - opis",
-      type: "text",
-      rows: 4,
+      name: "mission",
+      title: "Misja i wizja",
+      type: "object",
       group: "content",
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "missionImage",
-      title: "Misja i wizja - zdjęcie",
-      type: "img",
-      group: "content",
-      validation: (Rule) => Rule.required(),
+      fields: [
+        defineField({
+          name: "description",
+          title: "Opis",
+          type: "text",
+          rows: 4,
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: "image",
+          title: "Zdjęcie",
+          type: "img",
+          validation: (Rule) => Rule.required(),
+        }),
+      ],
     }),
     defineField({
       name: "meaningCards",
@@ -36,6 +42,12 @@ export default defineType({
           title: "Karta znaczenia",
           type: "object",
           fields: [
+            defineField({
+              name: "title",
+              title: "Tytuł",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
             defineField({
               name: "image",
               title: "Grafika karty",
@@ -52,12 +64,14 @@ export default defineType({
           ],
           preview: {
             select: {
-              title: "description",
+              title: "title",
+              description: "description",
               media: "image",
             },
-            prepare({ title, media }) {
+            prepare({ title, description, media }) {
               return {
-                title: title ? `${title}`.slice(0, 60) : "Karta znaczenia",
+                title: title ?? "Karta znaczenia",
+                subtitle: description,
                 media,
               };
             },
@@ -68,11 +82,11 @@ export default defineType({
     }),
     defineField({
       name: "galleryImages",
-      title: "Galeria (do 6 zdjęć)",
+      title: "Galeria",
       type: "array",
       group: "content",
       of: [{ type: "img" }],
-      validation: (Rule) => Rule.required().min(1).max(6),
+      validation: (Rule) => Rule.required().min(1),
     }),
     defineField({
       name: "teamMembers",
