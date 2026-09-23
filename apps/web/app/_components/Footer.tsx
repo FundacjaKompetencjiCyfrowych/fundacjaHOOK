@@ -31,57 +31,58 @@ export default async function Footer({ address, krs, logo, socialLinks }: Footer
   const socialLinksData = socialLinks;
 
   return (
-    <footer className="bg-sunken px-4 py-10 border-subtle border-t text-main">
-      <div className="mx-auto container">
-        {/*Left part*/}
-        <div className="gap-8 grid grid-cols-1 md:grid-cols-4 text-sm">
-          <div>
-            {/*Logo*/}
-            <div className="relative w-32 h-12">
-              {logoUrl && (
-                <Image
-                  src={logoUrl}
-                  alt="Fundacja HOOK"
-                  fill
-                  priority
-                  className="object-contain object-left"
-                />
-              )}
+    <footer className="border-subtle border-t text-main">
+      <div className="bg-sunken px-4 py-10 md:py-11">
+        <div className="mx-auto container">
+          <div className="gap-x-8 gap-y-10 grid grid-cols-1 text-sm md:grid-cols-4">
+            <div>
+              {/*Logo*/}
+              <div className="relative w-32 h-12">
+                {logoUrl && (
+                  <Image
+                    src={logoUrl}
+                    alt="Fundacja HOOK"
+                    fill
+                    priority
+                    className="object-contain object-left"
+                  />
+                )}
+              </div>
+              <p className="mt-2">{address}</p>
+              {krs && <p className="mt-1 text-muted">KRS: {krs}</p>}
             </div>
-            <p className="mt-2">{address}</p>
-            {krs && <p className="mt-1 text-muted">KRS: {krs}</p>}
-          </div>
-          {/*Main links*/}
-          <div>
-            <p className="mb-2 font-bold">Linki</p>
-            <ul className="space-y-1 text-muted">
-              {mainLinks.map(([label, href]) => (
-                <li key={label}>
-                  <a href={href} className="hover:underline">
-                    {label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-          {/*Legal links*/}
-          <div>
-            <p className="mb-2 font-bold">Prawne</p>
-            <ul className="space-y-1 text-muted">
-              {legalLinks.map(([label, href]) => (
-                <li key={label}>
-                  <a href={href} className="hover:underline">
-                    {label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-          {/*Newsletter*/}
-          <div>
-            <NewsletterForm SOCIAL_LINKS={socialLinksData} />
+            <div>
+              <p className="mb-2 font-bold">Linki</p>
+              <ul className="space-y-1 text-muted">
+                {mainLinks.map(([label, href]) => (
+                  <li key={label}>
+                    <a href={href} className="hover:underline">
+                      {label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className="mb-2 font-bold">Prawne</p>
+              <ul className="space-y-1 text-muted">
+                {legalLinks.map(([label, href]) => (
+                  <li key={label}>
+                    <a href={href} className="hover:underline">
+                      {label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <NewsletterForm SOCIAL_LINKS={socialLinksData} />
+            </div>
           </div>
         </div>
+      </div>
+      <div className="bg-white border-subtle border-t px-4 pt-1.25 pb-1 text-center text-main text-[10px] leading-[15px]">
+        Wykonane przez FKC
       </div>
     </footer>
   );

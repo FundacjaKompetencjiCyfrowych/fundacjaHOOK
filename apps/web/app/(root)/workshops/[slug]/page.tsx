@@ -11,6 +11,9 @@ import { Suspense } from "react";
 import { workshopSlugsQuery } from "@/sanity/queries/workshopDetails";
 import { client } from "@/sanity/client";
 import { cacheLife } from "next/dist/server/use-cache/cache-life";
+import Breadcrumbs from "@/app/_components/Navigation/Breadcrumbs";
+import PageTitle from "@/app/_components/Navigation/PageTitle";
+import ROUTES from "@/constants/routes";
 
 async function getWorkshops() {
   "use cache";
@@ -60,96 +63,90 @@ async function WorkshopContent({ slug }: { slug: string }) {
   if (!data) notFound();
 
   const workshop = data;
+  const title = workshop.title ?? "Warsztat";
   const formattedDate = workshop.datetime ? getFormattedWorkshopDate(workshop.datetime) : null;
 
   return (
-    <main className="w-full min-h-screen">
-      {/* Header with back link */}
-      <div className="bg-sunken px-4 sm:px-8 py-4 w-full">
-        <Link
-          href="/workshops"
-          className="font-medium text-brand-primary hover:text-brand-onhover text-sm"
-        >
-          ← Wróć do listy
-        </Link>
-      </div>
-
-      {/* Main content */}
-      <div className="mx-auto px-4 sm:px-8 py-12 w-full max-w-3xl">
-        {/* Title with Badge */}
-        <div className="mb-8">
-          <div className="flex items-start gap-3 mb-2">
-            <h1 className="font-bold text-3xl sm:text-4xl">{workshop.title}</h1>
+    <>
+      <Breadcrumbs segments={[{ label: "Warsztaty", href: ROUTES.WORKSHOPS }, { label: title }]} />
+      <section className="px-4 py-12 md:px-6 md:py-14">
+        <div className="mx-auto max-w-[1200px]">
+          <div className="flex items-start gap-3">
+            <PageTitle>{title}</PageTitle>
             {workshop.status && (
               <Badge
                 variant={workshop.status === "inProgress" ? "default" : "outline"}
-                className="mt-2 font-normal text-xs whitespace-nowrap"
+                className="font-normal text-xs whitespace-nowrap"
               >
                 {mapStatus(workshop.status)}
               </Badge>
             )}
           </div>
-        </div>
+          <Link
+            href={ROUTES.WORKSHOPS}
+            className="block mt-6 font-medium text-brand-primary hover:text-brand-onhover text-sm"
+          >
+            ← Wróć do listy
+          </Link>
+          {/* Description */}
+          {workshop.description && (
+            <p className="mt-6 mb-8 text-main text-base leading-relaxed">{workshop.description}</p>
+          )}
 
-        {/* Description */}
-        {workshop.description && (
-          <p className="mb-8 text-main text-base leading-relaxed">{workshop.description}</p>
-        )}
+          {/* Workshop image */}
+          <div className="mb-10 rounded-lg overflow-hidden">
+            <SanityImage
+              image={workshop.image}
+              width={800}
+              height={400}
+              className="w-full h-64 sm:h-96 object-cover"
+            />
+          </div>
 
-        {/* Workshop image */}
-        <div className="mb-10 rounded-lg overflow-hidden">
-          <SanityImage
-            image={workshop.image}
-            width={800}
-            height={400}
-            className="w-full h-64 sm:h-96 object-cover"
-          />
-        </div>
+          <div className="space-y-6 mb-10">
+            {/* Termin warsztatu */}
+            {formattedDate && (
+              <div className="pb-6">
+                <h3 className="mb-4 font-bold text-lg">Termin warsztatu</h3>
+                <div className="flex items-center gap-3 text-main">
+                  <Calendar1 size={20} className="text-brand-primary shrink-0" />
+                  <span className="text-base">{formattedDate}</span>
+                </div>
+              </div>
+            )}
 
-        <div className="space-y-6 mb-10">
-          {/* Termin warsztatu */}
-          {formattedDate && (
+            {/* Regulamin */}
+            {workshop.materials?.asset?.url && (
+              <div className="space-y-6">
+                <h3 className="mb-1 font-bold text-sm">Regulamin</h3>
+                <a
+                  href={workshop.materials.asset.url}
+                  download={workshop.materials.asset.originalFilename || "materials"}
+                  className="inline-flex items-center gap-2 hover:bg-elevated active:bg-elevated px-3 py-2 border border-border rounded-lg font-medium text-foreground text-xs transition-colors"
+                >
+                  <Download className="w-4 h-4" />
+                  Pobierz regulamin (PDF)
+                </a>
+              </div>
+            )}
+          </div>
+
+          {/* Lokalizacja */}
+          {workshop.location && (
             <div className="pb-6">
-              <h3 className="mb-4 font-bold text-lg">Termin warsztatu</h3>
-              <div className="flex items-center gap-3 text-main">
-                <Calendar1 size={20} className="text-brand-primary shrink-0" />
-                <span className="text-base">{formattedDate}</span>
+              <h3 className="mb-4 font-bold text-lg">Lokalizacja</h3>
+              <div className="flex items-center gap-3 mb-4 text-main">
+                <MapPin size={20} className="text-brand-primary shrink-0" />
+                <span className="text-base">{workshop.location}</span>
+              </div>
+              <div className="flex justify-center items-center bg-elevated rounded-lg h-48 text-muted">
+                [MAP / LOCATION PLACEHOLDER]
               </div>
             </div>
           )}
 
-          {/* Regulamin */}
-          {workshop.materials?.asset?.url && (
-            <div className="space-y-6">
-              <h3 className="mb-1 font-bold text-sm">Regulamin</h3>
-              <a
-                href={workshop.materials.asset.url}
-                download={workshop.materials.asset.originalFilename || "materials"}
-                className="inline-flex items-center gap-2 hover:bg-elevated active:bg-elevated px-3 py-2 border border-border rounded-lg font-medium text-foreground text-xs transition-colors"
-              >
-                <Download className="w-4 h-4" />
-                Pobierz regulamin (PDF)
-              </a>
-            </div>
-          )}
-        </div>
-
-        {/* Lokalizacja */}
-        {workshop.location && (
-          <div className="pb-6">
-            <h3 className="mb-4 font-bold text-lg">Lokalizacja</h3>
-            <div className="flex items-center gap-3 mb-4 text-main">
-              <MapPin size={20} className="text-brand-primary shrink-0" />
-              <span className="text-base">{workshop.location}</span>
-            </div>
-            <div className="flex justify-center items-center bg-elevated rounded-lg h-48 text-muted">
-              [MAP / LOCATION PLACEHOLDER]
-            </div>
-          </div>
-        )}
-
-        {/* Workshop info grid */}
-        {/* <div className="gap-6 grid grid-cols-1 sm:grid-cols-2 pb-6">
+          {/* Workshop info grid */}
+          {/* <div className="gap-6 grid grid-cols-1 sm:grid-cols-2 pb-6">
           {workshop.duration && (
             <div>
               <div className="flex items-center gap-2 mb-2">
@@ -173,33 +170,34 @@ async function WorkshopContent({ slug }: { slug: string }) {
           )}
         </div> */}
 
-        {/* Materials download section */}
-        {/* Action buttons */}
-        <div className="flex sm:flex-row flex-col gap-3">
-          {workshop.signupFormUrl && (
-            <a href={workshop.signupFormUrl} target="_blank" rel="noopener noreferrer">
-              <Button className="bg-brand-primary hover:bg-brand-onhover text-white">
-                <LogIn size={18} className="mr-2" />
-                Zapisz się
-              </Button>
-            </a>
-          )}
+          {/* Materials download section */}
+          {/* Action buttons */}
+          <div className="flex sm:flex-row flex-col gap-3">
+            {workshop.signupFormUrl && (
+              <a href={workshop.signupFormUrl} target="_blank" rel="noopener noreferrer">
+                <Button className="bg-brand-primary hover:bg-brand-onhover text-white">
+                  <LogIn size={18} className="mr-2" />
+                  Zapisz się
+                </Button>
+              </a>
+            )}
 
-          {workshop.materials?.asset?.url && (
-            <a
-              href={workshop.materials.asset.url}
-              download={workshop.materials.asset.originalFilename || "materials"}
-              className="sm:flex-initial"
-            >
-              <Button className="bg-brand-primary hover:bg-brand-onhover text-white">
-                <Download size={18} className="mr-2" />
-                Pobierz materiały
-              </Button>
-            </a>
-          )}
+            {workshop.materials?.asset?.url && (
+              <a
+                href={workshop.materials.asset.url}
+                download={workshop.materials.asset.originalFilename || "materials"}
+                className="sm:flex-initial"
+              >
+                <Button className="bg-brand-primary hover:bg-brand-onhover text-white">
+                  <Download size={18} className="mr-2" />
+                  Pobierz materiały
+                </Button>
+              </a>
+            )}
+          </div>
         </div>
-      </div>
-    </main>
+      </section>
+    </>
   );
 }
 

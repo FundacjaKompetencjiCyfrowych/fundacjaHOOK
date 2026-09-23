@@ -87,8 +87,8 @@ export default function MaterialyFilters({ materials, counts }: MaterialyFilters
   };
 
   return (
-    <section className="px-4 py-12 sm:py-16">
-      <div className="mx-auto w-full max-w-6xl">
+    <section className="mt-6">
+      <div className="w-full">
         <Collapsible open={filtersOpen} onOpenChange={setFiltersOpen}>
           <MaterialyFiltersTopBar
             search={search}

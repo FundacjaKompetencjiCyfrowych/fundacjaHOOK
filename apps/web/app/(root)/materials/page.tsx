@@ -1,4 +1,6 @@
 import MaterialyFilters from "@/app/_components/Filtering/MaterialyFilters";
+import Breadcrumbs from "@/app/_components/Navigation/Breadcrumbs";
+import PageTitle from "@/app/_components/Navigation/PageTitle";
 import { mapMaterialsToFilterItems } from "@/lib/mappers/materials";
 import { cacheLife } from "next/cache";
 import { sanityFetch } from "@/sanity/live";
@@ -25,10 +27,18 @@ const MaterialsPage = async () => {
   const { materials, eventCount, typeCount, areaCount, formatCount } = await getCachedMaterials();
 
   return (
-    <MaterialyFilters
-      materials={materials}
-      counts={{ eventCount, typeCount, areaCount, formatCount }}
-    />
+    <>
+      <Breadcrumbs segments={[{ label: "Materiały" }]} />
+      <section className="px-4 py-12 md:px-6 md:py-14">
+        <div className="mx-auto max-w-[1200px]">
+          <PageTitle>Materiały</PageTitle>
+          <MaterialyFilters
+            materials={materials}
+            counts={{ eventCount, typeCount, areaCount, formatCount }}
+          />
+        </div>
+      </section>
+    </>
   );
 };
 

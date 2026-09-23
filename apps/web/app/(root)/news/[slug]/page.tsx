@@ -7,6 +7,9 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { SanityImage } from "@/sanity/image/SanityImage";
 import { SanityRichText } from "@/sanity/richText/SanityRichText";
+import Breadcrumbs from "@/app/_components/Navigation/Breadcrumbs";
+import PageTitle from "@/app/_components/Navigation/PageTitle";
+import ROUTES from "@/constants/routes";
 
 async function getNews() {
   "use cache";
@@ -47,35 +50,38 @@ async function NewsArticlePageContent({ params }: NewsArticlePageProps) {
   if (!data) notFound();
 
   const item = data;
+  const title = item.title ?? "Aktualność";
 
   return (
-    <section className="wire-section">
-      <div className="mx-auto container">
-        <Link
-          href="/news"
-          className="block mb-4 font-medium text-brand-primary hover:text-brand-onhover"
-        >
-          ← Wróć do listy
-        </Link>
+    <>
+      <Breadcrumbs segments={[{ label: "Aktualności", href: ROUTES.NEWS }, { label: title }]} />
+      <section className="px-4 py-12 md:px-6 md:py-14">
+        <div className="mx-auto max-w-[1200px]">
+          <PageTitle>{title}</PageTitle>
+          <Link
+            href={ROUTES.NEWS}
+            className="block mt-6 font-medium text-brand-primary hover:text-brand-onhover text-sm"
+          >
+            ← Wróć do listy
+          </Link>
 
-        <h1 className="mt-2 mb-4 font-bold text-main text-2xl">{item.title}</h1>
+          <div className="mb-6 rounded-lg overflow-hidden">
+            <SanityImage
+              image={item.image}
+              width={1200}
+              height={480}
+              className="w-full h-64 object-cover"
+            />
+          </div>
 
-        <div className="mb-6 rounded-lg overflow-hidden">
-          <SanityImage
-            image={item.image}
-            width={1200}
-            height={480}
-            className="w-full h-64 object-cover"
-          />
+          {item.description && <p className="mb-4 text-muted">{item.description}</p>}
+
+          <div className="text-main">
+            <SanityRichText value={item.article} />
+          </div>
         </div>
-
-        {item.description && <p className="mb-4 text-muted">{item.description}</p>}
-
-        <div className="text-main">
-          <SanityRichText value={item.article} />
-        </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
 

@@ -6,6 +6,9 @@ import { mapMetadata } from "@/sanity/metadata/mapMetadata";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { client } from "@/sanity/client";
+import Breadcrumbs from "@/app/_components/Navigation/Breadcrumbs";
+import PageTitle from "@/app/_components/Navigation/PageTitle";
+import ROUTES from "@/constants/routes";
 
 // GROQD Query builders
 const postSlugs = q.star
@@ -53,19 +56,24 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   const { data } = await sanityFetch({ query: post.query, params: { slug } });
   if (!data) notFound();
   const p = post.parse(data)!;
+  const title = p.title ?? "Aktualność";
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <main className="flex flex-col justify-between items-center sm:items-start px-16 py-32 w-full max-w-3xl min-h-screen">
-        <div className="flex flex-col items-center sm:items-start gap-6 sm:text-left text-center">
-          <div className="flex flex-col gap-6 p-5 border border-dotted">
-            <div key={p._id} className="relative flex flex-col gap-2">
-              <SanityImage image={p.image} mode="cover" width={600} height={300} />
-              <SanityRichText value={p.body} />
+    <>
+      <Breadcrumbs segments={[{ label: "Aktualności", href: ROUTES.NEWS }, { label: title }]} />
+      <section className="px-4 py-12 md:px-6 md:py-14">
+        <div className="mx-auto max-w-[1200px]">
+          <PageTitle>{title}</PageTitle>
+          <div className="mt-6 flex flex-col items-center gap-6 sm:items-start sm:text-left text-center">
+            <div className="flex flex-col gap-6 p-5 border border-dotted">
+              <div key={p._id} className="relative flex flex-col gap-2">
+                <SanityImage image={p.image} mode="cover" width={600} height={300} />
+                <SanityRichText value={p.body} />
+              </div>
             </div>
           </div>
         </div>
-      </main>
-    </div>
+      </section>
+    </>
   );
 }

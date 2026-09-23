@@ -11,8 +11,8 @@ export default function Breadcrumbs({ segments }: { segments: BreadcrumbSegment[
   const allSegments = [{ label: "Strona główna", href: ROUTES.HOME }, ...segments];
 
   return (
-    <nav aria-label="Okruszki" className="mx-auto max-w-[1200px] px-4 md:px-6 py-2">
-      <ol className="flex items-center gap-1 text-muted text-xs">
+    <nav aria-label="Okruszki" className="px-4 py-2 md:px-6">
+      <ol className="mx-auto flex max-w-[1200px] items-center gap-1 text-muted text-xs">
         {allSegments.map((segment, index) => (
           <li key={`${segment.label}-${segment.href ?? index}`} className="flex items-center gap-1">
             {index > 0 && <span aria-hidden="true">›</span>}

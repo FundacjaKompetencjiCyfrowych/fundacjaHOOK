@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import Breadcrumbs from "@/app/_components/Navigation/Breadcrumbs";
+import PageTitle from "@/app/_components/Navigation/PageTitle";
 import { cn } from "@/lib/utils";
 import { MATERIAL_PLACEMENTS } from "@/lib/constants/materialPlacements";
 import { mapMaterialsToFilterItems } from "@/lib/mappers/materials";
@@ -39,13 +40,13 @@ export default async function AboutUsPage() {
     <>
       <Breadcrumbs segments={[{ label: "O nas" }]} />
 
-      <section className="border-subtle border-b">
-        <div className="mx-auto max-w-[1200px] px-4 md:px-6 py-12 md:py-14">
-          <h1 className="font-bold text-main text-2xl leading-8">O nas</h1>
+      <section className="px-4 py-12 md:px-6 md:py-14">
+        <div className="mx-auto max-w-[1200px]">
+          <PageTitle>O nas</PageTitle>
 
           {(page.mission?.description || page.mission?.image) && (
-            <section className="mt-6 md:mt-14">
-              <h2 className="font-bold text-main text-lg leading-7">Misja i wizja</h2>
+            <section className="mt-6 pb-10">
+              <h2 className="font-medium text-base text-main leading-[1.1]">Misja i wizja</h2>
               <div
                 className={cn(
                   "gap-6 grid mt-3",

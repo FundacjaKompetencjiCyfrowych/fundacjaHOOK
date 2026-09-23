@@ -1,4 +1,5 @@
 import { sanityFetch } from "@/sanity/live";
+import Breadcrumbs from "@/app/_components/Navigation/Breadcrumbs";
 import projectsQuery from "@/sanity/queries/projects";
 import { countValues } from "@/lib/mappers/projects";
 import ProjectPageClient from "./page.client";
@@ -19,7 +20,12 @@ const ProjectsPage = async () => {
     completed: statusCounts.get("completed") ?? 0,
   };
 
-  return <ProjectPageClient projects={projects} counts={counts} />;
+  return (
+    <>
+      <Breadcrumbs segments={[{ label: "Projekty" }]} />
+      <ProjectPageClient projects={projects} counts={counts} />
+    </>
+  );
 };
 
 export default ProjectsPage;
