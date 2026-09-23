@@ -1,4 +1,5 @@
 import { sanityFetch } from "@/sanity/live";
+import Breadcrumbs from "@/app/_components/Navigation/Breadcrumbs";
 import { newsQuery } from "@/sanity/queries/news";
 import NewsPageClient from "./page.client";
 
@@ -7,7 +8,12 @@ const NewsPage = async () => {
     query: newsQuery,
   });
 
-  return <NewsPageClient initialNews={news} />;
+  return (
+    <>
+      <Breadcrumbs segments={[{ label: "Aktualności" }]} />
+      <NewsPageClient initialNews={news} />
+    </>
+  );
 };
 
 export default NewsPage;

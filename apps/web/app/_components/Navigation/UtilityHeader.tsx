@@ -1,4 +1,6 @@
+import Link from "next/link";
 import SocialMediaLinks from "@/app/_components/SocialMediaLinks";
+import ROUTES from "@/constants/routes";
 
 interface UtilityHeaderProps {
   SocialLinks?: {
@@ -20,9 +22,12 @@ export default function UtilityHeader({ SocialLinks, krs }: UtilityHeaderProps) 
         <div className="flex items-center gap-1">
           <SocialMediaLinks SocialLinks={SocialLinks} />
 
-          <button className="sm:ml-2 px-2 sm:px-4 py-1.5 rounded-md font-medium text-main hover:text-white transition-all cursor-pointer">
+          <Link
+            href={ROUTES.SUPPORT_US}
+            className="sm:ml-2 px-2 sm:px-4 py-1.5 rounded-md font-medium text-main cursor-pointer"
+          >
             Wesprzyj nas
-          </button>
+          </Link>
         </div>
       </div>
     </header>

@@ -2,6 +2,8 @@
 
 import { useNewsletterSubmit } from "@/lib/hooks/useNewsletterSubmit";
 import SocialMediaLinks from "@/app/_components/SocialMediaLinks";
+import { Button } from "@/app/_components/ui/button";
+import { Input } from "@/app/_components/ui/input";
 
 interface NewsletterFormProps {
   SOCIAL_LINKS?: {
@@ -14,35 +16,34 @@ interface NewsletterFormProps {
 export default function NewsletterForm({ SOCIAL_LINKS }: NewsletterFormProps) {
   const { email, setEmail, formAction, formRef, isPending, submitted } = useNewsletterSubmit();
 
-  const platformLabels = {
-    facebook: "f",
-    instagram: "ig",
-    linkedin: "in",
-  };
-
   return (
     <div>
       <p className="mb-2 font-bold">Newsletter</p>
-      <form ref={formRef} action={formAction} className="flex gap-2">
-        <input
+      <form ref={formRef} action={formAction} className="flex flex-col gap-2 sm:flex-row">
+        <Input
           type="email"
           name="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="[EMAIL INPUT]"
+          placeholder="mail@hook.pl"
           disabled={isPending}
-          className="flex-1 bg-elevated disabled:opacity-50 px-3 py-1.5 border border-subtle focus:border-brand-primary rounded outline-none min-w-0 text-main placeholder:text-muted text-sm"
+          className="bg-white px-4 border-gray-500 focus-visible:border-brand-primary h-10 placeholder:text-gray-500"
         />
-        <button
+        <Button
           type="submit"
+          variant="secondary"
+          size="default"
           disabled={!email || isPending}
-          className="bg-elevated hover:bg-brand-soft disabled:opacity-50 px-3 py-1.5 border border-subtle rounded text-main text-sm transition-colors disabled:cursor-not-allowed shrink-0"
+          className="h-10 shrink-0"
         >
           {isPending ? "Wysyłanie..." : submitted ? "Zapisano!" : "Zapisz się"}
-        </button>
+        </Button>
       </form>
-      <div className="flex gap-2 mt-3">
-        <SocialMediaLinks SocialLinks={SOCIAL_LINKS} />
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-3">
+        <p className="font-bold">Obserwuj nas:</p>
+        <div className="flex items-center gap-2">
+          <SocialMediaLinks SocialLinks={SOCIAL_LINKS} />
+        </div>
       </div>
     </div>
   );

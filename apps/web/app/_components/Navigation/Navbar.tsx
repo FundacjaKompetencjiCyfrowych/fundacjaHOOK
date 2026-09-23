@@ -5,12 +5,14 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import ROUTES from "@/constants/routes";
 
 import { Menu, X } from "lucide-react";
 
 export default function Navbar({ Logo }: { Logo?: string | null }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   const navLinks = [
     { name: "Warsztaty", href: ROUTES.WORKSHOPS },
@@ -21,6 +23,12 @@ export default function Navbar({ Logo }: { Logo?: string | null }) {
     { name: "O nas", href: ROUTES.ABOUT_US },
     { name: "Kontakt", href: ROUTES.CONTACT },
   ];
+
+  const isActiveLink = (href: string) => {
+    const normalizedHref = href.startsWith("/") ? href : `/${href}`;
+
+    return pathname === normalizedHref || pathname.startsWith(`${normalizedHref}/`);
+  };
 
   return (
     <div className="top-0 z-40 sticky flex justify-center px-4 py-3">
@@ -40,7 +48,10 @@ export default function Navbar({ Logo }: { Logo?: string | null }) {
             <Link
               key={link.name}
               href={link.href}
-              className="focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 text-navbar text-sm transition-colors cursor-pointer"
+              aria-current={isActiveLink(link.href) ? "page" : undefined}
+              className={`focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 text-navbar text-sm transition-colors cursor-pointer ${
+                isActiveLink(link.href) ? "font-bold" : ""
+              }`}
             >
               {link.name}
             </Link>
@@ -62,7 +73,10 @@ export default function Navbar({ Logo }: { Logo?: string | null }) {
             <Link
               key={link.name}
               href={link.href}
-              className="py-1 focus-visible:outline-2 focus-visible:outline-ring text-muted text-sm transition-colors focus-visible:offset-2"
+              aria-current={isActiveLink(link.href) ? "page" : undefined}
+              className={`py-1 focus-visible:outline-2 focus-visible:outline-ring text-muted text-sm transition-colors focus-visible:offset-2 ${
+                isActiveLink(link.href) ? "font-bold text-foreground" : ""
+              }`}
             >
               {link.name}
             </Link>

@@ -7,6 +7,7 @@ import { Button } from "@/app/_components/ui/button";
 import { filterProjects, sortProjects } from "@/lib/projectHelpers";
 import { Project } from "@/sanity/typegen";
 import { useMemo, useState } from "react";
+import PageTitle from "@/app/_components/Navigation/PageTitle";
 
 const getProjectsLabel = (count: number) => {
   if (count === 1) return "projekt";
@@ -34,10 +35,10 @@ const ProjectPageClient = ({
     : filteredAndSortedProjects.slice(0, 3);
 
   return (
-    <section className="px-4 py-8 sm:py-10 border-subtle border-b wire-section">
-      <div className="mx-auto container">
+    <section className="px-4 py-12 md:px-6 md:py-14">
+      <div className="mx-auto max-w-[1200px]">
         <header className="mb-6">
-          <h1 className="font-bold text-foreground text-4xl sm:text-5xl leading-tight">Projekty</h1>
+          <PageTitle>Projekty</PageTitle>
           <p className="mt-2 max-w-xl text-muted-foreground text-base">
             Poznaj nasze bieżące i planowane projekty społeczne.
           </p>
