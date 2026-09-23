@@ -58,9 +58,15 @@ export default async function AboutUsPage() {
                 {page.mission?.image && (
                   <SanityImage
                     image={page.mission.image}
-                    width={384}
-                    height={160}
-                    className="rounded-xl w-full h-40 object-cover"
+                    width={420}
+                    height={230}
+                    className="rounded-xl w-full object-contain"
+                    style={{
+                      width: "100%",
+                      height: "auto",
+                      maxWidth: "420px",
+                      maxHeight: "230px",
+                    }}
                   />
                 )}
               </div>
@@ -90,9 +96,7 @@ export default async function AboutUsPage() {
           {page.teamMembers.length > 0 && (
             <section className="mt-12">
               <h2 className="font-bold text-main text-lg leading-7">Zespół</h2>
-              <div
-                className={cn("gap-4 grid mt-3", page.teamMembers.length > 1 && "md:grid-cols-2")}
-              >
+              <div className="gap-4 grid md:grid-cols-2 mt-3">
                 {page.teamMembers.map((member) => (
                   <TeamMemberCard key={member._key} member={member} />
                 ))}
