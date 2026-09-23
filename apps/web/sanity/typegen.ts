@@ -449,9 +449,12 @@ export type AboutUs = {
   _rev: string;
   seo?: Seo;
   documentName?: string;
-  missionDescription?: string;
-  missionImage?: Img;
+  mission?: {
+    description?: string;
+    image?: Img;
+  };
   meaningCards?: Array<{
+    title?: string;
     image?: Img;
     description?: string;
     _type: "meaningCard";
@@ -900,27 +903,94 @@ export type HomeQueryResult = {
 
 // Source: ../web/sanity/queries/aboutUs.ts
 // Variable: aboutUsQuery
-// Query: *[_type == "aboutUs"][0] {    seo,    missionDescription,    missionImage,    meaningDescription,    meaningCards[]{      _key,      image,      description    },    galleryImages,    teamMembers[]{      _key,      name,      role,      photo    }  }
+// Query: *[_type == "aboutUs"][0] {    seo,    mission{      description,      image {        _type,        asset-> {          _id,          _ref,          url,          metadata {            lqip,            dimensions          },          altText,          title,          description,          extension        },        crop,        hotspot      }    },    meaningCards[]{      _key,      title,      image {        _type,        asset-> {          _id,          _ref,          url,          metadata {            lqip,            dimensions          },          altText,          title,          description,          extension        },        crop,        hotspot      },      description    },    galleryImages[]{      _key,      _type,      asset-> {        _id,        _ref,        url,        metadata {          lqip,          dimensions        },        altText,        title,        description,        extension      },      crop,      hotspot    },    teamMembers[]{      _key,      name,      role,      photo {        _type,        asset-> {          _id,          _ref,          url,          metadata {            lqip,            dimensions          },          altText,          title,          description,          extension        },        crop,        hotspot      }    }  }
 export type AboutUsQueryResult = {
   seo: Seo | null;
-  missionDescription: string | null;
-  missionImage: Img | null;
-  meaningDescription: null;
+  mission: {
+    description: string | null;
+    image: {
+      _type: "img";
+      asset: {
+        _id: string;
+        _ref: null;
+        url: string | null;
+        metadata: {
+          lqip: string | null;
+          dimensions: SanityImageDimensions | null;
+        } | null;
+        altText: string | null;
+        title: string | null;
+        description: string | null;
+        extension: string | null;
+      } | null;
+      crop: SanityImageCrop | null;
+      hotspot: SanityImageHotspot | null;
+    } | null;
+  } | null;
   meaningCards: Array<{
     _key: string;
-    image: Img | null;
+    title: string | null;
+    image: {
+      _type: "img";
+      asset: {
+        _id: string;
+        _ref: null;
+        url: string | null;
+        metadata: {
+          lqip: string | null;
+          dimensions: SanityImageDimensions | null;
+        } | null;
+        altText: string | null;
+        title: string | null;
+        description: string | null;
+        extension: string | null;
+      } | null;
+      crop: SanityImageCrop | null;
+      hotspot: SanityImageHotspot | null;
+    } | null;
     description: string | null;
   }> | null;
-  galleryImages: Array<
-    {
-      _key: string;
-    } & Img
-  > | null;
+  galleryImages: Array<{
+    _key: string;
+    _type: "img";
+    asset: {
+      _id: string;
+      _ref: null;
+      url: string | null;
+      metadata: {
+        lqip: string | null;
+        dimensions: SanityImageDimensions | null;
+      } | null;
+      altText: string | null;
+      title: string | null;
+      description: string | null;
+      extension: string | null;
+    } | null;
+    crop: SanityImageCrop | null;
+    hotspot: SanityImageHotspot | null;
+  }> | null;
   teamMembers: Array<{
     _key: string;
     name: string | null;
     role: string | null;
-    photo: Img | null;
+    photo: {
+      _type: "img";
+      asset: {
+        _id: string;
+        _ref: null;
+        url: string | null;
+        metadata: {
+          lqip: string | null;
+          dimensions: SanityImageDimensions | null;
+        } | null;
+        altText: string | null;
+        title: string | null;
+        description: string | null;
+        extension: string | null;
+      } | null;
+      crop: SanityImageCrop | null;
+      hotspot: SanityImageHotspot | null;
+    } | null;
   }> | null;
 } | null;
 
@@ -1256,7 +1326,7 @@ declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_type == "workshop"] | order(_createdAt desc)': WorkshopsQueryResult;
     '\n  *[_type == "home"][0]{\n    _id,\n    sections[]{\n      ...,\n      _type in ["cardswithbackground", "sectionCardsWithBackground"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          image\n        }\n      },\n      _type in ["cardswithredirect", "sectionCardsWithRedirect"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          href,\n          hrefText,\n          image\n        },\n        button->{\n          _id,\n          text,\n          href\n        }\n      },\n      _type in ["supportSection", "sectionSupport"] => {\n        ...,\n        button->{\n          _id,\n          text,\n          href\n        }\n      },\n      _type in ["cooperationSection", "sectionCooperation"] => {\n        ...,\n        button->{\n          _id,\n          text,\n          href\n        }\n      }\n    }\n  }\n': HomeQueryResult;
-    '\n  *[_type == "aboutUs"][0] {\n    seo,\n    missionDescription,\n    missionImage,\n    meaningDescription,\n    meaningCards[]{\n      _key,\n      image,\n      description\n    },\n    galleryImages,\n    teamMembers[]{\n      _key,\n      name,\n      role,\n      photo\n    }\n  }\n': AboutUsQueryResult;
+    '\n  *[_type == "aboutUs"][0] {\n    seo,\n    mission{\n      description,\n      image {\n        _type,\n        asset-> {\n          _id,\n          _ref,\n          url,\n          metadata {\n            lqip,\n            dimensions\n          },\n          altText,\n          title,\n          description,\n          extension\n        },\n        crop,\n        hotspot\n      }\n    },\n    meaningCards[]{\n      _key,\n      title,\n      image {\n        _type,\n        asset-> {\n          _id,\n          _ref,\n          url,\n          metadata {\n            lqip,\n            dimensions\n          },\n          altText,\n          title,\n          description,\n          extension\n        },\n        crop,\n        hotspot\n      },\n      description\n    },\n    galleryImages[]{\n      _key,\n      _type,\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description,\n        extension\n      },\n      crop,\n      hotspot\n    },\n    teamMembers[]{\n      _key,\n      name,\n      role,\n      photo {\n        _type,\n        asset-> {\n          _id,\n          _ref,\n          url,\n          metadata {\n            lqip,\n            dimensions\n          },\n          altText,\n          title,\n          description,\n          extension\n        },\n        crop,\n        hotspot\n      }\n    }\n  }\n': AboutUsQueryResult;
     '\n    {\n      "page": *[_type == "contactPage"][0]{\n        title,\n        departments[] {\n          name,\n          email,\n          phone\n        }\n      },\n      "orgDetails": *[_type == "organizationDetails" || _id == "organizationDetails"] | order(_updatedAt desc)[0]{\n        fullName,\n        address,\n        krs,\n        nip,\n        regon\n      }\n    }\n  ': ContactPageQueryResult;
     '\n  *[_type == "post"] | order(_createdAt desc) {\n    _id,\n    _createdAt,\n    title,\n    "slug": slug.current,\n    "author": author->name,\n    "image": mainImage.asset->url,\n    description,\n    "categories": categories[]->title,\n    body\n  }\n': PostsQueryResult;
     '\n  *[_type == "material"] | order(date desc) {\n    _id,\n    title,\n    description,\n    date,\n    event,\n    type,\n    area,\n    format,\n    size,\n    placements,\n    "fileAsset": file.asset->{\n      url,\n      extension,\n      size\n    }\n  }\n': MaterialsQueryResult;
