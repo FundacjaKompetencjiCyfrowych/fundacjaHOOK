@@ -16,8 +16,6 @@ export const settingsQuery = defineQuery(`
         }
       }
     },
-    address,
-    krs,
     link {
       socialLinks {
         facebook,

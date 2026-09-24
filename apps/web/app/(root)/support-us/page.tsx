@@ -4,7 +4,7 @@ import PageTitle from "@/app/_components/Navigation/PageTitle";
 import RedirectButton from "@/app/_components/Buttons/RedirectButton";
 import { mapMetadata } from "@/sanity/metadata/mapMetadata";
 import { supportUsQuery } from "@/sanity/queries/supportUs";
-import { settingsQuery } from "@/sanity/queries/settings";
+import { organizationDetailsQuery } from "@/sanity/queries/organizationDetails";
 import { sanityFetch } from "@/sanity/live";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -13,9 +13,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const SupportUsPage = async () => {
-  const [{ data: supportUsData }, { data: settingsData }] = await Promise.all([
+  const [{ data: supportUsData }, { data: organizationDetailsData }] = await Promise.all([
     sanityFetch({ query: supportUsQuery }),
-    sanityFetch({ query: settingsQuery }),
+    sanityFetch({ query: organizationDetailsQuery }),
   ]);
 
   const description =
@@ -25,7 +25,7 @@ const SupportUsPage = async () => {
   const buttonHref = supportUsData?.volunteerButton?.href ?? "#";
   const accountNumber = supportUsData?.accountNumber ?? "00 0000 0000 0000 0000 0000 0000";
   const transferTitle = supportUsData?.transferTitle ?? "DAROWIZNA";
-  const krs = settingsData?.krs ?? "0000000000";
+  const krs = organizationDetailsData?.krs;
 
   return (
     <>
@@ -59,7 +59,7 @@ const SupportUsPage = async () => {
 
             <div className="w-full border border-subtle border-dashed p-[17px] text-muted text-sm leading-5">
               <p>Numer konta: {accountNumber}</p>
-              <p>KRS: {krs}</p>
+              {krs && <p>KRS: {krs}</p>}
               <p>Tytuł przelewu: {transferTitle}</p>
             </div>
           </div>

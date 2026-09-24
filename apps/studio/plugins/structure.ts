@@ -24,6 +24,10 @@ export const structure: StructureToolOptions = {
           .title("O nas")
           .icon(DocumentIcon)
           .child(S.document().schemaType("aboutUs").documentId("aboutUs")),
+        S.listItem()
+          .title("Kontakt")
+          .icon(DocumentIcon)
+          .child(S.document().title("Kontakt").schemaType("contact").documentId("contact")),
         S.divider().title("Kolekcje"),
         S.documentTypeListItem("news").title("Wpisy").icon(ComposeIcon),
         S.documentTypeListItem("material").title("Materiały").icon(DocumentIcon),

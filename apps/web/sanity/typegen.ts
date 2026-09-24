@@ -404,8 +404,6 @@ export type Settings = {
   seo?: Seo;
   logoTop?: Logo;
   logoBottom?: Logo;
-  address?: string;
-  krs?: string;
   link?: Link;
 };
 
@@ -427,13 +425,14 @@ export type IconPicker = {
   svg?: string;
 };
 
-export type ContactPage = {
+export type Contact = {
   _id: string;
-  _type: "contactPage";
+  _type: "contact";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
+  seo?: Seo;
+  documentName?: string;
   departments?: Array<
     {
       _key: string;
@@ -718,7 +717,7 @@ export type AllSanitySchemaTypes =
   | Settings
   | Category
   | IconPicker
-  | ContactPage
+  | Contact
   | AboutUs
   | Material
   | AuthorReference
@@ -994,12 +993,11 @@ export type AboutUsQueryResult = {
   }> | null;
 } | null;
 
-// Source: ../web/sanity/queries/contactPage.ts
-// Variable: contactPageQuery
-// Query: {      "page": *[_type == "contactPage"][0]{        title,        departments[] {          name,          email,          phone        }      },      "orgDetails": *[_type == "organizationDetails" || _id == "organizationDetails"] | order(_updatedAt desc)[0]{        fullName,        address,        krs,        nip,        regon      }    }
-export type ContactPageQueryResult = {
+// Source: ../web/sanity/queries/contact.ts
+// Variable: contactQuery
+// Query: {      "page": *[_type == "contact"][0]{        departments[] {          name,          email,          phone        }      },      "orgDetails": *[_type == "organizationDetails" || _id == "organizationDetails"] | order(_updatedAt desc)[0]{        fullName,        address,        krs,        nip,        regon      }    }
+export type ContactQueryResult = {
   page: {
-    title: string | null;
     departments: Array<{
       name: string | null;
       email: string | null;
@@ -1011,13 +1009,6 @@ export type ContactPageQueryResult = {
         fullName: null;
         address: null;
         krs: null;
-        nip: null;
-        regon: null;
-      }
-    | {
-        fullName: null;
-        address: string | null;
-        krs: string | null;
         nip: null;
         regon: null;
       }
@@ -1161,6 +1152,20 @@ export type NewsBySlugQueryResult = {
   } | null;
 } | null;
 
+// Source: ../web/sanity/queries/organizationDetails.ts
+// Variable: organizationDetailsQuery
+// Query: *[_id == "organizationDetails"][0] {    address,    krs  }
+export type OrganizationDetailsQueryResult =
+  | {
+      address: null;
+      krs: null;
+    }
+  | {
+      address: string | null;
+      krs: string | null;
+    }
+  | null;
+
 // Source: ../web/sanity/queries/projects.ts
 // Variable: projectSlugsQuery
 // Query: *[_type == "project" && defined(slug.current)]{    "slug": slug.current  }
@@ -1219,7 +1224,7 @@ export type ProjectBySlugQueryResult = {
 
 // Source: ../web/sanity/queries/settings.ts
 // Variable: settingsQuery
-// Query: *[_type == "settings"][0] {    logoTop {      logo {        asset-> {          url        }      }    },    logoBottom {      logo {        asset-> {          url        }      }    },    address,    krs,    link {      socialLinks {        facebook,        instagram,        linkedin      }    }  }
+// Query: *[_type == "settings"][0] {    logoTop {      logo {        asset-> {          url        }      }    },    logoBottom {      logo {        asset-> {          url        }      }    },    link {      socialLinks {        facebook,        instagram,        linkedin      }    }  }
 export type SettingsQueryResult = {
   logoTop: {
     logo: {
@@ -1235,8 +1240,6 @@ export type SettingsQueryResult = {
       } | null;
     } | null;
   } | null;
-  address: string | null;
-  krs: string | null;
   link: {
     socialLinks: {
       facebook: string | null;
@@ -1327,15 +1330,16 @@ declare module "@sanity/client" {
     '\n  *[_type == "workshop"] | order(_createdAt desc)': WorkshopsQueryResult;
     '\n  *[_type == "home"][0]{\n    _id,\n    sections[]{\n      ...,\n      _type in ["cardswithbackground", "sectionCardsWithBackground"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          image\n        }\n      },\n      _type in ["cardswithredirect", "sectionCardsWithRedirect"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          href,\n          hrefText,\n          image\n        },\n        button->{\n          _id,\n          text,\n          href\n        }\n      },\n      _type in ["supportSection", "sectionSupport"] => {\n        ...,\n        button->{\n          _id,\n          text,\n          href\n        }\n      },\n      _type in ["cooperationSection", "sectionCooperation"] => {\n        ...,\n        button->{\n          _id,\n          text,\n          href\n        }\n      }\n    }\n  }\n': HomeQueryResult;
     '\n  *[_type == "aboutUs"][0] {\n    seo,\n    mission{\n      description,\n      image {\n        _type,\n        asset-> {\n          _id,\n          _ref,\n          url,\n          metadata {\n            lqip,\n            dimensions\n          },\n          altText,\n          title,\n          description,\n          extension\n        },\n        crop,\n        hotspot\n      }\n    },\n    meaningCards[]{\n      _key,\n      title,\n      image {\n        _type,\n        asset-> {\n          _id,\n          _ref,\n          url,\n          metadata {\n            lqip,\n            dimensions\n          },\n          altText,\n          title,\n          description,\n          extension\n        },\n        crop,\n        hotspot\n      },\n      description\n    },\n    galleryImages[]{\n      _key,\n      _type,\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description,\n        extension\n      },\n      crop,\n      hotspot\n    },\n    teamMembers[]{\n      _key,\n      name,\n      role,\n      photo {\n        _type,\n        asset-> {\n          _id,\n          _ref,\n          url,\n          metadata {\n            lqip,\n            dimensions\n          },\n          altText,\n          title,\n          description,\n          extension\n        },\n        crop,\n        hotspot\n      }\n    }\n  }\n': AboutUsQueryResult;
-    '\n    {\n      "page": *[_type == "contactPage"][0]{\n        title,\n        departments[] {\n          name,\n          email,\n          phone\n        }\n      },\n      "orgDetails": *[_type == "organizationDetails" || _id == "organizationDetails"] | order(_updatedAt desc)[0]{\n        fullName,\n        address,\n        krs,\n        nip,\n        regon\n      }\n    }\n  ': ContactPageQueryResult;
+    '\n    {\n      "page": *[_type == "contact"][0]{\n        departments[] {\n          name,\n          email,\n          phone\n        }\n      },\n      "orgDetails": *[_type == "organizationDetails" || _id == "organizationDetails"] | order(_updatedAt desc)[0]{\n        fullName,\n        address,\n        krs,\n        nip,\n        regon\n      }\n    }\n  ': ContactQueryResult;
     '\n  *[_type == "post"] | order(_createdAt desc) {\n    _id,\n    _createdAt,\n    title,\n    "slug": slug.current,\n    "author": author->name,\n    "image": mainImage.asset->url,\n    description,\n    "categories": categories[]->title,\n    body\n  }\n': PostsQueryResult;
     '\n  *[_type == "material"] | order(date desc) {\n    _id,\n    title,\n    description,\n    date,\n    event,\n    type,\n    area,\n    format,\n    size,\n    placements,\n    "fileAsset": file.asset->{\n      url,\n      extension,\n      size\n    }\n  }\n': MaterialsQueryResult;
     '\n  *[_type == "news"] | order(_createdAt desc)': NewsQueryResult;
     '\n  *[_type == "news" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    description,\n    article,\n    image {\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description\n      },\n      crop,\n      hotspot\n    },\n  }\n': NewsBySlugQueryResult;
+    '\n  *[_id == "organizationDetails"][0] {\n    address,\n    krs\n  }\n': OrganizationDetailsQueryResult;
     '\n  *[_type == "project" && defined(slug.current)]{\n    "slug": slug.current\n  }': ProjectSlugsQueryResult;
     '\n  *[_type == "project"] | order(startDate desc, _createdAt desc)': ProjectsQueryResult;
     '\n  *[_type == "project" && slug.current == $slug][0]{\n    ...,\n    events[]->{\n      _id,\n      title,\n      date,\n      location\n    }\n  }': ProjectBySlugQueryResult;
-    '\n  *[_type == "settings"][0] {\n    logoTop {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n    logoBottom {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n    address,\n    krs,\n    link {\n      socialLinks {\n        facebook,\n        instagram,\n        linkedin\n      }\n    }\n  }\n': SettingsQueryResult;
+    '\n  *[_type == "settings"][0] {\n    logoTop {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n    logoBottom {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n    link {\n      socialLinks {\n        facebook,\n        instagram,\n        linkedin\n      }\n    }\n  }\n': SettingsQueryResult;
     '\n  *[_type == "settings"][0] {\n    logoTop {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n  }\n': LogoQueryResult;
     '\n  *[_type == "supportUs"][0] {\n    seo,\n    volunteerDescription,\n    accountNumber,\n    transferTitle,\n    volunteerButton->{\n      _id,\n      text,\n      href\n    }\n  }\n': SupportUsQueryResult;
     '\n  *[_type == "workshop" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    description,\n    datetime,\n    location,\n    duration,\n    group,\n    status,\n    image {\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description\n      },\n      crop,\n      hotspot\n    },\n    signupFormUrl,\n    materials {\n      asset-> {\n        _ref,\n        url,\n        originalFilename\n      }\n    },\n  }\n': WorkshopDetailsQueryResult;

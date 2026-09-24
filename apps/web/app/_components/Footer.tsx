@@ -3,7 +3,7 @@ import NewsletterForm from "./NewsletterForm";
 import ROUTES from "@/constants/routes";
 
 interface FooterProps {
-  address: string;
+  address?: string | null;
   krs?: string | null;
   logo?: string | null;
   socialLinks?: {
@@ -48,7 +48,7 @@ export default async function Footer({ address, krs, logo, socialLinks }: Footer
                   />
                 )}
               </div>
-              <p className="mt-2">{address}</p>
+              {address && <p className="mt-2">{address}</p>}
               {krs && <p className="mt-1 text-muted">KRS: {krs}</p>}
             </div>
             <div>

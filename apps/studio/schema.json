@@ -2282,20 +2282,6 @@
         },
         "optional": true
       },
-      "address": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "krs": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
       "link": {
         "type": "objectAttribute",
         "value": {
@@ -2403,7 +2389,7 @@
     }
   },
   {
-    "name": "contactPage",
+    "name": "contact",
     "type": "document",
     "attributes": {
       "_id": {
@@ -2416,7 +2402,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "string",
-          "value": "contactPage"
+          "value": "contact"
         }
       },
       "_createdAt": {
@@ -2437,7 +2423,15 @@
           "type": "string"
         }
       },
-      "title": {
+      "seo": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "seo"
+        },
+        "optional": true
+      },
+      "documentName": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
