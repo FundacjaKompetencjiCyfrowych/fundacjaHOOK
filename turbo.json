@@ -21,7 +21,9 @@
     "NEXT_PUBLIC_SANITY_STUDIO_URL",
     "SANITY_AUTH_TOKEN",
     "CI",
-    "RESEND_API_KEY"
+    "RESEND_API_KEY",
+    "RESEND_FROM_EMAIL",
+    "RESEND_TO_EMAIL"
   ],
   "tasks": {
     "build": {

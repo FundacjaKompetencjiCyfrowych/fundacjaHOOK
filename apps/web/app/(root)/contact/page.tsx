@@ -1,4 +1,4 @@
-import ContactForm from "@/app/_components/ContactForm";
+import ContactForm from "./_components/ContactForm";
 import Breadcrumbs from "@/app/_components/Navigation/Breadcrumbs";
 import PageTitle from "@/app/_components/Navigation/PageTitle";
 import { sanityFetch } from "@/sanity/live";

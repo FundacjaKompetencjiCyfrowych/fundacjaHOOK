@@ -1,25 +1,13 @@
 "use server";
 
-import { z } from "zod";
 import { resend } from "@/lib/resend";
-
-const contactSchema = z.object({
-  name: z.string().min(2, "Imię musi mieć co najmniej 2 znaki"),
-  surname: z.string().min(2, "Nazwisko musi mieć co najmniej 2 znaki"),
-  email: z.string().email("Nieprawidłowy adres email"),
-  message: z.string().min(10, "Wiadomość musi mieć co najmniej 10 znaków"),
-});
+import { contactFormSchema, type ContactFormValues } from "../_validation/contactForm.schema";
 
 export type ContactState = {
   success?: boolean;
   errors?: Record<string, string[]>;
   message?: string;
-  values?: {
-    name?: string;
-    surname?: string;
-    email?: string;
-    message?: string;
-  };
+  values?: Partial<ContactFormValues>;
 };
 
 export async function submitContactForm(
@@ -33,12 +21,6 @@ export async function submitContactForm(
 
   if (honeypot) return { success: true, message: "Wiadomość została wysłana" };
 
-  // Fake response for forms filled too fast (likely bots)
-  const startedAt = Number(formData.get("startedAt"));
-  if (!startedAt || Date.now() - startedAt < MIN_FILL_TIME) {
-    return { success: true, message: "Wiadomość została wysłana" };
-  }
-
   const values = {
     name: formData.get("name") as string,
     surname: formData.get("surname") as string,
@@ -46,7 +28,7 @@ export async function submitContactForm(
     message: formData.get("message") as string,
   };
 
-  const validated = contactSchema.safeParse(values);
+  const validated = contactFormSchema.safeParse(values);
 
   if (!validated.success) {
     return {
@@ -56,10 +38,29 @@ export async function submitContactForm(
     };
   }
 
+  const fromEmail = process.env.RESEND_FROM_EMAIL?.trim();
+  const toEmail = process.env.RESEND_TO_EMAIL?.trim();
+
+  if (!fromEmail || !toEmail) {
+    console.error("Missing Resend contact email configuration");
+    return {
+      success: false,
+      message: "Wystąpił błąd podczas wysyłania wiadomości. Spróbuj ponownie.",
+      values,
+    };
+  }
+
+  // Fake response for forms filled too fast (likely bots). Validate first so an
+  // empty form never receives a success response.
+  const startedAt = Number(formData.get("startedAt"));
+  if (!startedAt || Date.now() - startedAt < MIN_FILL_TIME) {
+    return { success: true, message: "Wiadomość została wysłana" };
+  }
+
   try {
     const { error } = await resend.emails.send({
-      from: "Kontakt <onboarding@resend.dev>", // Replace with your verified domain in production (e.g. kontakt@fundacja.pl)
-      to: ["szymongrysiewicz@gmail.com"], // Destination email address
+      from: `Kontakt <${fromEmail}>`,
+      to: [toEmail],
       subject: `Nowa wiadomość od ${validated.data.name} ${validated.data.surname}`,
       replyTo: validated.data.email,
       html: `
