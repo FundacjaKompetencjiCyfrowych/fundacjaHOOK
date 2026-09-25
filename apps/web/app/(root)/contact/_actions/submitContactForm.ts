@@ -38,17 +38,8 @@ export async function submitContactForm(
     };
   }
 
-  const fromEmail = process.env.RESEND_FROM_EMAIL?.trim();
-  const toEmail = process.env.RESEND_TO_EMAIL?.trim();
-
-  if (!fromEmail || !toEmail) {
-    console.error("Missing Resend contact email configuration");
-    return {
-      success: false,
-      message: "Wystąpił błąd podczas wysyłania wiadomości. Spróbuj ponownie.",
-      values,
-    };
-  }
+  const fromEmail = process.env.RESEND_FROM_EMAIL?.trim() || "onboarding@resend.dev";
+  const toEmail = process.env.RESEND_TO_EMAIL?.trim() || "szymongrysiewicz@gmail.com";
 
   // Fake response for forms filled too fast (likely bots). Validate first so an
   // empty form never receives a success response.
