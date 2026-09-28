@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import NewsletterForm from "./NewsletterForm";
 import ROUTES from "@/constants/routes";
 
@@ -56,9 +57,9 @@ export default async function Footer({ address, krs, logo, socialLinks }: Footer
               <ul className="space-y-1 text-muted">
                 {mainLinks.map(([label, href]) => (
                   <li key={label}>
-                    <a href={href} className="hover:underline">
+                    <Link href={href} className="hover:underline">
                       {label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -68,9 +69,9 @@ export default async function Footer({ address, krs, logo, socialLinks }: Footer
               <ul className="space-y-1 text-muted">
                 {legalLinks.map(([label, href]) => (
                   <li key={label}>
-                    <a href={href} className="hover:underline">
+                    <Link href={href} className="hover:underline">
                       {label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>

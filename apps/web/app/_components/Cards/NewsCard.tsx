@@ -1,4 +1,5 @@
 import { News } from "@/sanity/typegen";
+import Link from "next/link";
 import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { SanityImage } from "@/sanity/image/SanityImage";
 
@@ -8,7 +9,7 @@ interface Props {
 
 const NewsCard = ({ news }: Props) => {
   return (
-    <a href={`/news/${news.slug?.current || "not-found"}`}>
+    <Link href={`/news/${news.slug?.current || "not-found"}`}>
       <Card className="relative gap-2 shadow-md hover:shadow-lg mx-auto pt-0 w-full max-w-142 transition-shadow cursor-pointer">
         <div className="px-4 pt-4">
           <SanityImage
@@ -23,7 +24,7 @@ const NewsCard = ({ news }: Props) => {
           <CardDescription>{news.description}</CardDescription>
         </CardHeader>
       </Card>
-    </a>
+    </Link>
   );
 };
 
