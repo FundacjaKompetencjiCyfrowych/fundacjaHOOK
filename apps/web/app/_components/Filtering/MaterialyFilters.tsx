@@ -89,6 +89,8 @@ export default function MaterialyFilters({ materials, counts }: MaterialyFilters
   return (
     <section className="mt-6">
       <div className="w-full">
+        <MaterialyFiltersReset activeFilterCount={activeFilterCount} onReset={resetFilters} />
+
         <Collapsible open={filtersOpen} onOpenChange={setFiltersOpen}>
           <MaterialyFiltersTopBar
             search={search}
@@ -116,8 +118,6 @@ export default function MaterialyFilters({ materials, counts }: MaterialyFilters
             onFormatToggle={(value) => setSelFormats((current) => toggleSet(current, value))}
           />
         </Collapsible>
-
-        <MaterialyFiltersReset activeFilterCount={activeFilterCount} onReset={resetFilters} />
 
         <MaterialySection materials={filteredMaterials} />
       </div>

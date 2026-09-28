@@ -27,14 +27,14 @@ export default function MaterialyFiltersTopBar({
           placeholder="Szukaj materiałów..."
           value={search}
           onChange={(event) => onSearchChange(event.target.value)}
-          className="bg-elevated pl-9 border-subtle rounded-xl h-11"
+          className="bg-elevated pl-9 border-subtle hover:border-brand-primary rounded-xl h-11"
         />
       </div>
 
       <CollapsibleTrigger asChild>
         <Button
           variant="secondary"
-          className="justify-between gap-2 bg-elevated aria-expanded:bg-elevated aria-expanded:hover:bg-muted border-subtle rounded-xl w-full sm:w-[200px] h-11 cursor-pointer"
+          className="justify-between gap-2 bg-elevated aria-expanded:bg-elevated aria-expanded:hover:bg-elevated hover:text-brand-primary border-subtle rounded-xl w-full sm:w-[200px] h-11 cursor-pointer"
         >
           <span className="flex items-center gap-2">
             <SlidersHorizontal className="w-4 h-4" />

@@ -1,6 +1,8 @@
+import { useState } from "react";
+
 import { formatDatePolish } from "@/lib/formatDate";
 import { pl } from "date-fns/locale/pl";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, Check, ChevronDown } from "lucide-react";
 
 import { Button } from "@/app/_components/ui/button";
 import { Calendar } from "@/app/_components/ui/calendar";
@@ -8,16 +10,62 @@ import { Checkbox } from "@/app/_components/ui/checkbox";
 import { CollapsibleContent } from "@/app/_components/ui/collapsible";
 import { Label } from "@/app/_components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/app/_components/ui/popover";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/app/_components/ui/select";
 import { cn } from "@/lib/utils";
 
 import { FORMATY, OBSZARY, TYPY } from "./materialyFilters.types";
+
+type FilterOption = { label: string; value: string };
+
+function FilterDropdown({
+  value,
+  options,
+  onChange,
+}: {
+  value: string;
+  options: FilterOption[];
+  onChange: (value: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const selectedOption = options.find((option) => option.value === value);
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          type="button"
+          variant="secondary"
+          role="combobox"
+          aria-expanded={open}
+          className="justify-between bg-elevated hover:bg-elevated border-subtle hover:border-brand-primary text-foreground hover:text-foreground aria-expanded:border-subtle aria-expanded:hover:border-brand-primary aria-expanded:hover:bg-elevated w-full font-normal text-left focus-visible:ring-brand-focus"
+        >
+          {selectedOption?.label}
+          <ChevronDown className="w-4 h-4 text-muted-foreground" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent align="start" className="p-1 w-[var(--radix-popover-trigger-width)]">
+        <div role="listbox">
+          {options.map((option) => (
+            <Button
+              key={option.value}
+              type="button"
+              variant="ghost"
+              role="option"
+              aria-selected={option.value === value}
+              className="justify-between w-full font-normal"
+              onClick={() => {
+                onChange(option.value);
+                setOpen(false);
+              }}
+            >
+              {option.label}
+              {option.value === value && <Check className="w-4 h-4" />}
+            </Button>
+          ))}
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+}
 
 type MaterialyAdvancedFiltersPanelProps = {
   sort: "newest" | "oldest";
@@ -61,35 +109,29 @@ export default function MaterialyAdvancedFiltersPanel({
       <div className="items-start gap-x-6 gap-y-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 bg-neutral-100 mb-6 p-4 rounded-2xl">
         <div>
           <p className="mb-2 font-bold text-sm">Sortowanie</p>
-          <Select
+          <FilterDropdown
             value={sort}
-            onValueChange={(value) => onSortChange(value as "newest" | "oldest")}
-          >
-            <SelectTrigger className="bg-elevated w-full">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="newest">Od najnowszych</SelectItem>
-              <SelectItem value="oldest">Od najstarszych</SelectItem>
-            </SelectContent>
-          </Select>
+            options={[
+              { value: "newest", label: "Od najnowszych" },
+              { value: "oldest", label: "Od najstarszych" },
+            ]}
+            onChange={(value) => onSortChange(value as "newest" | "oldest")}
+          />
         </div>
 
         <div>
           <p className="mb-2 font-bold text-sm">Wydarzenie</p>
-          <Select value={selectedEvent} onValueChange={onSelectedEventChange}>
-            <SelectTrigger className="bg-elevated w-full">
-              <SelectValue placeholder="Wszystkie" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Wszystkie</SelectItem>
-              {events.map((eventValue) => (
-                <SelectItem key={eventValue} value={eventValue}>
-                  {eventValue} ({countForValue("event", eventValue)})
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <FilterDropdown
+            value={selectedEvent}
+            options={[
+              { value: "all", label: "Wszystkie" },
+              ...events.map((eventValue) => ({
+                value: eventValue,
+                label: `${eventValue} (${countForValue("event", eventValue)})`,
+              })),
+            ]}
+            onChange={onSelectedEventChange}
+          />
         </div>
 
         <div>
