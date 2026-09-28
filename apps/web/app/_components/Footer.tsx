@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import NewsletterForm from "./NewsletterForm";
+import FooterYear from "./FooterYear";
 import ROUTES from "@/constants/routes";
+import { Suspense } from "react";
 
 interface FooterProps {
   address?: string | null;
@@ -83,7 +85,19 @@ export default async function Footer({ address, krs, logo, socialLinks }: Footer
         </div>
       </div>
       <div className="bg-white border-subtle border-t px-4 pt-1.25 pb-1 text-center text-main text-[10px] leading-[15px]">
-        Wykonane przez FKC
+        ©{" "}
+        <Suspense>
+          <FooterYear />
+        </Suspense>{" "}
+        Strona wykonana przez{" "}
+        <a
+          href="https://www.cyfrowe.org/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-bold hover:underline"
+        >
+          Fundację Kompetencji Cyfrowych
+        </a>
       </div>
     </footer>
   );
