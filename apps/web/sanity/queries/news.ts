@@ -6,6 +6,7 @@ export const newsQuery = defineQuery(`
 export const newsBySlugQuery = defineQuery(`
   *[_type == "news" && slug.current == $slug][0] {
     _id,
+    _createdAt,
     title,
     slug,
     description,

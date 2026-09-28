@@ -10,6 +10,7 @@ import { SanityRichText } from "@/sanity/richText/SanityRichText";
 import Breadcrumbs from "@/app/_components/Navigation/Breadcrumbs";
 import PageTitle from "@/app/_components/Navigation/PageTitle";
 import ROUTES from "@/constants/routes";
+import { formatDate } from "@/lib/formatDate";
 
 async function getNews() {
   "use cache";
@@ -57,24 +58,34 @@ async function NewsArticlePageContent({ params }: NewsArticlePageProps) {
       <Breadcrumbs segments={[{ label: "Aktualności", href: ROUTES.NEWS }, { label: title }]} />
       <section className="px-4 py-12 md:px-6 md:py-14">
         <div className="mx-auto max-w-[1200px]">
-          <PageTitle>{title}</PageTitle>
+          <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
+            <PageTitle>{title}</PageTitle>
+            <time dateTime={item._createdAt} className="shrink-0 text-sm text-muted-foreground">
+              {formatDate(item._createdAt)}
+            </time>
+          </div>
           <Link
             href={ROUTES.NEWS}
-            className="block mt-6 font-medium text-brand-primary hover:text-brand-onhover text-sm"
+            className="block mt-6 mb-6 font-medium text-brand-primary hover:text-brand-onhover text-sm"
           >
             ← Wróć do listy
           </Link>
 
-          <div className="mb-6 rounded-lg overflow-hidden">
+          <div className="relative mb-6 h-64 rounded-lg overflow-hidden">
             <SanityImage
               image={item.image}
               width={1200}
               height={480}
-              className="w-full h-64 object-cover"
+              fill
+              className="object-cover"
             />
           </div>
 
-          {item.description && <p className="mb-4 text-muted">{item.description}</p>}
+          {item.description && (
+            <p className="mb-4 text-base leading-[1.1] tracking-[-0.01em] text-muted">
+              {item.description}
+            </p>
+          )}
 
           <div className="text-main">
             <SanityRichText value={item.article} />

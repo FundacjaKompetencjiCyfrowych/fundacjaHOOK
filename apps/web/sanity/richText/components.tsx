@@ -7,7 +7,9 @@ import Link from "next/link";
  */
 export const components: PortableTextComponents = {
   block: {
-    normal: ({ children }) => <p className="body-base">{children}</p>,
+    normal: ({ children }) => (
+      <p className="text-base leading-[1.1] tracking-[-0.01em] text-muted">{children}</p>
+    ),
     h1: ({ children }) => <h1 className="heading-1">{children}</h1>,
     h2: ({ children }) => <h2 className="heading-2">{children}</h2>,
     h3: ({ children }) => <h3 className="heading-3">{children}</h3>,
