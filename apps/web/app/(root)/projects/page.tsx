@@ -1,29 +1,30 @@
 import { sanityFetch } from "@/sanity/live";
 import Breadcrumbs from "@/app/_components/Navigation/Breadcrumbs";
-import projectsQuery from "@/sanity/queries/projects";
-import { countValues } from "@/lib/mappers/projects";
-import ProjectPageClient from "./page.client";
+import {
+  PROJECTS_PAGE_SIZE,
+  projectCountsQuery,
+  projectsNewestQuery,
+} from "@/sanity/queries/projects";
+import type { Project } from "@/sanity/typegen";
+import type { ProjectCounts } from "./_constants/projects";
+import ProjectsPageClient from "./_components/ProjectsPageClient";
 
 const ProjectsPage = async () => {
-  const { data: projects } = await sanityFetch({
-    query: projectsQuery,
-  });
-
-  // Count projects by status
-  const statusCounts = countValues(projects, "status");
-
-  // Convert Map to Record for ProjectFilters
-  const counts: Record<string, number> = {
-    all: projects.length,
-    inProgress: statusCounts.get("inProgress") ?? 0,
-    planned: statusCounts.get("planned") ?? 0,
-    completed: statusCounts.get("completed") ?? 0,
-  };
+  const [{ data: projects }, { data: counts }] = await Promise.all([
+    sanityFetch({
+      query: projectsNewestQuery,
+      params: { status: "all", start: 0, end: PROJECTS_PAGE_SIZE },
+    }),
+    sanityFetch({ query: projectCountsQuery }),
+  ]);
 
   return (
     <>
       <Breadcrumbs segments={[{ label: "Projekty" }]} />
-      <ProjectPageClient projects={projects} counts={counts} />
+      <ProjectsPageClient
+        initialProjects={projects as Project[]}
+        counts={counts as ProjectCounts}
+      />
     </>
   );
 };

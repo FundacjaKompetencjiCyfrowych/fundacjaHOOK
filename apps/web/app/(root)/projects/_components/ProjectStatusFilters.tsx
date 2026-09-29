@@ -1,78 +1,78 @@
 "use client";
 
-import PROJECTS_STATUS from "@/lib/constants/projects";
+import PROJECTS_STATUS, { type ProjectCounts, type ProjectFilter } from "../_constants/projects";
 import { cn } from "@/lib/utils";
 
-interface ProjectFiltersProps {
-  counts: Record<string, number>;
-  filter: string;
-  setFilter: (filter: string) => void;
+interface ProjectStatusFiltersProps {
+  counts: ProjectCounts;
+  activeFilter: ProjectFilter;
+  onFilterChange: (filter: ProjectFilter) => void;
 }
 
-export default function ProjectFilters({ counts, filter, setFilter }: ProjectFiltersProps) {
+export default function ProjectStatusFilters({
+  counts,
+  activeFilter,
+  onFilterChange,
+}: ProjectStatusFiltersProps) {
   return (
     <div className="flex flex-wrap items-center gap-1 bg-neutral-100 shadow-sm p-1 rounded-2xl sm:rounded-full">
-      {PROJECTS_STATUS.slice(0, 2).map((f) => {
-        const active = filter === f.value;
+      {PROJECTS_STATUS.slice(0, 2).map((filter) => {
+        const isActive = activeFilter === filter.value;
         return (
           <button
-            key={f.value}
+            key={filter.value}
             type="button"
-            onClick={() => {
-              setFilter(f.value);
-            }}
+            onClick={() => onFilterChange(filter.value)}
             className={cn(
               "inline-flex items-center gap-2 px-3 py-1.5 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring text-sm transition-colors",
               {
-                "bg-muted text-foreground": active,
-                "bg-neutral-200 text-muted-foreground": !active,
+                "bg-muted text-foreground": isActive,
+                "bg-neutral-200 text-muted-foreground": !isActive,
               }
             )}
           >
-            {f.label}
+            {filter.label}
             <span
               className={cn(
                 "inline-flex justify-center items-center px-1.5 rounded-full min-w-5 h-5 text-[11px]",
                 {
-                  "bg-muted text-foreground": active,
-                  "bg-neutral-200 text-muted-foreground": !active,
+                  "bg-muted text-foreground": isActive,
+                  "bg-neutral-200 text-muted-foreground": !isActive,
                 }
               )}
             >
-              {counts[f.value]}
+              {counts[filter.value]}
             </span>
           </button>
         );
       })}
       <div className="flex items-center gap-1">
-        {PROJECTS_STATUS.slice(2).map((f) => {
-          const active = filter === f.value;
+        {PROJECTS_STATUS.slice(2).map((filter) => {
+          const isActive = activeFilter === filter.value;
           return (
             <button
-              key={f.value}
+              key={filter.value}
               type="button"
-              onClick={() => {
-                setFilter(f.value);
-              }}
+              onClick={() => onFilterChange(filter.value)}
               className={cn(
                 "inline-flex items-center gap-2 px-3 py-1.5 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring text-sm transition-colors",
                 {
-                  "bg-background text-foreground font-medium shadow-sm": active,
-                  "text-muted-foreground hover:text-foreground": !active,
+                  "bg-background text-foreground font-medium shadow-sm": isActive,
+                  "text-muted-foreground hover:text-foreground": !isActive,
                 }
               )}
             >
-              {f.label}
+              {filter.label}
               <span
                 className={cn(
                   "inline-flex justify-center items-center px-1.5 rounded-full min-w-5 h-5 text-[11px]",
                   {
-                    "bg-muted text-foreground": active,
-                    "bg-neutral-200 text-muted-foreground": !active,
+                    "bg-muted text-foreground": isActive,
+                    "bg-neutral-200 text-muted-foreground": !isActive,
                   }
                 )}
               >
-                {counts[f.value]}
+                {counts[filter.value]}
               </span>
             </button>
           );

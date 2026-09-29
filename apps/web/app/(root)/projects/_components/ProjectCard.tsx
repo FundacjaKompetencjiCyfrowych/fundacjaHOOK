@@ -1,16 +1,16 @@
 import Link from "next/link";
 
-import { PROJECT_STATUS_LABELS, PROJECT_STATUS_VARIANTS } from "@/lib/mappers/projects";
-import { Badge } from "../ui/badge";
-import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import { PROJECT_STATUS_LABELS, PROJECT_STATUS_VARIANTS } from "../_mappers/projects";
+import { Badge } from "@/app/_components/ui/badge";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/app/_components/ui/card";
 import { SanityImage } from "@/sanity/image/SanityImage";
-import { Project } from "@/sanity/typegen";
+import type { Project } from "@/sanity/typegen";
 
-interface Props {
+interface ProjectCardProps {
   project: Project;
 }
 
-const ProjectCard = ({ project }: Props) => {
+export default function ProjectCard({ project }: ProjectCardProps) {
   const href = `/projects/${project.slug?.current || "not-found"}`;
   const status = project.status ?? "planned";
 
@@ -45,6 +45,4 @@ const ProjectCard = ({ project }: Props) => {
       </Card>
     </Link>
   );
-};
-
-export default ProjectCard;
+}

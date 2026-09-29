@@ -736,33 +736,6 @@ export type AllSanitySchemaTypes =
 
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
-// Source: ../web/app/(root)/workshops/page.tsx
-// Variable: workshopsQuery
-// Query: *[_type == "workshop"] | order(_createdAt desc)
-export type WorkshopsQueryResult = Array<{
-  _id: string;
-  _type: "workshop";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  slug?: Slug;
-  image?: Img;
-  description?: string;
-  datetime?: string;
-  location?: string;
-  duration?: number;
-  group?: "adult" | "children" | "family" | "teen";
-  href?: string;
-  status?: "completed" | "inProgress" | "planned";
-  signupFormUrl?: string;
-  materials?: {
-    asset?: SanityFileAssetReference;
-    media?: unknown;
-    _type: "file";
-  };
-}>;
-
 // Source: ../web/app/page.tsx
 // Variable: homeQuery
 // Query: *[_type == "home"][0]{    _id,    sections[]{      ...,      _type in ["cardswithbackground", "sectionCardsWithBackground"] => {        ...,        cards[]->{          _id,          title,          description,          image        }      },      _type in ["cardswithredirect", "sectionCardsWithRedirect"] => {        ...,        cards[]->{          _id,          title,          description,          href,          hrefText,          image        },        button->{          _id,          text,          href        }      },      _type in ["supportSection", "sectionSupport"] => {        ...,        button->{          _id,          text,          href        }      },      _type in ["cooperationSection", "sectionCooperation"] => {        ...,        button->{          _id,          text,          href        }      }    }  }
@@ -1175,9 +1148,9 @@ export type ProjectSlugsQueryResult = Array<{
 }>;
 
 // Source: ../web/sanity/queries/projects.ts
-// Variable: projectsQuery
-// Query: *[_type == "project"] | order(startDate desc, _createdAt desc)
-export type ProjectsQueryResult = Array<{
+// Variable: projectsNewestQuery
+// Query: *[_type == "project" && ($status == "all" || status == $status)]    | order(coalesce(startDate, _createdAt) desc, _id asc) [$start...$end]
+export type ProjectsNewestQueryResult = Array<{
   _id: string;
   _type: "project";
   _createdAt: string;
@@ -1197,6 +1170,40 @@ export type ProjectsQueryResult = Array<{
     } & EventReference
   >;
 }>;
+
+// Source: ../web/sanity/queries/projects.ts
+// Variable: projectsOldestQuery
+// Query: *[_type == "project" && ($status == "all" || status == $status)]    | order(coalesce(startDate, _createdAt) asc, _id asc) [$start...$end]
+export type ProjectsOldestQueryResult = Array<{
+  _id: string;
+  _type: "project";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  image?: Img;
+  description?: string;
+  article?: string;
+  status?: "completed" | "inProgress" | "planned";
+  startDate?: string;
+  endDate?: string;
+  events?: Array<
+    {
+      _key: string;
+    } & EventReference
+  >;
+}>;
+
+// Source: ../web/sanity/queries/projects.ts
+// Variable: projectCountsQuery
+// Query: {  "all": count(*[_type == "project"]),  "inProgress": count(*[_type == "project" && status == "inProgress"]),  "planned": count(*[_type == "project" && status == "planned"]),  "completed": count(*[_type == "project" && status == "completed"])}
+export type ProjectCountsQueryResult = {
+  all: number;
+  inProgress: number;
+  planned: number;
+  completed: number;
+};
 
 // Source: ../web/sanity/queries/projects.ts
 // Variable: projectBySlugQuery
@@ -1324,11 +1331,37 @@ export type WorkshopSlugsQueryResult = Array<{
   slug: string | null;
 }>;
 
+// Source: ../web/sanity/queries/workshops.ts
+// Variable: workshopsQuery
+// Query: *[_type == "workshop"] | order(_createdAt desc) [$start...$end]
+export type WorkshopsQueryResult = Array<{
+  _id: string;
+  _type: "workshop";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  image?: Img;
+  description?: string;
+  datetime?: string;
+  location?: string;
+  duration?: number;
+  group?: "adult" | "children" | "family" | "teen";
+  href?: string;
+  status?: "completed" | "inProgress" | "planned";
+  signupFormUrl?: string;
+  materials?: {
+    asset?: SanityFileAssetReference;
+    media?: unknown;
+    _type: "file";
+  };
+}>;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n  *[_type == "workshop"] | order(_createdAt desc)': WorkshopsQueryResult;
     '\n  *[_type == "home"][0]{\n    _id,\n    sections[]{\n      ...,\n      _type in ["cardswithbackground", "sectionCardsWithBackground"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          image\n        }\n      },\n      _type in ["cardswithredirect", "sectionCardsWithRedirect"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          href,\n          hrefText,\n          image\n        },\n        button->{\n          _id,\n          text,\n          href\n        }\n      },\n      _type in ["supportSection", "sectionSupport"] => {\n        ...,\n        button->{\n          _id,\n          text,\n          href\n        }\n      },\n      _type in ["cooperationSection", "sectionCooperation"] => {\n        ...,\n        button->{\n          _id,\n          text,\n          href\n        }\n      }\n    }\n  }\n': HomeQueryResult;
     '\n  *[_type == "aboutUs"][0] {\n    seo,\n    mission{\n      description,\n      image {\n        _type,\n        asset-> {\n          _id,\n          _ref,\n          url,\n          metadata {\n            lqip,\n            dimensions\n          },\n          altText,\n          title,\n          description,\n          extension\n        },\n        crop,\n        hotspot\n      }\n    },\n    meaningCards[]{\n      _key,\n      title,\n      image {\n        _type,\n        asset-> {\n          _id,\n          _ref,\n          url,\n          metadata {\n            lqip,\n            dimensions\n          },\n          altText,\n          title,\n          description,\n          extension\n        },\n        crop,\n        hotspot\n      },\n      description\n    },\n    galleryImages[]{\n      _key,\n      _type,\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description,\n        extension\n      },\n      crop,\n      hotspot\n    },\n    teamMembers[]{\n      _key,\n      name,\n      role,\n      photo {\n        _type,\n        asset-> {\n          _id,\n          _ref,\n          url,\n          metadata {\n            lqip,\n            dimensions\n          },\n          altText,\n          title,\n          description,\n          extension\n        },\n        crop,\n        hotspot\n      }\n    }\n  }\n': AboutUsQueryResult;
     '\n    {\n      "page": *[_type == "contact"][0]{\n        departments[] {\n          name,\n          email,\n          phone\n        }\n      },\n      "orgDetails": *[_type == "organizationDetails" || _id == "organizationDetails"] | order(_updatedAt desc)[0]{\n        fullName,\n        address,\n        krs,\n        nip,\n        regon\n      }\n    }\n  ': ContactQueryResult;
@@ -1338,12 +1371,15 @@ declare module "@sanity/client" {
     '\n  *[_type == "news" && slug.current == $slug][0] {\n    _id,\n    _createdAt,\n    title,\n    slug,\n    description,\n    article,\n    image {\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description\n      },\n      crop,\n      hotspot\n    },\n  }\n': NewsBySlugQueryResult;
     '\n  *[_id == "organizationDetails"][0] {\n    address,\n    krs\n  }\n': OrganizationDetailsQueryResult;
     '\n  *[_type == "project" && defined(slug.current)]{\n    "slug": slug.current\n  }': ProjectSlugsQueryResult;
-    '\n  *[_type == "project"] | order(startDate desc, _createdAt desc)': ProjectsQueryResult;
+    '\n  *[_type == "project" && ($status == "all" || status == $status)]\n    | order(coalesce(startDate, _createdAt) desc, _id asc) [$start...$end]': ProjectsNewestQueryResult;
+    '\n  *[_type == "project" && ($status == "all" || status == $status)]\n    | order(coalesce(startDate, _createdAt) asc, _id asc) [$start...$end]': ProjectsOldestQueryResult;
+    '{\n  "all": count(*[_type == "project"]),\n  "inProgress": count(*[_type == "project" && status == "inProgress"]),\n  "planned": count(*[_type == "project" && status == "planned"]),\n  "completed": count(*[_type == "project" && status == "completed"])\n}': ProjectCountsQueryResult;
     '\n  *[_type == "project" && slug.current == $slug][0]{\n    ...,\n    events[]->{\n      _id,\n      title,\n      date,\n      location\n    }\n  }': ProjectBySlugQueryResult;
     '\n  *[_type == "settings"][0] {\n    logoTop {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n    logoBottom {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n    link {\n      socialLinks {\n        facebook,\n        instagram,\n        linkedin\n      }\n    }\n  }\n': SettingsQueryResult;
     '\n  *[_type == "settings"][0] {\n    logoTop {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n  }\n': LogoQueryResult;
     '\n  *[_type == "supportUs"][0] {\n    seo,\n    volunteerDescription,\n    accountNumber,\n    transferTitle,\n    volunteerButton->{\n      _id,\n      text,\n      href\n    }\n  }\n': SupportUsQueryResult;
     '\n  *[_type == "workshop" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    description,\n    datetime,\n    location,\n    duration,\n    group,\n    status,\n    image {\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description\n      },\n      crop,\n      hotspot\n    },\n    signupFormUrl,\n    materials {\n      asset-> {\n        _ref,\n        url,\n        originalFilename\n      }\n    },\n  }\n': WorkshopDetailsQueryResult;
     '\n  *[_type == "workshop"] {\n    "slug": slug.current\n  }\n': WorkshopSlugsQueryResult;
+    '\n  *[_type == "workshop"] | order(_createdAt desc) [$start...$end]': WorkshopsQueryResult;
   }
 }

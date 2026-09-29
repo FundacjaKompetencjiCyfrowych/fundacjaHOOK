@@ -16,7 +16,7 @@ import { SanityImage } from "@/sanity/image/SanityImage";
 import MeaningCard from "./_components/MeaningCard";
 import TeamMemberCard from "./_components/TeamMemberCard";
 import Gallery from "./_components/Gallery";
-import { mapContent } from "./mapContent";
+import { mapContent } from "./_mappers/aboutUs";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data } = await sanityFetch({ query: aboutUsQuery });

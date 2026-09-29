@@ -1,5 +1,3 @@
-import { Project } from "@/sanity/typegen";
-
 export const PROJECT_STATUSES = {
   inProgress: "inProgress",
   planned: "planned",
@@ -28,14 +26,3 @@ export const PROJECT_STATUS_LABELS = Object.fromEntries(
 export const PROJECT_STATUS_VARIANTS = Object.fromEntries(
   Object.entries(STATUS_CONFIG).map(([key, val]) => [key, val.variant])
 ) as Record<ProjectStatus, "default" | "secondary" | "outline">;
-
-export function countValues(materials: Project[], key: "status"): Map<string, number> {
-  const counts = new Map<string, number>();
-
-  for (const material of materials) {
-    const fieldValue = material[key];
-    counts.set(fieldValue ?? "", (counts.get(fieldValue ?? "") ?? 0) + 1);
-  }
-
-  return counts;
-}

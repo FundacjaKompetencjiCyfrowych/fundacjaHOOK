@@ -5,7 +5,7 @@ import { Calendar1, MapPin } from "lucide-react";
 import { Badge } from "@/app/_components/ui/badge";
 import { Card } from "@/app/_components/ui/card";
 import { formatDate } from "@/lib/formatDate";
-import { PROJECT_STATUS_LABELS, PROJECT_STATUS_VARIANTS } from "@/lib/mappers/projects";
+import { PROJECT_STATUS_LABELS, PROJECT_STATUS_VARIANTS } from "../_mappers/projects";
 import { client } from "@/sanity/client";
 import { SanityImage } from "@/sanity/image/SanityImage";
 import { sanityFetch } from "@/sanity/live";

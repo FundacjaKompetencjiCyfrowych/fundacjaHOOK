@@ -1,6 +1,6 @@
 import type { AboutUsQueryResult } from "@/sanity/typegen";
 
-import type { AboutUsPageContent } from "./types";
+import type { AboutUsPageContent } from "../types";
 
 export function mapContent(data: AboutUsQueryResult): AboutUsPageContent {
   return {
