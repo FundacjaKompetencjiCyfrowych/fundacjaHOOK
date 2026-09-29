@@ -13,6 +13,8 @@ export default function RedirectButton({
   return (
     <Link
       href={href}
+      target="_blank"
+      rel="noopener noreferrer"
       className={cn(
         "inline-flex items-center justify-center bg-brand-primary text-white text-sm font-semibold px-6 py-2.5 rounded-full hover:bg-brand-onhover transition-colors",
         className
