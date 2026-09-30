@@ -1082,6 +1082,39 @@ export type NewsQueryResult = Array<{
 }>;
 
 // Source: ../web/sanity/queries/news.ts
+// Variable: allNewsQuery
+// Query: *[_type == "news"] | order(_createdAt desc)
+export type AllNewsQueryResult = Array<{
+  _id: string;
+  _type: "news";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  image?: Img;
+  description?: string;
+  article?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+}>;
+
+// Source: ../web/sanity/queries/news.ts
 // Variable: newsBySlugQuery
 // Query: *[_type == "news" && slug.current == $slug][0] {    _id,    _createdAt,    title,    slug,    description,    article,    image {      asset-> {        _id,        _ref,        url,        metadata {          lqip,          dimensions        },        altText,        title,        description      },      crop,      hotspot    },  }
 export type NewsBySlugQueryResult = {
@@ -1368,6 +1401,7 @@ declare module "@sanity/client" {
     '\n  *[_type == "post"] | order(_createdAt desc) {\n    _id,\n    _createdAt,\n    title,\n    "slug": slug.current,\n    "author": author->name,\n    "image": mainImage.asset->url,\n    description,\n    "categories": categories[]->title,\n    body\n  }\n': PostsQueryResult;
     '\n  *[_type == "material"] | order(date desc) {\n    _id,\n    title,\n    description,\n    date,\n    event,\n    type,\n    area,\n    format,\n    size,\n    placements,\n    "fileAsset": file.asset->{\n      url,\n      extension,\n      size\n    }\n  }\n': MaterialsQueryResult;
     '\n  *[_type == "news"] | order(_createdAt desc) [$start...$end]': NewsQueryResult;
+    '\n  *[_type == "news"] | order(_createdAt desc)': AllNewsQueryResult;
     '\n  *[_type == "news" && slug.current == $slug][0] {\n    _id,\n    _createdAt,\n    title,\n    slug,\n    description,\n    article,\n    image {\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description\n      },\n      crop,\n      hotspot\n    },\n  }\n': NewsBySlugQueryResult;
     '\n  *[_id == "organizationDetails"][0] {\n    address,\n    krs\n  }\n': OrganizationDetailsQueryResult;
     '\n  *[_type == "project" && defined(slug.current)]{\n    "slug": slug.current\n  }': ProjectSlugsQueryResult;

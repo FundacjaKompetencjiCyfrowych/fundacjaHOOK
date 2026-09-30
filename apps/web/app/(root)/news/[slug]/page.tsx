@@ -1,5 +1,4 @@
-import { newsBySlugQuery } from "@/sanity/queries/news";
-import { newsQuery } from "@/sanity/queries/news";
+import { allNewsQuery, newsBySlugQuery } from "@/sanity/queries/news";
 import { client } from "@/sanity/client";
 import { cacheLife } from "next/dist/server/use-cache/cache-life";
 import { sanityFetch } from "@/sanity/live";
@@ -16,7 +15,7 @@ async function getNews() {
   "use cache";
   cacheLife("days");
 
-  const data = await client.fetch(newsQuery, {}, { perspective: "published", stega: false });
+  const data = await client.fetch(allNewsQuery, {}, { perspective: "published", stega: false });
 
   return data || [];
 }
