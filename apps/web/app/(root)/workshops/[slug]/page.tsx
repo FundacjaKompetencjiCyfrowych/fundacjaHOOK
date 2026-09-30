@@ -4,6 +4,7 @@ import { sanityFetch } from "@/sanity/live";
 import { Button } from "@/app/_components/ui/button";
 import { Calendar1, MapPin, Download, LogIn } from "lucide-react";
 import { getFormattedWorkshopDate } from "@/lib/utils";
+import { getDownloadUrl } from "@/lib/getDownloadUrl";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -138,8 +139,7 @@ async function WorkshopContent({ slug }: { slug: string }) {
             <div className="mt-6">
               <h3 className="mb-2 font-bold text-sm">Regulamin</h3>
               <a
-                href={workshop.materials.asset.url}
-                download={workshop.materials.asset.originalFilename || "materials"}
+                href={getDownloadUrl(workshop.materials.asset.url)}
                 className="inline-flex items-center gap-2 hover:bg-elevated active:bg-elevated px-3 py-2 border border-border rounded-lg font-medium text-foreground text-xs transition-colors"
               >
                 <Download className="w-4 h-4" />
@@ -160,11 +160,7 @@ async function WorkshopContent({ slug }: { slug: string }) {
             )}
 
             {workshop.materials?.asset?.url && (
-              <a
-                href={workshop.materials.asset.url}
-                download={workshop.materials.asset.originalFilename || "materials"}
-                className="sm:flex-initial"
-              >
+              <a href={getDownloadUrl(workshop.materials.asset.url)} className="sm:flex-initial">
                 <Button variant="secondary" className="cursor-pointer">
                   <Download size={18} className="mr-2" />
                   Pobierz materiały
