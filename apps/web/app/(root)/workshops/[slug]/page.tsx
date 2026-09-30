@@ -2,9 +2,8 @@ import { SanityImage } from "@/sanity/image/SanityImage";
 import { workshopDetailsQuery } from "@/sanity/queries/workshopDetails";
 import { sanityFetch } from "@/sanity/live";
 import { Button } from "@/app/_components/ui/button";
-import { Badge } from "@/app/_components/ui/badge";
 import { Calendar1, MapPin, Download, LogIn } from "lucide-react";
-import { getFormattedWorkshopDate, mapStatus } from "@/lib/utils";
+import { getFormattedWorkshopDate } from "@/lib/utils";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -13,6 +12,7 @@ import { client } from "@/sanity/client";
 import { cacheLife } from "next/dist/server/use-cache/cache-life";
 import Breadcrumbs from "@/app/_components/Navigation/Breadcrumbs";
 import PageTitle from "@/app/_components/Navigation/PageTitle";
+import { StatusBadge } from "@/app/_components/ui/status-badge";
 import ROUTES from "@/constants/routes";
 
 async function getWorkshops() {
@@ -71,71 +71,59 @@ async function WorkshopContent({ slug }: { slug: string }) {
       <Breadcrumbs segments={[{ label: "Warsztaty", href: ROUTES.WORKSHOPS }, { label: title }]} />
       <section className="px-4 py-12 md:px-6 md:py-14">
         <div className="mx-auto max-w-[1200px]">
-          <div className="flex items-start gap-3">
-            <PageTitle>{title}</PageTitle>
-            {workshop.status && (
-              <Badge
-                variant={workshop.status === "inProgress" ? "default" : "outline"}
-                className="font-normal text-xs whitespace-nowrap"
-              >
-                {mapStatus(workshop.status)}
-              </Badge>
-            )}
+          <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <PageTitle>{title}</PageTitle>
+              <StatusBadge status={workshop.status} />
+            </div>
           </div>
+          {formattedDate && (
+            <p className="mt-2 mb-2 flex items-center gap-1.5 text-xs text-muted-foreground">
+              <Calendar1 size={14} />
+              {formattedDate}
+            </p>
+          )}
           <Link
             href={ROUTES.WORKSHOPS}
-            className="block mt-6 font-medium text-brand-primary hover:text-brand-onhover text-sm"
+            className="block mt-6 mb-6 font-medium text-brand-primary hover:text-brand-onhover text-sm"
           >
             ← Wróć do listy
           </Link>
-          {/* Description */}
-          {workshop.description && (
-            <p className="mt-6 mb-8 text-main text-base leading-relaxed">{workshop.description}</p>
-          )}
 
           {/* Workshop image */}
-          <div className="mb-10 rounded-lg overflow-hidden">
+          <div className="relative mb-6 h-64 rounded-lg overflow-hidden">
             <SanityImage
               image={workshop.image}
-              width={800}
-              height={400}
-              className="w-full h-64 sm:h-96 object-cover"
+              width={1200}
+              height={480}
+              fill
+              className="object-cover"
             />
           </div>
 
-          <div className="space-y-6 mb-10">
-            {/* Termin warsztatu */}
-            {formattedDate && (
-              <div className="pb-6">
-                <h3 className="mb-4 font-bold text-lg">Termin warsztatu</h3>
-                <div className="flex items-center gap-3 text-main">
-                  <Calendar1 size={20} className="text-brand-primary shrink-0" />
-                  <span className="text-base">{formattedDate}</span>
-                </div>
-              </div>
-            )}
+          {/* Description */}
+          {workshop.description && (
+            <p className="mb-4 text-base leading-[1.1] tracking-[-0.01em] text-muted">
+              {workshop.description}
+            </p>
+          )}
 
-            {/* Regulamin */}
-            {workshop.materials?.asset?.url && (
-              <div className="space-y-6">
-                <h3 className="mb-1 font-bold text-sm">Regulamin</h3>
-                <a
-                  href={workshop.materials.asset.url}
-                  download={workshop.materials.asset.originalFilename || "materials"}
-                  className="inline-flex items-center gap-2 hover:bg-elevated active:bg-elevated px-3 py-2 border border-border rounded-lg font-medium text-foreground text-xs transition-colors"
-                >
-                  <Download className="w-4 h-4" />
-                  Pobierz regulamin (PDF)
-                </a>
+          {/* Termin warsztatu */}
+          {formattedDate && (
+            <div className="mb-6">
+              <h2 className="font-bold text-foreground text-xl">Termin warsztatu</h2>
+              <div className="flex items-center gap-3 mt-2 text-main">
+                <Calendar1 size={20} className="text-brand-primary shrink-0" />
+                <span className="text-base">{formattedDate}</span>
               </div>
-            )}
-          </div>
+            </div>
+          )}
 
           {/* Lokalizacja */}
           {workshop.location && (
-            <div className="pb-6">
-              <h3 className="mb-4 font-bold text-lg">Lokalizacja</h3>
-              <div className="flex items-center gap-3 mb-4 text-main">
+            <div className="mb-6">
+              <h3 className="font-bold text-foreground text-xl">Lokalizacja</h3>
+              <div className="flex items-center gap-3 mt-2 mb-3 text-main">
                 <MapPin size={20} className="text-brand-primary shrink-0" />
                 <span className="text-base">{workshop.location}</span>
               </div>
@@ -145,37 +133,26 @@ async function WorkshopContent({ slug }: { slug: string }) {
             </div>
           )}
 
-          {/* Workshop info grid */}
-          {/* <div className="gap-6 grid grid-cols-1 sm:grid-cols-2 pb-6">
-          {workshop.duration && (
-            <div>
-              <div className="flex items-center gap-2 mb-2">
-                <Timer size={18} className="text-brand-primary" />
-                <span className="font-semibold text-sm">Czas trwania</span>
-              </div>
-              <p className="text-main">
-                {workshop.duration} {getHoursLabel(Number(workshop.duration))}
-              </p>
+          {/* Regulamin */}
+          {workshop.materials?.asset?.url && (
+            <div className="mt-6">
+              <h3 className="mb-2 font-bold text-sm">Regulamin</h3>
+              <a
+                href={workshop.materials.asset.url}
+                download={workshop.materials.asset.originalFilename || "materials"}
+                className="inline-flex items-center gap-2 hover:bg-elevated active:bg-elevated px-3 py-2 border border-border rounded-lg font-medium text-foreground text-xs transition-colors"
+              >
+                <Download className="w-4 h-4" />
+                Pobierz regulamin (PDF)
+              </a>
             </div>
           )}
 
-          {workshop.group && (
-            <div>
-              <div className="flex items-center gap-2 mb-2">
-                <Users size={18} className="text-brand-primary" />
-                <span className="font-semibold text-sm">Grupa docelowa</span>
-              </div>
-              <p className="text-main">{mapGroup (workshop.group)}</p>
-            </div>
-          )}
-        </div> */}
-
-          {/* Materials download section */}
           {/* Action buttons */}
-          <div className="flex sm:flex-row flex-col gap-3">
+          <div className="flex sm:flex-row flex-col gap-3 mt-7">
             {workshop.signupFormUrl && (
               <a href={workshop.signupFormUrl} target="_blank" rel="noopener noreferrer">
-                <Button className="bg-brand-primary hover:bg-brand-onhover text-white">
+                <Button className="cursor-pointer">
                   <LogIn size={18} className="mr-2" />
                   Zapisz się
                 </Button>
@@ -188,7 +165,7 @@ async function WorkshopContent({ slug }: { slug: string }) {
                 download={workshop.materials.asset.originalFilename || "materials"}
                 className="sm:flex-initial"
               >
-                <Button className="bg-brand-primary hover:bg-brand-onhover text-white">
+                <Button variant="secondary" className="cursor-pointer">
                   <Download size={18} className="mr-2" />
                   Pobierz materiały
                 </Button>

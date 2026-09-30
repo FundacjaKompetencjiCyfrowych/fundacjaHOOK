@@ -17,11 +17,6 @@ interface ProjectsPageClientProps {
   counts: ProjectCounts;
 }
 
-const getProjectsLabel = (count: number) => {
-  if (count === 1) return "projekt";
-  return "projektów";
-};
-
 export default function ProjectsPageClient({ initialProjects, counts }: ProjectsPageClientProps) {
   const [filter, setFilter] = useState<ProjectFilter>("all");
   const [sortBy, setSortBy] = useState<ProjectSortOrder>("Najnowsze");
@@ -38,7 +33,7 @@ export default function ProjectsPageClient({ initialProjects, counts }: Projects
 
   return (
     <section className="px-4 pt-14 pb-12 md:px-6">
-      <div className="mx-auto max-w-[1200px] px-6">
+      <div className="mx-auto max-w-[1200px]">
         <header className="mb-7">
           <PageTitle>Projekty</PageTitle>
         </header>
@@ -47,9 +42,6 @@ export default function ProjectsPageClient({ initialProjects, counts }: Projects
           <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
             <p className="text-muted-foreground text-base">
               Poznaj nasze bieżące i planowane projekty społeczne.
-            </p>
-            <p className="text-muted-foreground text-sm">
-              {counts.all} {getProjectsLabel(counts.all)}
             </p>
           </div>
 

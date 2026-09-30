@@ -24,7 +24,7 @@ export default function ProjectStatusFilters({
             type="button"
             onClick={() => onFilterChange(filter.value)}
             className={cn(
-              "inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+              "inline-flex cursor-pointer items-center gap-2 rounded-full px-3 py-1.5 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
               {
                 "bg-white font-medium text-foreground shadow-[0_1px_2px_rgba(0,0,0,0.08)]":
                   isActive,
