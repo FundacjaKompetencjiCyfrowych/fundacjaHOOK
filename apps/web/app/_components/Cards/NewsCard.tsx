@@ -11,7 +11,7 @@ interface Props {
 const NewsCard = ({ news }: Props) => {
   return (
     <Link href={`/news/${news.slug?.current || "not-found"}`}>
-      <Card className="relative gap-2 shadow-md hover:shadow-lg mx-auto pt-0 w-full max-w-142 transition-shadow cursor-pointer">
+      <Card className="relative gap-2 shadow-md hover:shadow-lg mx-auto pt-0 w-full max-w-142 transition-all hover:-translate-y-0.5 duration-150 cursor-pointer">
         <div className="relative mx-4 mt-4 h-32 min-w-0 overflow-hidden rounded-xl">
           <SanityImage image={news.image} width={536} height={128} fill className="object-cover" />
         </div>

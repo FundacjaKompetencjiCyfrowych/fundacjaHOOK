@@ -2,11 +2,10 @@ import { Workshop } from "@/sanity/typegen";
 import Link from "next/link";
 import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { SanityImage } from "@/sanity/image/SanityImage";
-import { Badge } from "../ui/badge";
+import { StatusBadge } from "../ui/status-badge";
 import { Calendar1, MapPin, Timer, Users } from "lucide-react";
 import { mapGroup } from "@/lib/mappers/workshop";
 import { getFormattedWorkshopDate, getHoursLabel } from "@/lib/utils";
-import { mapStatus } from "@/lib/utils";
 
 interface Props {
   workshop: Workshop;
@@ -29,12 +28,7 @@ const WorkshopCard = ({ workshop }: Props) => {
         <CardHeader>
           <CardTitle className="flex items-center mb-1">
             <span className="mr-2 font-bold">{workshop.title}</span>
-            <Badge
-              variant={workshop.status === "inProgress" ? "default" : "outline"}
-              className="font-normal text-[10px]"
-            >
-              {mapStatus(workshop.status)}
-            </Badge>
+            <StatusBadge status={workshop.status} />
           </CardTitle>
 
           <CardDescription>
