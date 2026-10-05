@@ -1,6 +1,7 @@
 import { Download, Eye } from "lucide-react";
 
 import { formatDate } from "@/lib/formatDate";
+import { getDownloadUrl } from "@/lib/getDownloadUrl";
 import WirePlaceholder from "../WirePlaceholder";
 
 export type ContentItemType = {
@@ -16,7 +17,7 @@ export type ContentItemType = {
 };
 
 export default function ContentItem({ material }: { material: ContentItemType }) {
-  const downloadUrl = `${material.fileUrl}${material.fileUrl.includes("?") ? "&" : "?"}dl=`;
+  const downloadUrl = getDownloadUrl(material.fileUrl);
 
   return (
     <article className="flex items-center gap-3 bg-elevated shadow-sm p-3 border border-subtle rounded-lg">

@@ -15,8 +15,8 @@ export default function ProjectStatusFilters({
   onFilterChange,
 }: ProjectStatusFiltersProps) {
   return (
-    <div className="flex flex-wrap items-center gap-1 bg-neutral-100 shadow-sm p-1 rounded-2xl sm:rounded-full">
-      {PROJECTS_STATUS.slice(0, 2).map((filter) => {
+    <div className="inline-flex w-fit max-w-full flex-wrap items-center gap-1 rounded-full bg-[#f5f5f5] p-1 shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
+      {PROJECTS_STATUS.map((filter) => {
         const isActive = activeFilter === filter.value;
         return (
           <button
@@ -24,10 +24,11 @@ export default function ProjectStatusFilters({
             type="button"
             onClick={() => onFilterChange(filter.value)}
             className={cn(
-              "inline-flex items-center gap-2 px-3 py-1.5 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring text-sm transition-colors",
+              "inline-flex cursor-pointer items-center gap-2 rounded-full px-3 py-1.5 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
               {
-                "bg-muted text-foreground": isActive,
-                "bg-neutral-200 text-muted-foreground": !isActive,
+                "bg-white font-medium text-foreground shadow-[0_1px_2px_rgba(0,0,0,0.08)]":
+                  isActive,
+                "text-muted-foreground hover:text-foreground": !isActive,
               }
             )}
           >
@@ -36,8 +37,8 @@ export default function ProjectStatusFilters({
               className={cn(
                 "inline-flex justify-center items-center px-1.5 rounded-full min-w-5 h-5 text-[11px]",
                 {
-                  "bg-muted text-foreground": isActive,
-                  "bg-neutral-200 text-muted-foreground": !isActive,
+                  "bg-[#eae7e1] text-foreground": isActive,
+                  "bg-[#e5e5e5] text-muted-foreground": !isActive,
                 }
               )}
             >
@@ -46,38 +47,6 @@ export default function ProjectStatusFilters({
           </button>
         );
       })}
-      <div className="flex items-center gap-1">
-        {PROJECTS_STATUS.slice(2).map((filter) => {
-          const isActive = activeFilter === filter.value;
-          return (
-            <button
-              key={filter.value}
-              type="button"
-              onClick={() => onFilterChange(filter.value)}
-              className={cn(
-                "inline-flex items-center gap-2 px-3 py-1.5 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring text-sm transition-colors",
-                {
-                  "bg-background text-foreground font-medium shadow-sm": isActive,
-                  "text-muted-foreground hover:text-foreground": !isActive,
-                }
-              )}
-            >
-              {filter.label}
-              <span
-                className={cn(
-                  "inline-flex justify-center items-center px-1.5 rounded-full min-w-5 h-5 text-[11px]",
-                  {
-                    "bg-muted text-foreground": isActive,
-                    "bg-neutral-200 text-muted-foreground": !isActive,
-                  }
-                )}
-              >
-                {counts[filter.value]}
-              </span>
-            </button>
-          );
-        })}
-      </div>
     </div>
   );
 }

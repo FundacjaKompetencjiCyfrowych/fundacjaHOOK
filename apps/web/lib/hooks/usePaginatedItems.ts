@@ -57,7 +57,7 @@ export function usePaginatedItems<T>({
         if (activeRequestRef.current !== requestId) return;
 
         setItems((currentItems) => (replaceItems ? nextItems : [...currentItems, ...nextItems]));
-        setHasMore(nextItems.length === pageSize);
+        setHasMore(nextItems.length > 0 && nextItems.length === pageSize);
       } catch {
         if (activeRequestRef.current !== requestId) return;
         failedRequestRef.current = { start, replaceItems };
@@ -77,6 +77,8 @@ export function usePaginatedItems<T>({
   }, [requestPage, resetKey]);
 
   const loadMore = useCallback(async () => {
+    if (isLoading || !hasMore) return;
+
     const failedRequest = failedRequestRef.current;
     if (failedRequest) {
       await requestPage(failedRequest.start, failedRequest.replaceItems);
@@ -84,7 +86,7 @@ export function usePaginatedItems<T>({
     }
 
     await requestPage(items.length, false);
-  }, [items.length, requestPage]);
+  }, [hasMore, isLoading, items.length, requestPage]);
 
   return {
     items,

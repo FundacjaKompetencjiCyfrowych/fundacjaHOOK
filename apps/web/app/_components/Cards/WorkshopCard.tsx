@@ -2,11 +2,10 @@ import { Workshop } from "@/sanity/typegen";
 import Link from "next/link";
 import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { SanityImage } from "@/sanity/image/SanityImage";
-import { Badge } from "../ui/badge";
+import { StatusBadge } from "../ui/status-badge";
 import { Calendar1, MapPin, Timer, Users } from "lucide-react";
 import { mapGroup } from "@/lib/mappers/workshop";
 import { getFormattedWorkshopDate, getHoursLabel } from "@/lib/utils";
-import { mapStatus } from "@/lib/utils";
 
 interface Props {
   workshop: Workshop;
@@ -17,24 +16,14 @@ const WorkshopCard = ({ workshop }: Props) => {
 
   return (
     <Link href={`/workshops/${workshop.slug?.current || "not-found"}`}>
-      <Card className="relative gap-2 shadow-md hover:shadow-lg mx-auto pt-0 w-full max-w-142 transition-shadow cursor-pointer">
-        <div className="px-4 pt-4">
-          <SanityImage
-            image={workshop.image}
-            width={536}
-            height={128}
-            className="rounded-xl w-full h-32 object-cover"
-          />
+      <Card className="relative gap-2 shadow-md hover:shadow-lg pt-0 w-full transition-all hover:-translate-y-0.5 duration-150 cursor-pointer">
+        <div className="relative mx-4 mt-4 aspect-[2.1] min-w-0 overflow-hidden rounded-xl">
+          <SanityImage image={workshop.image} fill className="object-cover" />
         </div>
         <CardHeader>
-          <CardTitle className="flex items-center mb-1">
-            <span className="mr-2 font-bold">{workshop.title}</span>
-            <Badge
-              variant={workshop.status === "inProgress" ? "default" : "outline"}
-              className="font-normal text-[10px]"
-            >
-              {mapStatus(workshop.status)}
-            </Badge>
+          <CardTitle className="flex flex-wrap items-baseline gap-x-2 gap-y-1 text-sm leading-[1.15] mb-1">
+            <span>{workshop.title}</span>
+            <StatusBadge status={workshop.status} />
           </CardTitle>
 
           <CardDescription>

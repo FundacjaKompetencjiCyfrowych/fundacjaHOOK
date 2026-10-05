@@ -17,11 +17,6 @@ interface ProjectsPageClientProps {
   counts: ProjectCounts;
 }
 
-const getProjectsLabel = (count: number) => {
-  if (count === 1) return "projekt";
-  return "projektów";
-};
-
 export default function ProjectsPageClient({ initialProjects, counts }: ProjectsPageClientProps) {
   const [filter, setFilter] = useState<ProjectFilter>("all");
   const [sortBy, setSortBy] = useState<ProjectSortOrder>("Najnowsze");
@@ -37,27 +32,31 @@ export default function ProjectsPageClient({ initialProjects, counts }: Projects
   });
 
   return (
-    <section className="px-4 py-12 md:px-6 md:py-14">
+    <section className="px-4 pt-14 pb-12 md:px-6">
       <div className="mx-auto max-w-[1200px]">
-        <header className="mb-6">
+        <header className="mb-7">
           <PageTitle>Projekty</PageTitle>
-          <p className="mt-2 max-w-xl text-muted-foreground text-base">
-            Poznaj nasze bieżące i planowane projekty społeczne.
-          </p>
         </header>
 
-        <div className="flex lg:flex-row flex-col lg:justify-between lg:items-end gap-4 mb-6">
-          <ProjectStatusFilters counts={counts} activeFilter={filter} onFilterChange={setFilter} />
-          <div className="flex flex-col items-start lg:items-end gap-2">
-            <p className="text-muted-foreground text-sm">
-              {counts.all} {getProjectsLabel(counts.all)}
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
+            <p className="text-muted-foreground text-base">
+              Poznaj nasze bieżące i planowane projekty społeczne.
             </p>
+          </div>
+
+          <div className="flex flex-col justify-between gap-4 pt-4 sm:flex-row sm:items-center">
+            <ProjectStatusFilters
+              counts={counts}
+              activeFilter={filter}
+              onFilterChange={setFilter}
+            />
             <ProjectSortSelect sortBy={sortBy} onSortChange={setSortBy} />
           </div>
         </div>
 
         {pagination.items.length > 0 ? (
-          <div className="gap-4 grid grid-cols-1 md:grid-cols-3">
+          <div className="mt-8 gap-4 grid grid-cols-1 md:grid-cols-3">
             {pagination.items.map((project) => (
               <ProjectCard key={project._id} project={project} />
             ))}

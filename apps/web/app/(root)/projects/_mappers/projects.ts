@@ -8,11 +8,11 @@ export type ProjectStatus = (typeof PROJECT_STATUSES)[keyof typeof PROJECT_STATU
 
 const STATUS_CONFIG: Record<
   ProjectStatus,
-  { label: string; shortLabel: string; variant: "default" | "secondary" | "outline" }
+  { label: string; shortLabel: string; variant: "inProgress" | "planned" | "completed" }
 > = {
-  inProgress: { label: "W trakcie", shortLabel: "W trakcie", variant: "default" },
-  planned: { label: "Planowany", shortLabel: "Planowane", variant: "secondary" },
-  completed: { label: "Zakończony", shortLabel: "Zakończone", variant: "outline" },
+  inProgress: { label: "W trakcie", shortLabel: "W trakcie", variant: "inProgress" },
+  planned: { label: "Planowane", shortLabel: "Planowane", variant: "planned" },
+  completed: { label: "Zakończone", shortLabel: "Zakończone", variant: "completed" },
 };
 
 export const PROJECTS_MAP = Object.fromEntries(
@@ -25,4 +25,4 @@ export const PROJECT_STATUS_LABELS = Object.fromEntries(
 
 export const PROJECT_STATUS_VARIANTS = Object.fromEntries(
   Object.entries(STATUS_CONFIG).map(([key, val]) => [key, val.variant])
-) as Record<ProjectStatus, "default" | "secondary" | "outline">;
+) as Record<ProjectStatus, "inProgress" | "planned" | "completed">;
