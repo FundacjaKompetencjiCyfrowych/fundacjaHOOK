@@ -4,6 +4,8 @@ import NewsletterForm from "./NewsletterForm";
 import FooterYear from "./FooterYear";
 import ROUTES from "@/constants/routes";
 import { Suspense } from "react";
+import { sanityFetch } from "@/sanity/live";
+import { legalPagesQuery } from "@/sanity/queries/legalPages";
 
 interface FooterProps {
   address?: string | null;
@@ -17,17 +19,14 @@ interface FooterProps {
 }
 
 export default async function Footer({ address, krs, logo, socialLinks }: FooterProps) {
+  const { data: legalPages } = await sanityFetch({ query: legalPagesQuery });
+
   const mainLinks = [
     ["Warsztaty", ROUTES.WORKSHOPS],
     ["Materiały", ROUTES.MATERIALS],
     ["Wesprzyj nas", ROUTES.SUPPORT_US],
     ["O nas", ROUTES.ABOUT_US],
     ["Kontakt", ROUTES.CONTACT],
-  ];
-
-  const legalLinks = [
-    ["Klauzula informacyjna", ROUTES.INFORMATION_CLAUSE],
-    ["Polityka prywatności (RODO)", ROUTES.PRIVACY_POLICY],
   ];
 
   const logoUrl = logo;
@@ -69,10 +68,10 @@ export default async function Footer({ address, krs, logo, socialLinks }: Footer
             <div>
               <p className="mb-2 font-bold">Prawne</p>
               <ul className="space-y-1 text-muted">
-                {legalLinks.map(([label, href]) => (
-                  <li key={label}>
-                    <Link href={href} className="hover:underline">
-                      {label}
+                {legalPages?.map((page) => (
+                  <li key={page._id}>
+                    <Link href={`/${page.slug}`} className="hover:underline">
+                      {page.title}
                     </Link>
                   </li>
                 ))}

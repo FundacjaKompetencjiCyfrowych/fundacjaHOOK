@@ -24,6 +24,43 @@ export type SocialLinks = {
   linkedin?: string;
 };
 
+export type LegalPage = {
+  _id: string;
+  _type: "legalPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  seo?: Seo;
+  title?: string;
+  slug?: Slug;
+  body?: RichText;
+};
+
+export type RichText = Array<{
+  children?: Array<{
+    marks?: Array<string>;
+    text?: string;
+    _type: "span";
+    _key: string;
+  }>;
+  style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
+  listItem?: "bullet";
+  markDefs?: Array<{
+    href?: string;
+    _type: "link";
+    _key: string;
+  }>;
+  level?: number;
+  _type: "block";
+  _key: string;
+}>;
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
+};
+
 export type OrganizationDetails = {
   _id: string;
   _type: "organizationDetails";
@@ -96,12 +133,6 @@ export type Img = {
   media?: unknown;
   hotspot?: SanityImageHotspot;
   crop?: SanityImageCrop;
-};
-
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
 };
 
 export type News = {
@@ -294,25 +325,6 @@ export type LeadSection = {
   title?: string;
   subtitle?: string;
 };
-
-export type RichText = Array<{
-  children?: Array<{
-    marks?: Array<string>;
-    text?: string;
-    _type: "span";
-    _key: string;
-  }>;
-  style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
-  listItem?: "bullet";
-  markDefs?: Array<{
-    href?: string;
-    _type: "link";
-    _key: string;
-  }>;
-  level?: number;
-  _type: "block";
-  _key: string;
-}>;
 
 export type Seo = {
   _type: "seo";
@@ -688,6 +700,9 @@ export type Geopoint = {
 export type AllSanitySchemaTypes =
   | Robots
   | SocialLinks
+  | LegalPage
+  | RichText
+  | Slug
   | OrganizationDetails
   | DepartmentCard
   | Event
@@ -695,7 +710,6 @@ export type AllSanitySchemaTypes =
   | Project
   | SanityImageAssetReference
   | Img
-  | Slug
   | News
   | Link
   | Logo
@@ -713,7 +727,6 @@ export type AllSanitySchemaTypes =
   | HeroSection
   | PostsSection
   | LeadSection
-  | RichText
   | Seo
   | SupportUs
   | RedirectButton
@@ -1016,6 +1029,25 @@ export type PostsQueryResult = Array<{
   categories: Array<string | null> | null;
   body: RichText | null;
 }>;
+
+// Source: ../web/sanity/queries/legalPages.ts
+// Variable: legalPagesQuery
+// Query: *[_type == "legalPage" && defined(title) && defined(slug.current)] | order(_createdAt asc) {    _id,    title,    "slug": slug.current  }
+export type LegalPagesQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  slug: string | null;
+}>;
+
+// Source: ../web/sanity/queries/legalPages.ts
+// Variable: legalPageBySlugQuery
+// Query: *[_type == "legalPage" && slug.current == $slug][0] {    seo,    title,    "slug": slug.current,    body  }
+export type LegalPageBySlugQueryResult = {
+  seo: Seo | null;
+  title: string | null;
+  slug: string | null;
+  body: RichText | null;
+} | null;
 
 // Source: ../web/sanity/queries/materials.ts
 // Variable: materialsQuery
@@ -1436,6 +1468,8 @@ declare module "@sanity/client" {
     '\n  *[_type == "aboutUs"][0] {\n    seo,\n    mission{\n      description,\n      image {\n        _type,\n        asset-> {\n          _id,\n          _ref,\n          url,\n          metadata {\n            lqip,\n            dimensions\n          },\n          altText,\n          title,\n          description,\n          extension\n        },\n        crop,\n        hotspot\n      }\n    },\n    meaningCards[]{\n      _key,\n      title,\n      image {\n        _type,\n        asset-> {\n          _id,\n          _ref,\n          url,\n          metadata {\n            lqip,\n            dimensions\n          },\n          altText,\n          title,\n          description,\n          extension\n        },\n        crop,\n        hotspot\n      },\n      description\n    },\n    galleryImages[]{\n      _key,\n      _type,\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description,\n        extension\n      },\n      crop,\n      hotspot\n    },\n    teamMembers[]{\n      _key,\n      name,\n      role,\n      photo {\n        _type,\n        asset-> {\n          _id,\n          _ref,\n          url,\n          metadata {\n            lqip,\n            dimensions\n          },\n          altText,\n          title,\n          description,\n          extension\n        },\n        crop,\n        hotspot\n      }\n    }\n  }\n': AboutUsQueryResult;
     '\n    {\n      "page": *[_type == "contact"][0]{\n        gdprClause,\n        departments[] {\n          name,\n          email,\n          phone\n        }\n      },\n      "orgDetails": *[_type == "organizationDetails" || _id == "organizationDetails"] | order(_updatedAt desc)[0]{\n        fullName,\n        address,\n        krs,\n        nip,\n        regon\n      }\n    }\n  ': ContactQueryResult;
     '\n  *[_type == "post"] | order(_createdAt desc) {\n    _id,\n    _createdAt,\n    title,\n    "slug": slug.current,\n    "author": author->name,\n    "image": mainImage.asset->url,\n    description,\n    "categories": categories[]->title,\n    body\n  }\n': PostsQueryResult;
+    '\n  *[_type == "legalPage" && defined(title) && defined(slug.current)] | order(_createdAt asc) {\n    _id,\n    title,\n    "slug": slug.current\n  }\n': LegalPagesQueryResult;
+    '\n  *[_type == "legalPage" && slug.current == $slug][0] {\n    seo,\n    title,\n    "slug": slug.current,\n    body\n  }\n': LegalPageBySlugQueryResult;
     '\n  *[_type == "material"] | order(date desc) {\n    _id,\n    title,\n    description,\n    date,\n    event,\n    type,\n    area,\n    format,\n    size,\n    placements,\n    "fileAsset": file.asset->{\n      url,\n      extension,\n      size\n    }\n  }\n': MaterialsQueryResult;
     '\n  *[_type == "news"] | order(_createdAt desc) [$start...$end]': NewsQueryResult;
     '\n  *[_type == "news"] | order(_createdAt desc)': AllNewsQueryResult;
