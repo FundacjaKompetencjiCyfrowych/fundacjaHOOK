@@ -171,10 +171,15 @@ export type Workshop = {
   location?: string;
   duration?: number;
   group?: "adult" | "teen" | "children" | "family";
-  href?: string;
   status?: "inProgress" | "planned" | "completed";
+  locationMap?: Img;
   signupFormUrl?: string;
   materials?: {
+    asset?: SanityFileAssetReference;
+    media?: unknown;
+    _type: "file";
+  };
+  regulations?: {
     asset?: SanityFileAssetReference;
     media?: unknown;
     _type: "file";
@@ -1320,7 +1325,7 @@ export type SupportUsQueryResult = {
 
 // Source: ../web/sanity/queries/workshopDetails.ts
 // Variable: workshopDetailsQuery
-// Query: *[_type == "workshop" && slug.current == $slug][0] {    _id,    title,    slug,    description,    datetime,    location,    duration,    group,    status,    image {      asset-> {        _id,        _ref,        url,        metadata {          lqip,          dimensions        },        altText,        title,        description      },      crop,      hotspot    },    signupFormUrl,    materials {      asset-> {        _ref,        url,        originalFilename      }    },  }
+// Query: *[_type == "workshop" && slug.current == $slug][0] {    _id,    title,    slug,    description,    datetime,    location,    locationMap {      asset-> {        _id,        _ref,        url,        metadata {          lqip,          dimensions        },        altText,        title,        description,        extension      },      crop,      hotspot    },    duration,    group,    status,    image {      asset-> {        _id,        _ref,        url,        metadata {          lqip,          dimensions        },        altText,        title,        description      },      crop,      hotspot    },    signupFormUrl,    materials {      asset-> {        _ref,        url,        originalFilename      }    },    regulations {      asset-> {        _ref,        url,        originalFilename,        extension      }    },  }
 export type WorkshopDetailsQueryResult = {
   _id: string;
   title: string | null;
@@ -1328,6 +1333,23 @@ export type WorkshopDetailsQueryResult = {
   description: string | null;
   datetime: string | null;
   location: string | null;
+  locationMap: {
+    asset: {
+      _id: string;
+      _ref: null;
+      url: string | null;
+      metadata: {
+        lqip: string | null;
+        dimensions: SanityImageDimensions | null;
+      } | null;
+      altText: string | null;
+      title: string | null;
+      description: string | null;
+      extension: string | null;
+    } | null;
+    crop: SanityImageCrop | null;
+    hotspot: SanityImageHotspot | null;
+  } | null;
   duration: number | null;
   group: "adult" | "children" | "family" | "teen" | null;
   status: "completed" | "inProgress" | "planned" | null;
@@ -1353,6 +1375,14 @@ export type WorkshopDetailsQueryResult = {
       _ref: null;
       url: string | null;
       originalFilename: string | null;
+    } | null;
+  } | null;
+  regulations: {
+    asset: {
+      _ref: null;
+      url: string | null;
+      originalFilename: string | null;
+      extension: string | null;
     } | null;
   } | null;
 } | null;
@@ -1381,10 +1411,15 @@ export type WorkshopsQueryResult = Array<{
   location?: string;
   duration?: number;
   group?: "adult" | "children" | "family" | "teen";
-  href?: string;
   status?: "completed" | "inProgress" | "planned";
+  locationMap?: Img;
   signupFormUrl?: string;
   materials?: {
+    asset?: SanityFileAssetReference;
+    media?: unknown;
+    _type: "file";
+  };
+  regulations?: {
     asset?: SanityFileAssetReference;
     media?: unknown;
     _type: "file";
@@ -1412,7 +1447,7 @@ declare module "@sanity/client" {
     '\n  *[_type == "settings"][0] {\n    logoTop {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n    logoBottom {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n    link {\n      socialLinks {\n        facebook,\n        instagram,\n        linkedin\n      }\n    }\n  }\n': SettingsQueryResult;
     '\n  *[_type == "settings"][0] {\n    logoTop {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n  }\n': LogoQueryResult;
     '\n  *[_type == "supportUs"][0] {\n    seo,\n    volunteerDescription,\n    accountNumber,\n    transferTitle,\n    volunteerButton->{\n      _id,\n      text,\n      href\n    }\n  }\n': SupportUsQueryResult;
-    '\n  *[_type == "workshop" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    description,\n    datetime,\n    location,\n    duration,\n    group,\n    status,\n    image {\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description\n      },\n      crop,\n      hotspot\n    },\n    signupFormUrl,\n    materials {\n      asset-> {\n        _ref,\n        url,\n        originalFilename\n      }\n    },\n  }\n': WorkshopDetailsQueryResult;
+    '\n  *[_type == "workshop" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    description,\n    datetime,\n    location,\n    locationMap {\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description,\n        extension\n      },\n      crop,\n      hotspot\n    },\n    duration,\n    group,\n    status,\n    image {\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description\n      },\n      crop,\n      hotspot\n    },\n    signupFormUrl,\n    materials {\n      asset-> {\n        _ref,\n        url,\n        originalFilename\n      }\n    },\n    regulations {\n      asset-> {\n        _ref,\n        url,\n        originalFilename,\n        extension\n      }\n    },\n  }\n': WorkshopDetailsQueryResult;
     '\n  *[_type == "workshop"] {\n    "slug": slug.current\n  }\n': WorkshopSlugsQueryResult;
     '\n  *[_type == "workshop"] | order(_createdAt desc) [$start...$end]': WorkshopsQueryResult;
   }

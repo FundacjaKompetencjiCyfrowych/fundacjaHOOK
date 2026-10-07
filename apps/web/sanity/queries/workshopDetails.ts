@@ -8,6 +8,23 @@ export const workshopDetailsQuery = defineQuery(`
     description,
     datetime,
     location,
+    locationMap {
+      asset-> {
+        _id,
+        _ref,
+        url,
+        metadata {
+          lqip,
+          dimensions
+        },
+        altText,
+        title,
+        description,
+        extension
+      },
+      crop,
+      hotspot
+    },
     duration,
     group,
     status,
@@ -33,6 +50,14 @@ export const workshopDetailsQuery = defineQuery(`
         _ref,
         url,
         originalFilename
+      }
+    },
+    regulations {
+      asset-> {
+        _ref,
+        url,
+        originalFilename,
+        extension
       }
     },
   }

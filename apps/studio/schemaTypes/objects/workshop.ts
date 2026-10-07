@@ -74,12 +74,6 @@ export default defineType({
     }),
 
     defineField({
-      name: "href",
-      title: "Link",
-      type: "string",
-    }),
-
-    defineField({
       name: "status",
       title: "Status",
       type: "string",
@@ -94,9 +88,16 @@ export default defineType({
     }),
 
     defineField({
+      name: "locationMap",
+      title: "Mapa lokalizacji",
+      type: "img",
+      description: "Obraz mapy z zaznaczonym miejscem warsztatu.",
+    }),
+
+    defineField({
       name: "signupFormUrl",
       title: "Link do formularza zapisów",
-      type: "string",
+      type: "url",
       description: "URL do Google Form lub innego formularza zapisów",
     }),
 
@@ -105,6 +106,13 @@ export default defineType({
       title: "Materiały",
       type: "file",
       description: "Materiały do pobrania (PDF, ZIP, itp.)",
+    }),
+
+    defineField({
+      name: "regulations",
+      title: "Regulamin",
+      type: "file",
+      description: "Regulamin warsztatu do pobrania.",
     }),
   ],
   preview: {

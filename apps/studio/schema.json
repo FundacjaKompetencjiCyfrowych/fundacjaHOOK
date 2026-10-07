@@ -961,13 +961,6 @@
         },
         "optional": true
       },
-      "href": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
       "status": {
         "type": "objectAttribute",
         "value": {
@@ -989,6 +982,14 @@
         },
         "optional": true
       },
+      "locationMap": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "img"
+        },
+        "optional": true
+      },
       "signupFormUrl": {
         "type": "objectAttribute",
         "value": {
@@ -997,6 +998,37 @@
         "optional": true
       },
       "materials": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "asset": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "sanity.fileAsset.reference"
+              },
+              "optional": true
+            },
+            "media": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "unknown"
+              },
+              "optional": true
+            },
+            "_type": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string",
+                "value": "file"
+              }
+            }
+          }
+        },
+        "optional": true
+      },
+      "regulations": {
         "type": "objectAttribute",
         "value": {
           "type": "object",

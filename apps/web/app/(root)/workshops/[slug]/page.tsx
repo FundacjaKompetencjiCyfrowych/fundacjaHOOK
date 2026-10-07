@@ -66,6 +66,7 @@ async function WorkshopContent({ slug }: { slug: string }) {
   const workshop = data;
   const title = workshop.title ?? "Warsztat";
   const formattedDate = workshop.datetime ? getFormattedWorkshopDate(workshop.datetime) : null;
+  const regulationFileType = workshop.regulations?.asset?.extension?.toUpperCase();
 
   return (
     <>
@@ -128,22 +129,29 @@ async function WorkshopContent({ slug }: { slug: string }) {
                 <MapPin size={20} className="text-brand-primary shrink-0" />
                 <span className="text-base">{workshop.location}</span>
               </div>
-              <div className="flex justify-center items-center bg-elevated rounded-lg h-48 text-muted">
-                [MAP / LOCATION PLACEHOLDER]
-              </div>
+              {workshop.locationMap?.asset && (
+                <div className="relative h-28 overflow-hidden rounded-lg bg-elevated sm:h-64">
+                  <SanityImage
+                    image={workshop.locationMap}
+                    fill
+                    className="object-cover"
+                    alt={`Mapa lokalizacji: ${workshop.location}`}
+                  />
+                </div>
+              )}
             </div>
           )}
 
           {/* Regulamin */}
-          {workshop.materials?.asset?.url && (
+          {workshop.regulations?.asset?.url && (
             <div className="mt-6">
               <h3 className="mb-2 font-bold text-sm">Regulamin</h3>
               <a
-                href={getDownloadUrl(workshop.materials.asset.url)}
+                href={getDownloadUrl(workshop.regulations.asset.url)}
                 className="inline-flex items-center gap-2 hover:bg-elevated active:bg-elevated px-3 py-2 border border-border rounded-lg font-medium text-foreground text-xs transition-colors"
               >
                 <Download className="w-4 h-4" />
-                Pobierz regulamin (PDF)
+                Pobierz regulamin{regulationFileType ? ` (${regulationFileType})` : ""}
               </a>
             </div>
           )}
@@ -151,12 +159,12 @@ async function WorkshopContent({ slug }: { slug: string }) {
           {/* Action buttons */}
           <div className="flex sm:flex-row flex-col gap-3 mt-7">
             {workshop.signupFormUrl && (
-              <a href={workshop.signupFormUrl} target="_blank" rel="noopener noreferrer">
-                <Button className="cursor-pointer">
+              <Button asChild className="cursor-pointer">
+                <a href={workshop.signupFormUrl} target="_blank" rel="noopener noreferrer">
                   <LogIn size={18} className="mr-2" />
                   Zapisz się
-                </Button>
-              </a>
+                </a>
+              </Button>
             )}
 
             {workshop.materials?.asset?.url && (
