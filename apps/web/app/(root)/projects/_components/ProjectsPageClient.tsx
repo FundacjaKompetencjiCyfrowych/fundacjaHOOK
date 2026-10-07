@@ -62,7 +62,7 @@ export default function ProjectsPageClient({ initialProjects, counts }: Projects
             ))}
           </div>
         ) : (
-          <div className="bg-card px-6 py-10 border border-border border-dashed rounded-xl text-muted-foreground text-center">
+          <div className="mt-8 bg-card px-6 py-10 border border-border border-dashed rounded-xl text-muted-foreground text-center">
             Brak projektów dla wybranego filtra.
           </div>
         )}
