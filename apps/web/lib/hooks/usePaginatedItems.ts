@@ -7,7 +7,7 @@ const DEFAULT_ERROR_MESSAGE = "Nie udało się załadować kolejnych elementów.
 interface UsePaginatedItemsOptions<T> {
   initialItems: T[];
   pageSize: number;
-  loadItemsAction: (start: number) => Promise<T[]>;
+  loadItemsAction: (start: number, limit: number) => Promise<T[]>;
   resetKey?: string;
   errorMessage?: string;
 }
@@ -32,7 +32,7 @@ export function usePaginatedItems<T>({
   errorMessage = DEFAULT_ERROR_MESSAGE,
 }: UsePaginatedItemsOptions<T>): PaginatedItemsResult<T> {
   const [items, setItems] = useState(initialItems);
-  const [hasMore, setHasMore] = useState(initialItems.length === pageSize);
+  const [hasMore, setHasMore] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [loadError, setLoadError] = useState(false);
   const loadItemsActionRef = useRef(loadItemsAction);
@@ -44,6 +44,24 @@ export function usePaginatedItems<T>({
     loadItemsActionRef.current = loadItemsAction;
   }, [loadItemsAction]);
 
+  useEffect(() => {
+    if (initialItems.length !== pageSize) return;
+
+    let isCurrent = true;
+    void loadItemsActionRef
+      .current(pageSize, 1)
+      .then((nextItems) => {
+        if (isCurrent) setHasMore(nextItems.length > 0);
+      })
+      .catch(() => {
+        if (isCurrent) setHasMore(true);
+      });
+
+    return () => {
+      isCurrent = false;
+    };
+  }, [initialItems.length, pageSize]);
+
   const requestPage = useCallback(
     async (start: number, replaceItems: boolean) => {
       const requestId = ++activeRequestRef.current;
@@ -53,11 +71,14 @@ export function usePaginatedItems<T>({
       failedRequestRef.current = null;
 
       try {
-        const nextItems = await loadItemsActionRef.current(start);
+        const nextItems = await loadItemsActionRef.current(start, pageSize + 1);
         if (activeRequestRef.current !== requestId) return;
 
-        setItems((currentItems) => (replaceItems ? nextItems : [...currentItems, ...nextItems]));
-        setHasMore(nextItems.length > 0 && nextItems.length === pageSize);
+        const visibleItems = nextItems.slice(0, pageSize);
+        setItems((currentItems) =>
+          replaceItems ? visibleItems : [...currentItems, ...visibleItems]
+        );
+        setHasMore(nextItems.length > pageSize);
       } catch {
         if (activeRequestRef.current !== requestId) return;
         failedRequestRef.current = { start, replaceItems };

@@ -21,7 +21,7 @@ export default function ProjectsPageClient({ initialProjects, counts }: Projects
   const [filter, setFilter] = useState<ProjectFilter>("all");
   const [sortBy, setSortBy] = useState<ProjectSortOrder>("Najnowsze");
   const loadFilteredProjects = useCallback(
-    (start: number) => loadProjectsPage(start, filter, sortBy),
+    (start: number, limit: number) => loadProjectsPage(start, filter, sortBy, limit),
     [filter, sortBy]
   );
   const pagination = usePaginatedItems({
