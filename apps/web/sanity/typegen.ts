@@ -443,6 +443,7 @@ export type Contact = {
       _key: string;
     } & DepartmentCard
   >;
+  gdprClause?: string;
 };
 
 export type AboutUs = {
@@ -973,9 +974,10 @@ export type AboutUsQueryResult = {
 
 // Source: ../web/sanity/queries/contact.ts
 // Variable: contactQuery
-// Query: {      "page": *[_type == "contact"][0]{        departments[] {          name,          email,          phone        }      },      "orgDetails": *[_type == "organizationDetails" || _id == "organizationDetails"] | order(_updatedAt desc)[0]{        fullName,        address,        krs,        nip,        regon      }    }
+// Query: {      "page": *[_type == "contact"][0]{        gdprClause,        departments[] {          name,          email,          phone        }      },      "orgDetails": *[_type == "organizationDetails" || _id == "organizationDetails"] | order(_updatedAt desc)[0]{        fullName,        address,        krs,        nip,        regon      }    }
 export type ContactQueryResult = {
   page: {
+    gdprClause: string | null;
     departments: Array<{
       name: string | null;
       email: string | null;
@@ -1432,7 +1434,7 @@ declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_type == "home"][0]{\n    _id,\n    sections[]{\n      ...,\n      _type in ["cardswithbackground", "sectionCardsWithBackground"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          image\n        }\n      },\n      _type in ["cardswithredirect", "sectionCardsWithRedirect"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          href,\n          hrefText,\n          image\n        },\n        button->{\n          _id,\n          text,\n          href\n        }\n      },\n      _type in ["supportSection", "sectionSupport"] => {\n        ...,\n        button->{\n          _id,\n          text,\n          href\n        }\n      },\n      _type in ["cooperationSection", "sectionCooperation"] => {\n        ...,\n        button->{\n          _id,\n          text,\n          href\n        }\n      }\n    }\n  }\n': HomeQueryResult;
     '\n  *[_type == "aboutUs"][0] {\n    seo,\n    mission{\n      description,\n      image {\n        _type,\n        asset-> {\n          _id,\n          _ref,\n          url,\n          metadata {\n            lqip,\n            dimensions\n          },\n          altText,\n          title,\n          description,\n          extension\n        },\n        crop,\n        hotspot\n      }\n    },\n    meaningCards[]{\n      _key,\n      title,\n      image {\n        _type,\n        asset-> {\n          _id,\n          _ref,\n          url,\n          metadata {\n            lqip,\n            dimensions\n          },\n          altText,\n          title,\n          description,\n          extension\n        },\n        crop,\n        hotspot\n      },\n      description\n    },\n    galleryImages[]{\n      _key,\n      _type,\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description,\n        extension\n      },\n      crop,\n      hotspot\n    },\n    teamMembers[]{\n      _key,\n      name,\n      role,\n      photo {\n        _type,\n        asset-> {\n          _id,\n          _ref,\n          url,\n          metadata {\n            lqip,\n            dimensions\n          },\n          altText,\n          title,\n          description,\n          extension\n        },\n        crop,\n        hotspot\n      }\n    }\n  }\n': AboutUsQueryResult;
-    '\n    {\n      "page": *[_type == "contact"][0]{\n        departments[] {\n          name,\n          email,\n          phone\n        }\n      },\n      "orgDetails": *[_type == "organizationDetails" || _id == "organizationDetails"] | order(_updatedAt desc)[0]{\n        fullName,\n        address,\n        krs,\n        nip,\n        regon\n      }\n    }\n  ': ContactQueryResult;
+    '\n    {\n      "page": *[_type == "contact"][0]{\n        gdprClause,\n        departments[] {\n          name,\n          email,\n          phone\n        }\n      },\n      "orgDetails": *[_type == "organizationDetails" || _id == "organizationDetails"] | order(_updatedAt desc)[0]{\n        fullName,\n        address,\n        krs,\n        nip,\n        regon\n      }\n    }\n  ': ContactQueryResult;
     '\n  *[_type == "post"] | order(_createdAt desc) {\n    _id,\n    _createdAt,\n    title,\n    "slug": slug.current,\n    "author": author->name,\n    "image": mainImage.asset->url,\n    description,\n    "categories": categories[]->title,\n    body\n  }\n': PostsQueryResult;
     '\n  *[_type == "material"] | order(date desc) {\n    _id,\n    title,\n    description,\n    date,\n    event,\n    type,\n    area,\n    format,\n    size,\n    placements,\n    "fileAsset": file.asset->{\n      url,\n      extension,\n      size\n    }\n  }\n': MaterialsQueryResult;
     '\n  *[_type == "news"] | order(_createdAt desc) [$start...$end]': NewsQueryResult;

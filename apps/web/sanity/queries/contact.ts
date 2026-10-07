@@ -4,6 +4,7 @@ export const contactQuery = defineQuery(
   `
     {
       "page": *[_type == "contact"][0]{
+        gdprClause,
         departments[] {
           name,
           email,
