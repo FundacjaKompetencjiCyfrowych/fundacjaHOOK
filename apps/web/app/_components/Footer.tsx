@@ -68,13 +68,15 @@ export default async function Footer({ address, krs, logo, socialLinks }: Footer
             <div>
               <p className="mb-2 font-bold">Prawne</p>
               <ul className="space-y-1 text-muted">
-                {legalPages?.map((page) => (
-                  <li key={page._id}>
-                    <Link href={`/${page.slug}`} className="hover:underline">
-                      {page.title}
-                    </Link>
-                  </li>
-                ))}
+                {legalPages?.map((page) =>
+                  page.slug ? (
+                    <li key={page._id}>
+                      <Link href={ROUTES.LEGAL_PAGE(page.slug)} className="hover:underline">
+                        {page.title}
+                      </Link>
+                    </li>
+                  ) : null
+                )}
               </ul>
             </div>
             <div>

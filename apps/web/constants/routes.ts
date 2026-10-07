@@ -10,6 +10,7 @@ const ROUTES = {
   PROJECTS: "/projects",
   PROJECT: (id: string) => `/projects/${id}`,
   SUPPORT_US: "/support-us",
+  LEGAL_PAGE: (slug: string) => `/legal/${slug}`,
 };
 
 export default ROUTES;
