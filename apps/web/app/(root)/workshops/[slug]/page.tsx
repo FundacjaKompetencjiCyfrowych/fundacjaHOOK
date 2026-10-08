@@ -105,9 +105,7 @@ async function WorkshopContent({ slug }: { slug: string }) {
 
           {/* Description */}
           {workshop.description && (
-            <p className="mb-4 text-base leading-[1.1] tracking-[-0.01em] text-muted">
-              {workshop.description}
-            </p>
+            <p className="mb-4 text-main whitespace-pre-line">{workshop.description}</p>
           )}
 
           {/* Termin warsztatu */}
