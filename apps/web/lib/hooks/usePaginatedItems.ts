@@ -37,6 +37,7 @@ export function usePaginatedItems<T>({
   const [loadError, setLoadError] = useState(false);
   const loadItemsActionRef = useRef(loadItemsAction);
   const activeRequestRef = useRef(0);
+  const hasCheckedInitialPageRef = useRef(false);
   const previousResetKeyRef = useRef(resetKey);
   const failedRequestRef = useRef<{ start: number; replaceItems: boolean } | null>(null);
 
@@ -45,16 +46,21 @@ export function usePaginatedItems<T>({
   }, [loadItemsAction]);
 
   useEffect(() => {
-    if (initialItems.length !== pageSize) return;
+    if (hasCheckedInitialPageRef.current || initialItems.length !== pageSize) return;
 
     let isCurrent = true;
+    const requestId = activeRequestRef.current;
     void loadItemsActionRef
       .current(pageSize, 1)
       .then((nextItems) => {
-        if (isCurrent) setHasMore(nextItems.length > 0);
+        if (!isCurrent || activeRequestRef.current !== requestId) return;
+        hasCheckedInitialPageRef.current = true;
+        setHasMore(nextItems.length > 0);
       })
       .catch(() => {
-        if (isCurrent) setHasMore(true);
+        if (!isCurrent || activeRequestRef.current !== requestId) return;
+        hasCheckedInitialPageRef.current = true;
+        setHasMore(true);
       });
 
     return () => {
@@ -65,6 +71,7 @@ export function usePaginatedItems<T>({
   const requestPage = useCallback(
     async (start: number, replaceItems: boolean) => {
       const requestId = ++activeRequestRef.current;
+      hasCheckedInitialPageRef.current = true;
 
       setIsLoading(true);
       setLoadError(false);
