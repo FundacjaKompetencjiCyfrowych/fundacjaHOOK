@@ -10,6 +10,7 @@ import Breadcrumbs from "@/app/_components/Navigation/Breadcrumbs";
 import PageTitle from "@/app/_components/Navigation/PageTitle";
 import ROUTES from "@/constants/routes";
 import { formatDate } from "@/lib/formatDate";
+import { Calendar1 } from "lucide-react";
 
 async function getNews() {
   "use cache";
@@ -57,12 +58,14 @@ async function NewsArticlePageContent({ params }: NewsArticlePageProps) {
       <Breadcrumbs segments={[{ label: "Aktualności", href: ROUTES.NEWS }, { label: title }]} />
       <section className="px-4 py-12 md:px-6 md:py-14">
         <div className="mx-auto max-w-[1200px]">
-          <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
-            <PageTitle>{title}</PageTitle>
-            <time dateTime={item._createdAt} className="shrink-0 text-sm text-muted-foreground">
-              {formatDate(item._createdAt)}
-            </time>
-          </div>
+          <PageTitle>{title}</PageTitle>
+          <time
+            dateTime={item._createdAt}
+            className="mt-2 mb-2 flex items-center gap-1.5 text-xs text-muted-foreground"
+          >
+            <Calendar1 size={14} />
+            {formatDate(item._createdAt)}
+          </time>
           <Link
             href={ROUTES.NEWS}
             className="block mt-6 mb-6 font-medium text-brand-primary hover:text-brand-onhover text-sm"
@@ -86,7 +89,10 @@ async function NewsArticlePageContent({ params }: NewsArticlePageProps) {
             </p>
           )}
 
-          <div className="text-main">
+          <div
+            className="text-main whitespace-pre-line [&_p]:mb-6 [&_p]:leading-normal
+              [&_p]:tracking-normal [&_p]:text-main"
+          >
             <SanityRichText value={item.article} />
           </div>
         </div>
