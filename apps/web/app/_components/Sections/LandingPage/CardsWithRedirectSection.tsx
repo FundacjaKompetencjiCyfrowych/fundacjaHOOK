@@ -2,6 +2,7 @@ import RedirectButton from "@/app/_components/Buttons/RedirectButton";
 import CardWithRedirect from "@/app/_components/Cards/CardWithRedirect";
 import { sanityFetch } from "@/sanity/live";
 import type { Img } from "@/sanity/typegen";
+import { HomeProjectsSection, HomeWorkshopsSection } from "./HomePreviewSections";
 
 type CardWithRedirectItem = {
   _id: string;
@@ -39,6 +40,14 @@ export default async function CardsWithRedirectSection({
   cards?: Array<CardWithRedirectItem | CardReference> | null;
   button?: RedirectButtonItem | ButtonReference | null;
 }) {
+  // These home-page previews intentionally use the Figma sample content for now.
+  if (title?.trim().toLocaleLowerCase("pl").includes("warsztat")) {
+    return <HomeWorkshopsSection />;
+  }
+  if (title?.trim().toLocaleLowerCase("pl").includes("projekt")) {
+    return <HomeProjectsSection />;
+  }
+
   if (!cards?.length) return null;
 
   const cardRefs = cards.filter((card): card is CardReference => "_ref" in card);

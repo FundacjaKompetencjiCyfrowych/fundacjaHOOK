@@ -1,6 +1,7 @@
 import { SanityImage } from "@/sanity/image/SanityImage";
 import type { Img } from "@/sanity/typegen";
 import { Typography } from "../ui/typography";
+import { Card } from "../ui/card";
 
 export default function CardLandingPage({
   title,
@@ -12,8 +13,8 @@ export default function CardLandingPage({
   image?: Img | null;
 }) {
   return (
-    <div className="p-4 rounded-xl  bg-elevated shadow-md transition-all duration-200 hover:-translate-y-0.5">
-      <div className="p-2 mb-3 h-12 w-12 overflow-hidden rounded-xl border border-subtle bg-[#eae7e1] flex items-center justify-center">
+    <Card className="gap-0 rounded-xl bg-gray-200 p-4 shadow-md ring-0 transition-all duration-150 hover:-translate-y-0.5 hover:shadow-lg lg:min-h-[166px]">
+      <div className="p-2 mb-3 h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-subtle bg-[#eae7e1] flex items-center justify-center">
         <SanityImage
           image={image}
           width={1920}
@@ -29,9 +30,9 @@ export default function CardLandingPage({
       <Typography variant="body" weight="medium" className="mb-1 ">
         {title}
       </Typography>
-      <Typography variant={"caption"} className=" text-muted">
+      <Typography variant={"caption"} className="text-muted tracking-[0.02em]">
         {description}
       </Typography>
-    </div>
+    </Card>
   );
 }

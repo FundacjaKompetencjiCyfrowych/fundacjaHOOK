@@ -1,4 +1,6 @@
-import RedirectButton from "@/app/_components/Buttons/RedirectButton";
+import Link from "next/link";
+import { Button } from "../../ui/button";
+import { Typography } from "../../ui/typography";
 
 type ButtonData = {
   _id?: string;
@@ -16,12 +18,27 @@ export default function CooperationSection({
   button?: ButtonData | null;
 }) {
   return (
-    <section className="wire-section px-4 py-12 sm:py-16 border-b border-subtle">
-      <div className="container mx-auto max-w-2xl rounded-2xl px-6 py-8 sm:px-8 sm:py-10">
-        <h2 className="mb-2 text-2xl font-bold">{title}</h2>
-        {description ? <p className="mb-6 text-sm text-muted">{description}</p> : null}
+    <section className="wire-section border-b border-subtle px-4 pb-6 pt-14 sm:px-6">
+      <div className="mx-auto flex max-w-[668px] flex-col items-center text-center">
+        <Typography
+          as="h2"
+          variant="h4"
+          weight="bold"
+          className="text-[22px] leading-[1.1] tracking-[0.01em]"
+        >
+          {title}
+        </Typography>
+        {description ? (
+          <Typography variant="body" className="mt-2 text-muted">
+            {description}
+          </Typography>
+        ) : null}
         {button?.href && button.text ? (
-          <RedirectButton href={button.href} text={button.text} />
+          <Button asChild className="mt-4">
+            <Link href={button.href} target="_blank" rel="noopener noreferrer">
+              {button.text}
+            </Link>
+          </Button>
         ) : null}
       </div>
     </section>

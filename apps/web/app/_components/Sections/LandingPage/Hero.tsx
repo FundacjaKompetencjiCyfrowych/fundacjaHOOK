@@ -12,8 +12,8 @@ export default function Hero({
 }) {
   return (
     <section className="py-8 px-12 border-b border-subtle">
-      <div className="container mx-auto">
-        <div className="relative h-64 sm:h-96 mt-4 mb-6 rounded-xl border border-dashed border-subtle bg-placeholder flex items-center justify-center overflow-hidden">
+      <div className="mx-auto max-w-[1152px]">
+        <div className="relative h-64 sm:h-[387px] mt-4 mb-6 rounded-xl border border-dashed border-subtle bg-placeholder flex items-center justify-center overflow-hidden">
           <SanityImage image={image} fill className="object-cover object-center" />
         </div>
         <Typography variant={"h3"} weight={"bold"} className="mb-3 sm:max-w-[50%] wrap-break-word">

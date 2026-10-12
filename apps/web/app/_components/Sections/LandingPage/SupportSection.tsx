@@ -1,4 +1,5 @@
-import RedirectButton from "@/app/_components/Buttons/RedirectButton";
+import Link from "next/link";
+import { Button } from "../../ui/button";
 import { SanityImage } from "@/sanity/image/SanityImage";
 import type { Img } from "@/sanity/typegen";
 import { Typography } from "../../ui/typography";
@@ -23,8 +24,8 @@ export default function SupportSection({
   button?: ButtonData | null;
 }) {
   return (
-    <section className="wire-section px-4 py-8 sm:px-6 sm:py-10 border-b border-subtle">
-      <div className="container mx-auto relative overflow-hidden rounded-4xl px-6 py-30 text-center text-white sm:px-8">
+    <section className="wire-section px-4 py-8 sm:px-6 sm:py-10">
+      <div className="relative mx-auto flex max-w-[1200px] items-center justify-center overflow-hidden rounded-4xl px-6 py-30 text-center text-white sm:px-8 md:min-h-[500px] md:py-12">
         <div className="absolute inset-0 " />
         {backgroundImage ? (
           <div
@@ -64,11 +65,11 @@ export default function SupportSection({
           </div>
 
           {button?.href && button.text ? (
-            <RedirectButton
-              href={button.href}
-              text={button.text}
-              className="rounded-xl py-3 px-4"
-            />
+            <Button asChild>
+              <Link href={button.href} target="_blank" rel="noopener noreferrer">
+                {button.text}
+              </Link>
+            </Button>
           ) : null}
         </div>
       </div>

@@ -8,7 +8,7 @@ import type { Project } from "@/sanity/typegen";
 import { useCallback, useState } from "react";
 import { loadProjectsPage } from "../_actions/loadProjectsPage";
 import type { ProjectCounts, ProjectFilter, ProjectSortOrder } from "../_constants/projects";
-import ProjectCard from "./ProjectCard";
+import ProjectCard from "@/app/_components/Cards/ProjectCard";
 import ProjectSortSelect from "./ProjectSortSelect";
 import ProjectStatusFilters from "./ProjectStatusFilters";
 

@@ -57,5 +57,17 @@ export default async function Home() {
   const { data } = await sanityFetch({ query: homeQuery });
   if (!data) notFound();
 
-  return <SanitySections value={data.sections} />;
+  const sections = data.sections?.map((section) => {
+    if (["cooperationSection", "sectionCooperation"].includes(section._type)) {
+      return {
+        ...section,
+        title: "Masz pomysł? My pomożemy go zrealizować.",
+        description:
+          "Jeśli szukasz partnera do realizacji warsztatów, projektu społecznego, wydarzenia lub programu rozwojowego, porozmawiajmy. Łączymy ludzi, wiedzę i doświadczenie, tworząc rozwiązania dopasowane do konkretnych potrzeb.",
+      };
+    }
+    return section;
+  });
+
+  return <SanitySections value={sections} />;
 }
