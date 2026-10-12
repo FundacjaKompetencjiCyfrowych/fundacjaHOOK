@@ -1,12 +1,37 @@
 import type { Metadata } from "next";
+import { cacheLife } from "next/cache";
 import { notFound } from "next/navigation";
 
 import Breadcrumbs from "@/app/_components/Navigation/Breadcrumbs";
 import PageTitle from "@/app/_components/Navigation/PageTitle";
 import { SanityRichText } from "@/sanity/richText/SanityRichText";
+import { client } from "@/sanity/client";
 import { sanityFetch } from "@/sanity/live";
 import { mapMetadata } from "@/sanity/metadata/mapMetadata";
-import { legalPageBySlugQuery } from "@/sanity/queries/legalPages";
+import { legalPageBySlugQuery, legalPagesQuery } from "@/sanity/queries/legalPages";
+
+async function getLegalPages() {
+  "use cache";
+  cacheLife("days");
+
+  const data = await client.fetch<{ slug: string }[]>(
+    legalPagesQuery,
+    {},
+    { perspective: "published", stega: false }
+  );
+
+  return data || [];
+}
+
+export async function generateStaticParams() {
+  const pages = await getLegalPages();
+
+  if (pages.length === 0) {
+    return [{ slug: "not-found" }];
+  }
+
+  return pages.map((page) => ({ slug: page.slug }));
+}
 
 type LegalPageRouteProps = {
   params: Promise<{ slug: string }>;
@@ -14,7 +39,11 @@ type LegalPageRouteProps = {
 
 export async function generateMetadata({ params }: LegalPageRouteProps): Promise<Metadata> {
   const { slug } = await params;
-  const { data } = await sanityFetch({ query: legalPageBySlugQuery, params: { slug } });
+  const { data } = await sanityFetch({
+    query: legalPageBySlugQuery,
+    params: { slug },
+    stega: false,
+  });
 
   return mapMetadata(data);
 }
