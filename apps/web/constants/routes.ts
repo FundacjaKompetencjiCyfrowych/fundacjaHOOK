@@ -1,5 +1,3 @@
-// TODO: Cleanup routes and ask what should privacy policy and information clause be
-
 const ROUTES = {
   HOME: "/",
   WORKSHOPS: "/workshops",
@@ -12,8 +10,7 @@ const ROUTES = {
   PROJECTS: "/projects",
   PROJECT: (id: string) => `/projects/${id}`,
   SUPPORT_US: "/support-us",
-  PRIVACY_POLICY: "#",
-  INFORMATION_CLAUSE: "#",
+  LEGAL_PAGE: (slug: string) => `/legal/${slug}`,
 };
 
 export default ROUTES;

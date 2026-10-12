@@ -1,6 +1,7 @@
 import ContactForm from "./_components/ContactForm";
 import Breadcrumbs from "@/app/_components/Navigation/Breadcrumbs";
 import PageTitle from "@/app/_components/Navigation/PageTitle";
+import { Typography } from "@/app/_components/ui/typography";
 import { sanityFetch } from "@/sanity/live";
 import { contactQuery } from "@/sanity/queries/contact";
 
@@ -22,6 +23,11 @@ export default async function ContactPage() {
           <div className="grid grid-cols-1 items-start gap-10 mt-6 md:grid-cols-2 lg:gap-16">
             <div>
               <ContactForm />
+              {page?.gdprClause && (
+                <Typography variant="caption" className="mt-4 whitespace-pre-wrap text-muted">
+                  {page.gdprClause}
+                </Typography>
+              )}
             </div>
 
             <div className="space-y-6">

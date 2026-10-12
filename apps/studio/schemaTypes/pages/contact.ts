@@ -17,6 +17,13 @@ export default defineType({
       group: "content",
       of: [{ type: "departmentCard" }],
     }),
+    defineField({
+      name: "gdprClause",
+      title: "Klauzula RODO",
+      type: "text",
+      rows: 6,
+      group: "content",
+    }),
   ],
   preview: {
     select: {
