@@ -8,7 +8,7 @@ type ButtonData = {
   href?: string | null;
 };
 
-export default function CooperationSection({
+export default function HomeContactSection({
   title,
   description,
   button,
@@ -35,7 +35,11 @@ export default function CooperationSection({
         ) : null}
         {button?.href && button.text ? (
           <Button asChild className="mt-4">
-            <Link href={button.href} target="_blank" rel="noopener noreferrer">
+            <Link
+              href={button.href}
+              target={button.href.startsWith("/") ? undefined : "_blank"}
+              rel={button.href.startsWith("/") ? undefined : "noopener noreferrer"}
+            >
               {button.text}
             </Link>
           </Button>

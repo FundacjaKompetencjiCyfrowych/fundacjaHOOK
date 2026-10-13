@@ -21,15 +21,11 @@ export default function WorkshopCard({ workshop }: WorkshopCardProps) {
   const group = workshop.group ? mapGroup(workshop.group) : undefined;
   const card = (
     <Card className="relative gap-2 shadow-md hover:shadow-lg pt-0 w-full transition-all hover:-translate-y-0.5 duration-150 cursor-pointer">
-      <div className="relative mx-4 mt-4 aspect-[2.1] min-w-0 overflow-hidden rounded-xl">
-        {!image ? (
-          <div className="flex h-full items-center justify-center border border-subtle border-dashed bg-placeholder text-sm text-muted-foreground">
-            [IMAGE PLACEHOLDER]
-          </div>
-        ) : (
+      {image?.asset ? (
+        <div className="relative mx-4 mt-4 aspect-[2.1] min-w-0 overflow-hidden rounded-xl">
           <SanityImage image={image} fill className="object-cover" />
-        )}
-      </div>
+        </div>
+      ) : null}
       <CardHeader>
         <CardTitle className="flex flex-wrap items-baseline gap-x-2 gap-y-1 text-sm leading-[1.15] mb-1">
           <span>{title}</span>

@@ -10,7 +10,7 @@ type ButtonData = {
   href?: string | null;
 };
 
-export default function SupportSection({
+export default function HomeSupportSection({
   title,
   description,
   krsNumber,
@@ -59,14 +59,18 @@ export default function SupportSection({
             ) : null}
             {krsNumber ? (
               <Typography variant="body" weight="bold" className=" text-white">
-                KRS: [{krsNumber}]
+                KRS: {krsNumber}
               </Typography>
             ) : null}
           </div>
 
           {button?.href && button.text ? (
             <Button asChild>
-              <Link href={button.href} target="_blank" rel="noopener noreferrer">
+              <Link
+                href={button.href}
+                target={button.href.startsWith("/") ? undefined : "_blank"}
+                rel={button.href.startsWith("/") ? undefined : "noopener noreferrer"}
+              >
                 {button.text}
               </Link>
             </Button>

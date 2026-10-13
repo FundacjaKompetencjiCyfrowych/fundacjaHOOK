@@ -5,7 +5,7 @@ import type { Img } from "@/sanity/typegen";
 import { Typography } from "../../ui/typography";
 
 type CardsLandingItem = {
-  _id: string;
+  _id?: string;
   title?: string | null;
   description?: string | null;
   image?: Img | null;
@@ -18,7 +18,7 @@ type CardsLandingReference = {
 
 type CardsLandingInput = CardsLandingItem | CardsLandingReference;
 
-export default async function CardsLandingSection({
+export default async function HomeAboutSection({
   title,
   subtitle,
   backgroundImage,
@@ -39,7 +39,7 @@ export default async function CardsLandingSection({
   return (
     <section className="wire-section relative overflow-hidden border-y border-subtle px-4 py-12 sm:px-6 lg:pb-12 lg:pt-14">
       <div
-        className="pointer-events-none absolute inset-x-0 top-0 
+        className="pointer-events-none absolute inset-x-0 top-0
       w-[270%] h-[200%] -translate-x-[25%] -translate-y-[-5%]
       md:w-[112%] md:h-auto md:-translate-x-[12%] md:-translate-y-[4.5%]"
       >

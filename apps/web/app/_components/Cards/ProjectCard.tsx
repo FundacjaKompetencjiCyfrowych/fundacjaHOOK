@@ -11,19 +11,15 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project }: ProjectCardProps) {
   const { title, description, image } = project;
-  const status = project.status ?? "planned";
+  const status = project.status;
   const href = project.slug?.current ? `/projects/${project.slug.current}` : undefined;
   const card = (
     <Card className="gap-2 rounded-lg bg-[#f5f3f0] shadow-md hover:shadow-lg pt-0 border-0 focus-within:ring-2 focus-within:ring-ring/50 h-full transition-all hover:-translate-y-0.5 duration-150">
-      <div className="relative mx-4 mt-4 h-32 min-w-0 overflow-hidden rounded-xl">
-        {image ? (
+      {image?.asset ? (
+        <div className="relative mx-4 mt-4 h-32 min-w-0 overflow-hidden rounded-xl">
           <SanityImage image={image} width={536} height={128} fill className="object-cover" />
-        ) : (
-          <div className="flex h-full items-center justify-center border border-subtle border-dashed bg-placeholder text-sm text-muted-foreground">
-            [IMAGE PLACEHOLDER]
-          </div>
-        )}
-      </div>
+        </div>
+      ) : null}
       <CardHeader className="gap-2">
         <CardTitle className="flex flex-wrap items-center gap-2 text-sm leading-tight">
           <span className="font-medium text-foreground">{title}</span>

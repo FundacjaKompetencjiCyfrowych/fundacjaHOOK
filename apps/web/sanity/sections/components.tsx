@@ -4,11 +4,11 @@ import { SanityImage } from "@/sanity/image/SanityImage";
 import { ComponentType } from "react";
 import { q } from "../groqd";
 import { sanityFetch } from "../live";
-import Hero from "@/app/_components/Sections/LandingPage/Hero";
-import CardsLandingSection from "@/app/_components/Sections/LandingPage/CardsLandingSection";
+import HomeHeroSection from "@/app/_components/Sections/Home/HomeHeroSection";
+import HomeAboutSection from "@/app/_components/Sections/Home/HomeAboutSection";
+import HomeSupportSection from "@/app/_components/Sections/Home/HomeSupportSection";
+import HomeContactSection from "@/app/_components/Sections/Home/HomeContactSection";
 import CardsWithRedirectSection from "@/app/_components/Sections/LandingPage/CardsWithRedirectSection";
-import SupportSection from "@/app/_components/Sections/LandingPage/SupportSection";
-import CooperationSection from "@/app/_components/Sections/LandingPage/CooperationSection";
 
 /**
  * Example: A `section` registry mapping Sanity `_type` values to React components.
@@ -43,9 +43,9 @@ export const components: { [key: string]: ComponentType<any> } = {
 function HeroSectionComponent({
   item,
 }: {
-  item: { title: string; subtitle: string; image: { [key: string]: any } };
+  item: { title?: string; subtitle?: string; image?: Img };
 }) {
-  return <Hero title={item.title} subtitle={item.subtitle} image={item.image} />;
+  return <HomeHeroSection title={item.title} subtitle={item.subtitle} image={item.image} />;
 }
 
 function LeadSectionComponent({ item }: { item: LeadSection }) {
@@ -99,7 +99,7 @@ function CardsWithBackgroundSectionComponent({
   };
 }) {
   return (
-    <CardsLandingSection
+    <HomeAboutSection
       title={item.title}
       subtitle={item.subtitle}
       backgroundImage={item.backgroundImage}
@@ -155,7 +155,7 @@ function SupportSectionComponent({
   };
 }) {
   return (
-    <SupportSection
+    <HomeSupportSection
       title={item.title}
       description={item.description}
       krsNumber={item.krsNumber}
@@ -179,6 +179,6 @@ function CooperationSectionComponent({
   };
 }) {
   return (
-    <CooperationSection title={item.title} description={item.description} button={item.button} />
+    <HomeContactSection title={item.title} description={item.description} button={item.button} />
   );
 }
