@@ -1,61 +1,21 @@
 import { defineQuery } from "next-sanity";
 import { sanityFetch } from "@/sanity/live";
-import { SanitySections } from "@/sanity/sections/SanitySections";
-import { notFound } from "next/navigation";
+import { HomeSections } from "./_components/Sections/Home/HomeSections";
 
 const homeQuery = defineQuery(`
-  *[_type == "home"][0]{
+  *[_type == "home" && _id == "home"][0]{
     _id,
-    sections[]{
-      ...,
-      _type in ["cardswithbackground", "sectionCardsWithBackground"] => {
-        ...,
-        cards[]->{
-          _id,
-          title,
-          description,
-          image
-        }
-      },
-      _type in ["cardswithredirect", "sectionCardsWithRedirect"] => {
-        ...,
-        cards[]->{
-          _id,
-          title,
-          description,
-          href,
-          hrefText,
-          image
-        },
-        button->{
-          _id,
-          text,
-          href
-        }
-      },
-      _type in ["supportSection", "sectionSupport"] => {
-        ...,
-        button->{
-          _id,
-          text,
-          href
-        }
-      },
-      _type in ["cooperationSection", "sectionCooperation"] => {
-        ...,
-        button->{
-          _id,
-          text,
-          href
-        }
-      }
-    }
+    hero,
+    aboutUs,
+    workshops { ..., "documents": items[]-> },
+    supportUs,
+    projects { ..., "documents": items[]-> },
+    contact,
+    "krs": *[_id == "organizationDetails"][0].krs
   }
 `);
 
 export default async function Home() {
   const { data } = await sanityFetch({ query: homeQuery });
-  if (!data) notFound();
-
-  return <SanitySections value={data.sections} />;
+  return data ? <HomeSections data={data} /> : null;
 }

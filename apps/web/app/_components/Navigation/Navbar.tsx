@@ -1,7 +1,5 @@
 "use client";
 
-//TODO: dodać prawdziwe logo
-
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -33,15 +31,17 @@ export default function Navbar({ Logo }: { Logo?: string | null }) {
   return (
     <div className="top-0 z-40 sticky flex justify-center px-4 py-3">
       <nav className="relative flex items-center gap-6 bg-gray-200 shadow-md px-10 py-2 border-0 border-secondary rounded-full">
-        <Link href={ROUTES.HOME} className="" aria-label="Fundacja HOOK - strona główna">
-          <Image
-            src={Logo || "/logo.png"}
-            alt="Logo Fundacja HOOK"
-            width={72}
-            height={32}
-            className="w-auto h-8"
-          />
-        </Link>
+        {Logo ? (
+          <Link href={ROUTES.HOME} className="" aria-label="Fundacja HOOK - strona główna">
+            <Image
+              src={Logo}
+              alt="Logo Fundacja HOOK"
+              width={72}
+              height={32}
+              className="w-auto h-8"
+            />
+          </Link>
+        ) : null}
         {/*Desktop navigation*/}
         <div className="hidden md:flex items-center gap-6 xl:gap-8">
           {navLinks.map((link) => (

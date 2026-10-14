@@ -315,6 +315,22 @@ export type HeroSection = {
   subtitle?: string;
 };
 
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
+};
+
 export type PostsSection = {
   _type: "postsSection";
   displayNumber?: number;
@@ -360,6 +376,20 @@ export type RedirectButton = {
   href?: string;
 };
 
+export type WorkshopReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "workshop";
+};
+
+export type ProjectReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "project";
+};
+
 export type Home = {
   _id: string;
   _type: "home";
@@ -367,49 +397,50 @@ export type Home = {
   _updatedAt: string;
   _rev: string;
   seo?: Seo;
-  documentName?: string;
-  sections?: Array<
-    | ({
+  hero?: {
+    image?: Img;
+    title?: string;
+    subtitle?: string;
+  };
+  aboutUs?: {
+    title?: string;
+    subtitle?: string;
+    backgroundImage?: Img;
+    cards?: Array<{
+      title?: string;
+      description?: string;
+      image?: Img;
+      _type: "homeCard";
+      _key: string;
+    }>;
+  };
+  workshops?: {
+    title?: string;
+    subtitle?: string;
+    items?: Array<
+      {
         _key: string;
-      } & Img)
-    | ({
+      } & WorkshopReference
+    >;
+  };
+  supportUs?: {
+    image?: Img;
+    title?: string;
+    subtitle?: string;
+  };
+  projects?: {
+    title?: string;
+    subtitle?: string;
+    items?: Array<
+      {
         _key: string;
-      } & HeroSection)
-    | ({
-        _key: string;
-      } & LeadSection)
-    | ({
-        _key: string;
-      } & PostsSection)
-    | ({
-        _key: string;
-      } & Cardswithbackground)
-    | ({
-        _key: string;
-      } & Cardswithredirect)
-    | ({
-        _key: string;
-      } & SupportSection)
-    | ({
-        _key: string;
-      } & CooperationSection)
-  >;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
+      } & ProjectReference
+    >;
+  };
+  contact?: {
+    title?: string;
+    subtitle?: string;
+  };
 };
 
 export type Settings = {
@@ -725,14 +756,16 @@ export type AllSanitySchemaTypes =
   | CardLandingPageReference
   | Cardswithbackground
   | HeroSection
+  | SanityImageCrop
+  | SanityImageHotspot
   | PostsSection
   | LeadSection
   | Seo
   | SupportUs
   | RedirectButton
+  | WorkshopReference
+  | ProjectReference
   | Home
-  | SanityImageCrop
-  | SanityImageHotspot
   | Settings
   | Category
   | IconPicker
@@ -757,139 +790,102 @@ export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: ../web/app/page.tsx
 // Variable: homeQuery
-// Query: *[_type == "home"][0]{    _id,    sections[]{      ...,      _type in ["cardswithbackground", "sectionCardsWithBackground"] => {        ...,        cards[]->{          _id,          title,          description,          image        }      },      _type in ["cardswithredirect", "sectionCardsWithRedirect"] => {        ...,        cards[]->{          _id,          title,          description,          href,          hrefText,          image        },        button->{          _id,          text,          href        }      },      _type in ["supportSection", "sectionSupport"] => {        ...,        button->{          _id,          text,          href        }      },      _type in ["cooperationSection", "sectionCooperation"] => {        ...,        button->{          _id,          text,          href        }      }    }  }
+// Query: *[_type == "home" && _id == "home"][0]{    _id,    hero,    aboutUs,    workshops { ..., "documents": items[]-> },    supportUs,    projects { ..., "documents": items[]-> },    contact,    "krs": *[_id == "organizationDetails"][0].krs  }
 export type HomeQueryResult = {
-  _id: string;
-  sections: Array<
-    | {
+  _id: "home";
+  hero: {
+    image?: Img;
+    title?: string;
+    subtitle?: string;
+  } | null;
+  aboutUs: {
+    title?: string;
+    subtitle?: string;
+    backgroundImage?: Img;
+    cards?: Array<{
+      title?: string;
+      description?: string;
+      image?: Img;
+      _type: "homeCard";
+      _key: string;
+    }>;
+  } | null;
+  workshops: {
+    title?: string;
+    subtitle?: string;
+    items?: Array<
+      {
         _key: string;
-        _type: "cardswithbackground";
-        title?: string;
-        subtitle?: string;
-        backgroundImage?: Img;
-        cards?: Array<
-          {
-            _key: string;
-          } & CardLandingPageReference
-        >;
-      }
-    | {
-        _key: string;
-        _type: "cardswithbackground";
-        title?: string;
-        subtitle?: string;
-        backgroundImage?: Img;
-        cards: Array<{
-          _id: string;
-          title: string | null;
-          description: string | null;
-          image: Img | null;
-        }> | null;
-      }
-    | {
-        _key: string;
-        _type: "cardswithredirect";
-        title?: string;
-        subtitle?: string;
-        cards?: Array<
-          {
-            _key: string;
-          } & CardWithRedirectReference
-        >;
-        button?: RedirectButtonReference;
-      }
-    | {
-        _key: string;
-        _type: "cardswithredirect";
-        title?: string;
-        subtitle?: string;
-        cards: Array<{
-          _id: string;
-          title: string | null;
-          description: string | null;
-          href: string | null;
-          hrefText: string | null;
-          image: Img | null;
-        }> | null;
-        button: {
-          _id: string;
-          text: string | null;
-          href: string | null;
-        } | null;
-      }
-    | {
-        _key: string;
-        _type: "cooperationSection";
-        title?: string;
-        description?: string;
-        button?: RedirectButtonReference;
-      }
-    | {
-        _key: string;
-        _type: "cooperationSection";
-        title?: string;
-        description?: string;
-        button: {
-          _id: string;
-          text: string | null;
-          href: string | null;
-        } | null;
-      }
-    | {
-        _key: string;
-        _type: "heroSection";
-        image?: {
-          asset?: SanityImageAssetReference;
-          media?: unknown;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          _type: "image";
-        };
-        title?: string;
-        subtitle?: string;
-      }
-    | {
-        _key: string;
-        _type: "img";
-        asset?: SanityImageAssetReference;
+      } & WorkshopReference
+    >;
+    documents: Array<{
+      _id: string;
+      _type: "workshop";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      title?: string;
+      slug?: Slug;
+      image?: Img;
+      description?: string;
+      datetime?: string;
+      location?: string;
+      duration?: number;
+      group?: "adult" | "children" | "family" | "teen";
+      status?: "completed" | "inProgress" | "planned";
+      locationMap?: Img;
+      signupFormUrl?: string;
+      materials?: {
+        asset?: SanityFileAssetReference;
         media?: unknown;
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-      }
-    | {
+        _type: "file";
+      };
+      regulations?: {
+        asset?: SanityFileAssetReference;
+        media?: unknown;
+        _type: "file";
+      };
+    }> | null;
+  } | null;
+  supportUs: {
+    image?: Img;
+    title?: string;
+    subtitle?: string;
+  } | null;
+  projects: {
+    title?: string;
+    subtitle?: string;
+    items?: Array<
+      {
         _key: string;
-        _type: "leadSection";
-        title?: string;
-        subtitle?: string;
-      }
-    | {
-        _key: string;
-        _type: "postsSection";
-        displayNumber?: number;
-      }
-    | {
-        _key: string;
-        _type: "supportSection";
-        title?: string;
-        description?: string;
-        krsNumber?: string;
-        backgroundImage?: Img;
-        button?: RedirectButtonReference;
-      }
-    | {
-        _key: string;
-        _type: "supportSection";
-        title?: string;
-        description?: string;
-        krsNumber?: string;
-        backgroundImage?: Img;
-        button: {
-          _id: string;
-          text: string | null;
-          href: string | null;
-        } | null;
-      }
-  > | null;
+      } & ProjectReference
+    >;
+    documents: Array<{
+      _id: string;
+      _type: "project";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      title?: string;
+      slug?: Slug;
+      image?: Img;
+      description?: string;
+      article?: string;
+      status?: "completed" | "inProgress" | "planned";
+      startDate?: string;
+      endDate?: string;
+      events?: Array<
+        {
+          _key: string;
+        } & EventReference
+      >;
+    }> | null;
+  } | null;
+  contact: {
+    title?: string;
+    subtitle?: string;
+  } | null;
+  krs: null | string;
 } | null;
 
 // Source: ../web/sanity/queries/aboutUs.ts
@@ -1464,7 +1460,7 @@ export type WorkshopsQueryResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n  *[_type == "home"][0]{\n    _id,\n    sections[]{\n      ...,\n      _type in ["cardswithbackground", "sectionCardsWithBackground"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          image\n        }\n      },\n      _type in ["cardswithredirect", "sectionCardsWithRedirect"] => {\n        ...,\n        cards[]->{\n          _id,\n          title,\n          description,\n          href,\n          hrefText,\n          image\n        },\n        button->{\n          _id,\n          text,\n          href\n        }\n      },\n      _type in ["supportSection", "sectionSupport"] => {\n        ...,\n        button->{\n          _id,\n          text,\n          href\n        }\n      },\n      _type in ["cooperationSection", "sectionCooperation"] => {\n        ...,\n        button->{\n          _id,\n          text,\n          href\n        }\n      }\n    }\n  }\n': HomeQueryResult;
+    '\n  *[_type == "home" && _id == "home"][0]{\n    _id,\n    hero,\n    aboutUs,\n    workshops { ..., "documents": items[]-> },\n    supportUs,\n    projects { ..., "documents": items[]-> },\n    contact,\n    "krs": *[_id == "organizationDetails"][0].krs\n  }\n': HomeQueryResult;
     '\n  *[_type == "aboutUs"][0] {\n    seo,\n    mission{\n      description,\n      image {\n        _type,\n        asset-> {\n          _id,\n          _ref,\n          url,\n          metadata {\n            lqip,\n            dimensions\n          },\n          altText,\n          title,\n          description,\n          extension\n        },\n        crop,\n        hotspot\n      }\n    },\n    meaningCards[]{\n      _key,\n      title,\n      image {\n        _type,\n        asset-> {\n          _id,\n          _ref,\n          url,\n          metadata {\n            lqip,\n            dimensions\n          },\n          altText,\n          title,\n          description,\n          extension\n        },\n        crop,\n        hotspot\n      },\n      description\n    },\n    galleryImages[]{\n      _key,\n      _type,\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description,\n        extension\n      },\n      crop,\n      hotspot\n    },\n    teamMembers[]{\n      _key,\n      name,\n      role,\n      photo {\n        _type,\n        asset-> {\n          _id,\n          _ref,\n          url,\n          metadata {\n            lqip,\n            dimensions\n          },\n          altText,\n          title,\n          description,\n          extension\n        },\n        crop,\n        hotspot\n      }\n    }\n  }\n': AboutUsQueryResult;
     '\n    {\n      "page": *[_type == "contact"][0]{\n        gdprClause,\n        departments[] {\n          name,\n          email,\n          phone\n        }\n      },\n      "orgDetails": *[_type == "organizationDetails" || _id == "organizationDetails"] | order(_updatedAt desc)[0]{\n        fullName,\n        address,\n        krs,\n        nip,\n        regon\n      }\n    }\n  ': ContactQueryResult;
     '\n  *[_type == "post"] | order(_createdAt desc) {\n    _id,\n    _createdAt,\n    title,\n    "slug": slug.current,\n    "author": author->name,\n    "image": mainImage.asset->url,\n    description,\n    "categories": categories[]->title,\n    body\n  }\n': PostsQueryResult;

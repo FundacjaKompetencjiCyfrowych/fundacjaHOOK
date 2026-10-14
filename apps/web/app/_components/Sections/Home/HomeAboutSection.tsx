@@ -5,7 +5,7 @@ import type { Img } from "@/sanity/typegen";
 import { Typography } from "../../ui/typography";
 
 type CardsLandingItem = {
-  _id: string;
+  _id?: string;
   title?: string | null;
   description?: string | null;
   image?: Img | null;
@@ -18,7 +18,7 @@ type CardsLandingReference = {
 
 type CardsLandingInput = CardsLandingItem | CardsLandingReference;
 
-export default async function CardsLandingSection({
+export default async function HomeAboutSection({
   title,
   subtitle,
   backgroundImage,
@@ -37,9 +37,9 @@ export default async function CardsLandingSection({
     : (cards as CardsLandingItem[]);
 
   return (
-    <section className="wire-section relative overflow-hidden px-12 py-12 sm:py-16 border-b border-subtle">
+    <section className="wire-section relative overflow-hidden border-y border-subtle px-4 py-12 sm:px-6 lg:pb-12 lg:pt-14">
       <div
-        className="pointer-events-none absolute inset-x-0 top-0 
+        className="pointer-events-none absolute inset-x-0 top-0
       w-[270%] h-[200%] -translate-x-[25%] -translate-y-[-5%]
       md:w-[112%] md:h-auto md:-translate-x-[12%] md:-translate-y-[4.5%]"
       >
@@ -55,8 +55,13 @@ export default async function CardsLandingSection({
       </div>
       <div className="pointer-events-none absolute inset-0 bg-page/30" />
 
-      <div className="container mx-auto relative z-10">
-        <Typography variant={"h4"} weight={"bold"} className="mb-6 ">
+      <div className="relative z-10 mx-auto max-w-[1152px]">
+        <Typography
+          as="h2"
+          variant="h4"
+          weight="bold"
+          className="mb-6 text-[22px] leading-[1.1] tracking-[0.01em]"
+        >
           {title}
         </Typography>
         {subtitle ? <p className="mb-6 text-sm text-muted">{subtitle}</p> : null}
