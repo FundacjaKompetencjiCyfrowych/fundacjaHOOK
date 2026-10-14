@@ -7,14 +7,32 @@ export default defineType({
   title: "O nas",
   type: "document",
   groups: pageGroups,
+  fieldsets: [
+    {
+      name: "meaningCardsSection",
+      title: "Sekcja: Karty znaczenia",
+      options: { collapsible: true, collapsed: true },
+    },
+    {
+      name: "gallerySection",
+      title: "Sekcja: Galeria",
+      options: { collapsible: true, collapsed: true },
+    },
+    {
+      name: "teamSection",
+      title: "Sekcja: Zespół",
+      options: { collapsible: true, collapsed: true },
+    },
+  ],
   fields: [
     seoField,
     documentNameField,
     defineField({
       name: "mission",
-      title: "Misja i wizja",
+      title: "Sekcja: Misja i wizja",
       type: "object",
       group: "content",
+      options: { collapsible: true, collapsed: true },
       fields: [
         defineField({
           name: "description",
@@ -33,6 +51,7 @@ export default defineType({
     }),
     defineField({
       name: "meaningCards",
+      fieldset: "meaningCardsSection",
       title: "Karty znaczenia (4)",
       type: "array",
       group: "content",
@@ -82,6 +101,7 @@ export default defineType({
     }),
     defineField({
       name: "galleryImages",
+      fieldset: "gallerySection",
       title: "Galeria",
       type: "array",
       group: "content",
@@ -90,6 +110,7 @@ export default defineType({
     }),
     defineField({
       name: "teamMembers",
+      fieldset: "teamSection",
       title: "Zespół",
       type: "array",
       group: "content",
