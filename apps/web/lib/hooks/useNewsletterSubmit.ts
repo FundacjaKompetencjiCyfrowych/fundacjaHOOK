@@ -1,40 +1,53 @@
 "use client";
 
-import { useActionState, useEffect, useRef, useState } from "react";
+import { useActionState, useState } from "react";
 import { submitNewsletterEmail } from "@/lib/actions/newsletter";
+import { newsletterEmailSchema, type NewsletterState } from "@/lib/newsletter";
 
-/**
- * Custom hook for managing newsletter email submission
- * Uses React's useActionState for automatic pending state management
- * Resets submitted feedback after 2 seconds
- */
 export function useNewsletterSubmit() {
   const [email, setEmail] = useState("");
-  const formRef = useRef<HTMLFormElement>(null);
-  const [state, formAction, isPending] = useActionState(submitNewsletterEmail, {
-    submitted: false,
-    error: null,
-  });
+  const [status, setStatus] = useState<NewsletterState["status"]>("idle");
+  const [, formAction, isPending] = useActionState<NewsletterState, FormData>(
+    async (prevState, formData) => {
+      setStatus("idle");
+      const parsedEmail = newsletterEmailSchema.safeParse(formData.get("email"));
 
-  // Reset email and form after successful submission
-  useEffect(() => {
-    if (!state.submitted) return;
-    const timeout = setTimeout(() => {
-      setEmail("");
-      if (formRef.current) {
-        formRef.current.reset();
+      if (!parsedEmail.success) {
+        setStatus("error");
+        return { status: "error" };
       }
-    }, 2000);
-    return () => clearTimeout(timeout);
-  }, [state.submitted]);
+
+      formData.set("email", parsedEmail.data);
+
+      try {
+        const result = await submitNewsletterEmail(prevState, formData);
+        setStatus(result.status);
+
+        if (result.status === "success") {
+          setEmail("");
+        }
+
+        return result;
+      } catch {
+        setStatus("error");
+        return { status: "error" };
+      }
+    },
+    { status: "idle" }
+  );
+
+  function updateEmail(value: string) {
+    setEmail(value);
+    setStatus("idle");
+  }
 
   return {
     email,
-    setEmail,
+    updateEmail,
     formAction,
-    formRef,
     isPending,
-    submitted: state.submitted,
-    error: state.error,
+    status,
+    resetStatus: () => setStatus("idle"),
+    canSubmit: newsletterEmailSchema.safeParse(email).success && !isPending,
   };
 }
