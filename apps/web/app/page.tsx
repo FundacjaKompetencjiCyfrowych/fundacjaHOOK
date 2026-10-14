@@ -1,3 +1,6 @@
+import type { Metadata } from "next";
+import ROUTES from "@/constants/routes";
+import { getSeoMetadata } from "@/sanity/metadata/getSeoMetadata";
 import { defineQuery } from "next-sanity";
 import { sanityFetch } from "@/sanity/live";
 import { HomeSections } from "./_components/Sections/Home/HomeSections";
@@ -14,6 +17,10 @@ const homeQuery = defineQuery(`
     "krs": *[_id == "organizationDetails"][0].krs
   }
 `);
+
+export async function generateMetadata(): Promise<Metadata> {
+  return getSeoMetadata({ pathname: ROUTES.HOME, document: { type: "home" } });
+}
 
 export default async function Home() {
   const { data } = await sanityFetch({ query: homeQuery });

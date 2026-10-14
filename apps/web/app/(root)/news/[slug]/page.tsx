@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { getSeoMetadata } from "@/sanity/metadata/getSeoMetadata";
 import { allNewsQuery, newsBySlugQuery } from "@/sanity/queries/news";
 import { client } from "@/sanity/client";
 import { cacheLife } from "next/dist/server/use-cache/cache-life";
@@ -11,6 +13,14 @@ import PageTitle from "@/app/_components/Navigation/PageTitle";
 import ROUTES from "@/constants/routes";
 import { formatDate } from "@/lib/formatDate";
 import { Calendar1 } from "lucide-react";
+
+export async function generateMetadata({ params }: NewsArticlePageProps): Promise<Metadata> {
+  const { slug } = await params;
+  return getSeoMetadata({
+    pathname: ROUTES.NEWS_ARTICLE(slug),
+    document: { type: "news", slug },
+  });
+}
 
 async function getNews() {
   "use cache";

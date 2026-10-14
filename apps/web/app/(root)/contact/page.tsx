@@ -1,9 +1,16 @@
+import type { Metadata } from "next";
+import ROUTES from "@/constants/routes";
+import { getSeoMetadata } from "@/sanity/metadata/getSeoMetadata";
 import ContactForm from "./_components/ContactForm";
 import Breadcrumbs from "@/app/_components/Navigation/Breadcrumbs";
 import PageTitle from "@/app/_components/Navigation/PageTitle";
 import { Typography } from "@/app/_components/ui/typography";
 import { sanityFetch } from "@/sanity/live";
 import { contactQuery } from "@/sanity/queries/contact";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return getSeoMetadata({ pathname: ROUTES.CONTACT, document: { type: "contact" } });
+}
 
 export default async function ContactPage() {
   const { data: pageData } = await sanityFetch({

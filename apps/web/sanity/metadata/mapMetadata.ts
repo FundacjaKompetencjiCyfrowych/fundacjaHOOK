@@ -1,28 +1,65 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
-/**
- * Maps `seo` type defined in Sanity Studio to `Next`'s `Metadata` type.
- * You can use this on every page - properties fetched in subpages will replace parent data;
- * Properites that are not defined are inherited from the parent.
- */
-export const mapMetadata = (data?: Record<string, unknown> | null): Metadata => {
-  if (!data?.seo || typeof data.seo !== "object" || data.seo === null) return {};
+export interface SeoMetadata {
+  title?: string | null;
+  description?: string | null;
+  canonical?: string | null;
+  ogImage?: { asset?: { url?: string | null } | null } | null;
+  twitterCreator?: string | null;
+  robots?: { noIndex?: boolean | null; noFollow?: boolean | null } | null;
+}
 
-  const m = data.seo as Record<string, any>;
+interface MapMetadataOptions {
+  seo?: SeoMetadata | null;
+  defaults?: SeoMetadata | null;
+  /** Omit in the root layout to avoid inheriting a shared canonical URL. */
+  pathname?: string;
+  origin?: string;
+}
 
-  const metadata: Metadata = {};
-  if (m.title) metadata.title = m.title;
-  if (m.description) metadata.description = m.description;
-  if (m.canonical) metadata.alternates = { canonical: m.canonical };
+const nonEmpty = (value?: string | null): string | undefined => value?.trim() || undefined;
 
-  metadata.openGraph = {};
-  if (m.title) metadata.openGraph.title = m.title;
-  if (m.description) metadata.openGraph.description = m.description;
-  if (m.ogImage?.asset?.url) metadata.openGraph.images = [{ url: m.ogImage.asset.url }];
-  if (m.canonical) metadata.openGraph.url = m.canonical;
+/** Merge individual SEO fields before mapping to Next.js metadata. */
+export const mapMetadata = (options?: MapMetadataOptions | null): Metadata => {
+  if (!options) return {};
 
-  metadata.twitter = {};
-  if (m.twitterCreator) metadata.twitter.creator = m.twitterCreator;
+  const { seo, defaults, pathname, origin } = options;
+  const title = nonEmpty(seo?.title) ?? nonEmpty(defaults?.title);
+  const description = nonEmpty(seo?.description) ?? nonEmpty(defaults?.description);
+  const image = nonEmpty(seo?.ogImage?.asset?.url) ?? nonEmpty(defaults?.ogImage?.asset?.url);
+  const creator = nonEmpty(seo?.twitterCreator) ?? nonEmpty(defaults?.twitterCreator);
+  let canonical: string | undefined;
 
-  return metadata;
+  if (pathname !== undefined) {
+    const pageUrl = new URL(pathname, origin);
+    pageUrl.search = "";
+    pageUrl.hash = "";
+    canonical =
+      nonEmpty(seo?.canonical) ??
+      (pageUrl.pathname === "/" ? nonEmpty(defaults?.canonical) : undefined) ??
+      pageUrl.href;
+  }
+
+  return {
+    ...(title ? { title } : {}),
+    ...(description ? { description } : {}),
+    ...(canonical ? { alternates: { canonical } } : {}),
+    openGraph: {
+      ...(title ? { title } : {}),
+      ...(description ? { description } : {}),
+      ...(canonical ? { url: canonical } : {}),
+      ...(image ? { images: [{ url: image }] } : {}),
+    },
+    twitter: {
+      card: image ? "summary_large_image" : "summary",
+      ...(title ? { title } : {}),
+      ...(description ? { description } : {}),
+      ...(image ? { images: [image] } : {}),
+      ...(creator ? { creator } : {}),
+    },
+    robots: {
+      index: !(seo?.robots?.noIndex ?? defaults?.robots?.noIndex ?? false),
+      follow: !(seo?.robots?.noFollow ?? defaults?.robots?.noFollow ?? false),
+    },
+  };
 };

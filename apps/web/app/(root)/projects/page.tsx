@@ -1,3 +1,6 @@
+import type { Metadata } from "next";
+import ROUTES from "@/constants/routes";
+import { getSeoMetadata } from "@/sanity/metadata/getSeoMetadata";
 import { sanityFetch } from "@/sanity/live";
 import Breadcrumbs from "@/app/_components/Navigation/Breadcrumbs";
 import {
@@ -8,6 +11,10 @@ import {
 import type { Project } from "@/sanity/typegen";
 import type { ProjectCounts } from "./_constants/projects";
 import ProjectsPageClient from "./_components/ProjectsPageClient";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return getSeoMetadata({ pathname: ROUTES.PROJECTS });
+}
 
 const ProjectsPage = async () => {
   const [{ data: projects }, { data: counts }] = await Promise.all([

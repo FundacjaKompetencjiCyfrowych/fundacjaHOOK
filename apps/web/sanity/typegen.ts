@@ -1077,6 +1077,47 @@ export type ProjectBySlugQueryResult = {
   }> | null;
 } | null;
 
+// Source: ../web/sanity/queries/seo.ts
+// Variable: seoMetadataQuery
+// Query: {    "defaults": *[_type == "settings"][0].seo {      ...,      ogImage { asset-> { url } }    },    "page": *[      _type == $type &&      ($type != "home" || _id == "home") &&      ($slug == null || slug.current == $slug)    ][0] {      _id,      seo {        ...,        ogImage { asset-> { url } }      }    }  }
+export type SeoMetadataQueryResult = {
+  defaults: {
+    _type: "seo";
+    title?: string;
+    description?: string;
+    canonical?: string;
+    ogImage: {
+      asset: {
+        url: string | null;
+      } | null;
+    } | null;
+    twitterCreator?: string;
+    robots?: Robots;
+  } | null;
+  page:
+    | {
+        _id: string;
+        seo: null;
+      }
+    | {
+        _id: string;
+        seo: {
+          _type: "seo";
+          title?: string;
+          description?: string;
+          canonical?: string;
+          ogImage: {
+            asset: {
+              url: string | null;
+            } | null;
+          } | null;
+          twitterCreator?: string;
+          robots?: Robots;
+        } | null;
+      }
+    | null;
+};
+
 // Source: ../web/sanity/queries/settings.ts
 // Variable: settingsQuery
 // Query: *[_type == "settings"][0] {    logoTop {      logo {        asset-> {          url        }      }    },    logoBottom {      logo {        asset-> {          url        }      }    },    link {      "socialLinks": {        "facebook": coalesce(facebook, socialLinks.facebook),        "instagram": coalesce(instagram, socialLinks.instagram),        "linkedin": coalesce(linkedin, socialLinks.linkedin)      }    }  }
@@ -1251,6 +1292,7 @@ declare module "@sanity/client" {
     '\n  *[_type == "project" && ($status == "all" || status == $status)]\n    | order(coalesce(startDate, _createdAt) asc, _id asc) [$start...$end]': ProjectsOldestQueryResult;
     '{\n  "all": count(*[_type == "project"]),\n  "inProgress": count(*[_type == "project" && status == "inProgress"]),\n  "planned": count(*[_type == "project" && status == "planned"]),\n  "completed": count(*[_type == "project" && status == "completed"])\n}': ProjectCountsQueryResult;
     '\n  *[_type == "project" && slug.current == $slug][0]{\n    ...,\n    events[]->{\n      _id,\n      title,\n      date,\n      location\n    }\n  }': ProjectBySlugQueryResult;
+    '\n  {\n    "defaults": *[_type == "settings"][0].seo {\n      ...,\n      ogImage { asset-> { url } }\n    },\n    "page": *[\n      _type == $type &&\n      ($type != "home" || _id == "home") &&\n      ($slug == null || slug.current == $slug)\n    ][0] {\n      _id,\n      seo {\n        ...,\n        ogImage { asset-> { url } }\n      }\n    }\n  }\n': SeoMetadataQueryResult;
     '\n  *[_type == "settings"][0] {\n    logoTop {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n    logoBottom {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n    link {\n      "socialLinks": {\n        "facebook": coalesce(facebook, socialLinks.facebook),\n        "instagram": coalesce(instagram, socialLinks.instagram),\n        "linkedin": coalesce(linkedin, socialLinks.linkedin)\n      }\n    }\n  }\n': SettingsQueryResult;
     '\n  *[_type == "settings"][0] {\n    logoTop {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n  }\n': LogoQueryResult;
     '\n  *[_type == "supportUs"][0] {\n    seo,\n    volunteerDescription,\n    accountNumber,\n    transferTitle,\n    volunteerFormUrl\n  }\n': SupportUsQueryResult;

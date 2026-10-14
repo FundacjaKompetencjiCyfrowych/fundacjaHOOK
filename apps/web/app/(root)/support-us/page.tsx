@@ -1,16 +1,16 @@
+import ROUTES from "@/constants/routes";
+import { getSeoMetadata } from "@/sanity/metadata/getSeoMetadata";
 import type { Metadata } from "next";
 import Breadcrumbs from "@/app/_components/Navigation/Breadcrumbs";
 import PageTitle from "@/app/_components/Navigation/PageTitle";
 import Link from "next/link";
 import { Button } from "@/app/_components/ui/button";
-import { mapMetadata } from "@/sanity/metadata/mapMetadata";
 import { supportUsQuery } from "@/sanity/queries/supportUs";
 import { organizationDetailsQuery } from "@/sanity/queries/organizationDetails";
 import { sanityFetch } from "@/sanity/live";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { data } = await sanityFetch({ query: supportUsQuery });
-  return mapMetadata(data);
+  return getSeoMetadata({ pathname: ROUTES.SUPPORT_US, document: { type: "supportUs" } });
 }
 
 const SupportUsPage = async () => {

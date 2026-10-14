@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { getSeoMetadata } from "@/sanity/metadata/getSeoMetadata";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Calendar1, MapPin } from "lucide-react";
@@ -14,6 +16,14 @@ import { cacheLife } from "next/cache";
 import Breadcrumbs from "@/app/_components/Navigation/Breadcrumbs";
 import PageTitle from "@/app/_components/Navigation/PageTitle";
 import ROUTES from "@/constants/routes";
+
+export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  return getSeoMetadata({
+    pathname: ROUTES.PROJECT(slug),
+    document: { type: "project", slug },
+  });
+}
 
 type ProjectEvent = {
   _id: string;

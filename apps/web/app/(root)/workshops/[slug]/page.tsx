@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { getSeoMetadata } from "@/sanity/metadata/getSeoMetadata";
 import { SanityImage } from "@/sanity/image/SanityImage";
 import { workshopDetailsQuery } from "@/sanity/queries/workshopDetails";
 import { sanityFetch } from "@/sanity/live";
@@ -15,6 +17,14 @@ import Breadcrumbs from "@/app/_components/Navigation/Breadcrumbs";
 import PageTitle from "@/app/_components/Navigation/PageTitle";
 import { StatusBadge } from "@/app/_components/ui/status-badge";
 import ROUTES from "@/constants/routes";
+
+export async function generateMetadata({ params }: WorkshopPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  return getSeoMetadata({
+    pathname: ROUTES.WORKSHOP(slug),
+    document: { type: "workshop", slug },
+  });
+}
 
 async function getWorkshops() {
   "use cache";

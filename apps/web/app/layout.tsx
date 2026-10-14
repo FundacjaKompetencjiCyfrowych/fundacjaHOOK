@@ -4,8 +4,7 @@ import "@/app/globals.css";
 import { sanityFetch, SanityLive } from "@/sanity/live";
 import { Toaster } from "sonner";
 import { SanityPreview } from "@/sanity/preview/SanityPreview";
-import { mapMetadata } from "@/sanity/metadata/mapMetadata";
-import { q } from "@/sanity/groqd";
+import { getSeoMetadata } from "@/sanity/metadata/getSeoMetadata";
 
 import UtilityHeader from "@/app/_components/Navigation/UtilityHeader";
 import Navbar from "@/app/_components/Navigation/Navbar";
@@ -21,18 +20,9 @@ import type { OrganizationDetailsQueryResult, SettingsQueryResult } from "@/sani
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function */
 
 export async function generateMetadata(): Promise<Metadata> {
-  const seo = q.star
-    .filterByType("settings")
-    .slice(0)
-    .project((sub) => ({ seo: sub.field("seo") }));
-  const { data } = await sanityFetch({
-    query: seo.query,
-    params: { page: "settings" },
-    stega: false, // always set `stega: false` in Next's `generate` functions
-  });
   return {
     metadataBase: new URL(process.env.NEXT_PUBLIC_ORIGIN),
-    ...mapMetadata(seo.parse(data)),
+    ...(await getSeoMetadata()),
   };
 }
 

@@ -1,3 +1,6 @@
+import type { Metadata } from "next";
+import ROUTES from "@/constants/routes";
+import { getSeoMetadata } from "@/sanity/metadata/getSeoMetadata";
 import MaterialyFilters from "@/app/_components/Filtering/MaterialyFilters";
 import Breadcrumbs from "@/app/_components/Navigation/Breadcrumbs";
 import PageTitle from "@/app/_components/Navigation/PageTitle";
@@ -6,6 +9,10 @@ import { cacheLife } from "next/cache";
 import { sanityFetch } from "@/sanity/live";
 import { materialsQuery } from "@/sanity/queries/materials";
 import { countValues } from "@/app/_components/Filtering/materialyFilters.utils";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return getSeoMetadata({ pathname: ROUTES.MATERIALS });
+}
 
 async function getCachedMaterials() {
   "use cache";

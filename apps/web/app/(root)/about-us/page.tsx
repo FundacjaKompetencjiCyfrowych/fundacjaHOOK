@@ -1,3 +1,5 @@
+import ROUTES from "@/constants/routes";
+import { getSeoMetadata } from "@/sanity/metadata/getSeoMetadata";
 import type { Metadata } from "next";
 
 import Breadcrumbs from "@/app/_components/Navigation/Breadcrumbs";
@@ -7,7 +9,6 @@ import { MATERIAL_PLACEMENTS } from "@/lib/constants/materialPlacements";
 import { mapMaterialsToFilterItems } from "@/lib/mappers/materials";
 import MaterialySection from "@/app/_components/Sections/MaterialyPage/MaterialySection";
 import { sanityFetch } from "@/sanity/live";
-import { mapMetadata } from "@/sanity/metadata/mapMetadata";
 import { aboutUsQuery } from "@/sanity/queries/aboutUs";
 import { materialsQuery } from "@/sanity/queries/materials";
 import { getMaterialsByPlacement } from "@/sanity/queries/materialsByPlacement";
@@ -19,8 +20,7 @@ import Gallery from "./_components/Gallery";
 import { mapContent } from "./_mappers/aboutUs";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { data } = await sanityFetch({ query: aboutUsQuery });
-  return mapMetadata(data);
+  return getSeoMetadata({ pathname: ROUTES.ABOUT_US, document: { type: "aboutUs" } });
 }
 
 export default async function AboutUsPage() {
