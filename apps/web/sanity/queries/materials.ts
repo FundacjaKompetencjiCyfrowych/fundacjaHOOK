@@ -10,6 +10,7 @@ export const materialsQuery = defineQuery(`
     type,
     area,
     format,
+    linkUrl,
     size,
     placements,
     "fileAsset": file.asset->{

@@ -85,13 +85,6 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "file",
-      title: "Plik",
-      type: "file",
-      group: "content",
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
       name: "format",
       title: "Format",
       type: "string",
@@ -108,11 +101,51 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "linkUrl",
+      title: "Adres linku",
+      type: "url",
+      group: "content",
+      description: "Pełny adres strony rozpoczynający się od http:// lub https://.",
+      hidden: ({ document }) => document?.format !== "Link",
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          if (context.document?.format !== "Link") return true;
+          if (!value) return "Podaj adres linku.";
+
+          const invalidUrlMessage = "Podaj poprawny, pełny adres HTTP lub HTTPS.";
+          let url: URL;
+
+          try {
+            url = new URL(value);
+          } catch {
+            // URL parsing throws for malformed input; return a validation error to keep Studio usable.
+            return invalidUrlMessage;
+          }
+
+          return /^https?:\/\//i.test(value) && ["http:", "https:"].includes(url.protocol)
+            ? true
+            : invalidUrlMessage;
+        }),
+    }),
+    defineField({
+      name: "file",
+      title: "Plik",
+      type: "file",
+      group: "content",
+      hidden: ({ document }) => document?.format === "Link",
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          if (context.document?.format === "Link") return true;
+          return value?.asset?._ref ? true : "Dodaj plik materiału.";
+        }),
+    }),
+    defineField({
       name: "size",
       title: "Rozmiar",
       type: "string",
       description: "Opcjonalne. Gdy puste, rozmiar zostanie wyliczony z metadanych pliku.",
       group: "content",
+      hidden: ({ document }) => document?.format === "Link",
     }),
     defineField({
       name: "placements",

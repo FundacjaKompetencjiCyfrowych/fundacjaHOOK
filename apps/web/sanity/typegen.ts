@@ -411,12 +411,13 @@ export type Material = {
     | "Rozw\xF3j Osobisty"
     | "Rodzicielstwo"
     | "Inne";
+  format?: "PDF" | "Zip" | "MP4" | "Link" | "Inne";
+  linkUrl?: string;
   file?: {
     asset?: SanityFileAssetReference;
     media?: unknown;
     _type: "file";
   };
-  format?: "PDF" | "Zip" | "MP4" | "Link" | "Inne";
   size?: string;
   placements?: Array<string>;
 };
@@ -821,7 +822,7 @@ export type LegalPageBySlugQueryResult = {
 
 // Source: ../web/sanity/queries/materials.ts
 // Variable: materialsQuery
-// Query: *[_type == "material"] | order(date desc) {    _id,    title,    description,    date,    event,    type,    area,    format,    size,    placements,    "fileAsset": file.asset->{      url,      extension,      size    }  }
+// Query: *[_type == "material"] | order(date desc) {    _id,    title,    description,    date,    event,    type,    area,    format,    linkUrl,    size,    placements,    "fileAsset": file.asset->{      url,      extension,      size    }  }
 export type MaterialsQueryResult = Array<{
   _id: string;
   title: string | null;
@@ -848,6 +849,7 @@ export type MaterialsQueryResult = Array<{
     | "Zdrowie"
     | null;
   format: "Inne" | "Link" | "MP4" | "PDF" | "Zip" | null;
+  linkUrl: string | null;
   size: string | null;
   placements: Array<string> | null;
   fileAsset: {
@@ -1282,7 +1284,7 @@ declare module "@sanity/client" {
     '\n    {\n      "page": *[_type == "contact"][0]{\n        gdprClause,\n        departments[] {\n          name,\n          email,\n          phone\n        }\n      },\n      "orgDetails": *[_id == "organizationDetails"][0]{\n        fullName,\n        address,\n        krs,\n        nip,\n        regon\n      }\n    }\n  ': ContactQueryResult;
     '\n  *[_type == "legalPage" && defined(title) && defined(slug.current)] | order(_createdAt asc) {\n    _id,\n    title,\n    "slug": slug.current\n  }\n': LegalPagesQueryResult;
     '\n  *[_type == "legalPage" && slug.current == $slug][0] {\n    seo,\n    title,\n    "slug": slug.current,\n    body\n  }\n': LegalPageBySlugQueryResult;
-    '\n  *[_type == "material"] | order(date desc) {\n    _id,\n    title,\n    description,\n    date,\n    event,\n    type,\n    area,\n    format,\n    size,\n    placements,\n    "fileAsset": file.asset->{\n      url,\n      extension,\n      size\n    }\n  }\n': MaterialsQueryResult;
+    '\n  *[_type == "material"] | order(date desc) {\n    _id,\n    title,\n    description,\n    date,\n    event,\n    type,\n    area,\n    format,\n    linkUrl,\n    size,\n    placements,\n    "fileAsset": file.asset->{\n      url,\n      extension,\n      size\n    }\n  }\n': MaterialsQueryResult;
     '\n  *[_type == "news"] | order(_createdAt desc) [$start...$end]': NewsQueryResult;
     '\n  *[_type == "news"] | order(_createdAt desc)': AllNewsQueryResult;
     '\n  *[_type == "news" && slug.current == $slug][0] {\n    _id,\n    _createdAt,\n    title,\n    slug,\n    description,\n    article,\n    image {\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description\n      },\n      crop,\n      hotspot\n    },\n  }\n': NewsBySlugQueryResult;

@@ -15,6 +15,7 @@ export type MaterialQueryItem = {
   type?: string | null;
   area?: string | null;
   format?: string | null;
+  linkUrl?: string | null;
   size?: string | null;
   placements?: string[] | null;
   fileAsset?: MaterialAsset | null;
@@ -22,7 +23,6 @@ export type MaterialQueryItem = {
 
 const FALLBACK_TEXT = "Brak danych";
 const FALLBACK_DATE = "1970-01-01";
-const FALLBACK_URL = "#";
 
 const EVENT_MAP: Record<string, string> = {
   warsztaty: "Warsztaty",
@@ -100,7 +100,8 @@ export function mapMaterialToFilterItem(item: MaterialQueryItem): MaterialFilter
     event: normalizeEnumValue(item.event, EVENT_MAP),
     type: normalizeEnumValue(item.type, TYPE_MAP),
     area: normalizeEnumValue(item.area, AREA_MAP),
-    fileUrl: item.fileAsset?.url ?? FALLBACK_URL,
+    fileUrl: item.fileAsset?.url ?? null,
+    linkUrl: item.linkUrl ?? null,
     format: toFormatLabel(item.format, item.fileAsset?.extension),
     size: toSizeLabel(item.size, item.fileAsset?.size),
   };

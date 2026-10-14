@@ -1,5 +1,6 @@
-import { Download, Eye } from "lucide-react";
+import { Download, ExternalLink, Eye } from "lucide-react";
 
+import { Button } from "@/app/_components/ui/button";
 import { formatDate } from "@/lib/formatDate";
 import { getDownloadUrl } from "@/lib/getDownloadUrl";
 import WirePlaceholder from "../WirePlaceholder";
@@ -8,7 +9,8 @@ export type ContentItemType = {
   title: string;
   date: string;
   description: string;
-  fileUrl: string;
+  fileUrl?: string | null;
+  linkUrl?: string | null;
   format: string;
   size: string;
   event?: string;
@@ -16,8 +18,20 @@ export type ContentItemType = {
   area?: string;
 };
 
+function isHttpUrl(value: string | null | undefined): value is string {
+  if (!value || !/^https?:\/\//i.test(value)) return false;
+
+  try {
+    return ["http:", "https:"].includes(new URL(value).protocol);
+  } catch {
+    return false;
+  }
+}
+
 export default function ContentItem({ material }: { material: ContentItemType }) {
-  const downloadUrl = getDownloadUrl(material.fileUrl);
+  const isLink = material.format === "Link";
+  const linkUrl = isHttpUrl(material.linkUrl) ? material.linkUrl : null;
+  const fileUrl = isHttpUrl(material.fileUrl) ? material.fileUrl : null;
 
   return (
     <article className="flex items-center gap-3 bg-elevated shadow-sm p-3 border border-subtle rounded-lg">
@@ -30,26 +44,47 @@ export default function ContentItem({ material }: { material: ContentItemType })
 
         <div className="flex items-center gap-3 text-muted shrink-0">
           <span className="text-xs whitespace-nowrap">
-            {material.size} · {formatDate(material.date)}
+            {!isLink && `${material.size} · `}
+            {formatDate(material.date)}
           </span>
-          <a
-            href={material.fileUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Podgląd"
-            title="Podgląd"
-            className="inline-flex justify-center items-center hover:bg-sunken rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 w-9 h-9 transition-colors"
-          >
-            <Eye className="w-4 h-4" />
-          </a>
-          <a
-            href={downloadUrl}
-            aria-label="Pobierz"
-            title="Pobierz"
-            className="inline-flex justify-center items-center hover:bg-sunken rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 w-9 h-9 transition-colors"
-          >
-            <Download className="w-4 h-4" />
-          </a>
+          {isLink ? (
+            linkUrl ? (
+              <Button asChild variant="ghost" size="icon-lg">
+                <a
+                  href={linkUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Otwórz link"
+                  title="Otwórz link"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+              </Button>
+            ) : (
+              <span className="text-xs">Link niedostępny</span>
+            )
+          ) : fileUrl ? (
+            <>
+              <Button asChild variant="ghost" size="icon-lg">
+                <a
+                  href={fileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Podgląd"
+                  title="Podgląd"
+                >
+                  <Eye className="w-4 h-4" />
+                </a>
+              </Button>
+              <Button asChild variant="ghost" size="icon-lg">
+                <a href={getDownloadUrl(fileUrl)} aria-label="Pobierz" title="Pobierz">
+                  <Download className="w-4 h-4" />
+                </a>
+              </Button>
+            </>
+          ) : (
+            <span className="text-xs">Plik niedostępny</span>
+          )}
         </div>
       </div>
     </article>
