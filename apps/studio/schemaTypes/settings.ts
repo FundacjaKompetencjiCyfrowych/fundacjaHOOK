@@ -4,11 +4,11 @@ export default defineType({
   name: "settings",
   title: "Ustawienia",
   type: "document",
-  description: "top level description",
+  description: "Ustawienia ogólne witryny.",
   groups: [
     {
       name: "content",
-      title: "Content",
+      title: "Treść",
     },
     {
       name: "seo",
@@ -41,7 +41,7 @@ export default defineType({
     }),
     defineField({
       name: "link",
-      title: "Linki do socjali",
+      title: "Media społecznościowe",
       type: "link",
       group: "content",
     }),

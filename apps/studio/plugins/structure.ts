@@ -1,5 +1,5 @@
 import { StructureToolOptions } from "sanity/structure";
-import { ComposeIcon, HomeIcon, CogIcon, DocumentIcon } from "@sanity/icons";
+import { HomeIcon, CogIcon, DocumentIcon } from "@sanity/icons";
 
 /**
  * Structure of the Sanity Studio
@@ -9,13 +9,17 @@ export const structure: StructureToolOptions = {
   structure: (S) =>
     S.list()
       .id("content")
-      .title("Content")
+      .title("Treść")
       .items([
         S.divider().title("Strony"),
         S.listItem()
           .title("Strona główna")
           .icon(HomeIcon)
           .child(S.document().title("Strona główna").schemaType("home").documentId("home")),
+        S.documentTypeListItem("workshop").title("Warsztaty").icon(DocumentIcon),
+        S.documentTypeListItem("project").title("Projekty").icon(DocumentIcon),
+        S.documentTypeListItem("material").title("Materiały").icon(DocumentIcon),
+        S.documentTypeListItem("news").title("Aktualności").icon(DocumentIcon),
         S.listItem()
           .title("Wesprzyj nas")
           .icon(DocumentIcon)
@@ -30,17 +34,6 @@ export const structure: StructureToolOptions = {
           .child(S.document().title("Kontakt").schemaType("contact").documentId("contact")),
         S.divider().title("Kolekcje"),
         S.documentTypeListItem("legalPage").title("Strony prawne").icon(DocumentIcon),
-        S.documentTypeListItem("news").title("Wpisy").icon(ComposeIcon),
-        S.documentTypeListItem("material").title("Materiały").icon(DocumentIcon),
-        S.documentTypeListItem("cardLandingPage").title("Karty landing page").icon(DocumentIcon),
-        S.documentTypeListItem("cardWithRedirect")
-          .title("Karty z przekierowaniem")
-          .icon(DocumentIcon),
-        S.documentTypeListItem("redirectButton")
-          .title("Przyciski przekierowania")
-          .icon(DocumentIcon),
-        S.documentTypeListItem("workshop").title("Warsztaty").icon(DocumentIcon),
-        S.documentTypeListItem("project").title("Projekty").icon(DocumentIcon),
         S.documentTypeListItem("event").title("Wydarzenia").icon(DocumentIcon),
         S.divider().title("Ustawienia"),
         S.listItem()

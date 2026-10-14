@@ -17,10 +17,10 @@ export const settingsQuery = defineQuery(`
       }
     },
     link {
-      socialLinks {
-        facebook,
-        instagram,
-        linkedin
+      "socialLinks": {
+        "facebook": coalesce(facebook, socialLinks.facebook),
+        "instagram": coalesce(instagram, socialLinks.instagram),
+        "linkedin": coalesce(linkedin, socialLinks.linkedin)
       }
     }
   }

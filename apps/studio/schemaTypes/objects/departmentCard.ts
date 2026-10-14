@@ -13,7 +13,7 @@ export default defineType({
     }),
     defineField({
       name: "email",
-      title: "Email",
+      title: "Adres e-mail",
       type: "string",
     }),
     defineField({

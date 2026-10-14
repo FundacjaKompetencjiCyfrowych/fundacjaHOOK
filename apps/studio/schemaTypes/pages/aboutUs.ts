@@ -138,13 +138,8 @@ export default defineType({
     }),
   ],
   preview: {
-    select: {
-      title: "documentName",
-    },
-    prepare({ title }) {
-      return {
-        title: title ?? "O nas",
-      };
+    prepare() {
+      return { title: "O nas" };
     },
   },
 });

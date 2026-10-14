@@ -1,3 +1,4 @@
+import { DocumentIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 import { pageGroups } from "../../utils/groups";
 import { seoField } from "../../utils/fields";
@@ -20,6 +21,7 @@ export default defineType({
   name: "legalPage",
   title: "Strona prawna",
   type: "document",
+  icon: DocumentIcon,
   groups: pageGroups,
   fields: [
     seoField,
@@ -65,8 +67,9 @@ export default defineType({
     },
     prepare({ title, slug }) {
       return {
-        title: title ?? "Strona prawna",
-        subtitle: slug ? `/legal/${slug}` : "Brak sluga",
+        title: title?.trim() || "Bez tytułu",
+        subtitle: slug ? `/legal/${slug}` : undefined,
+        media: DocumentIcon,
       };
     },
   },

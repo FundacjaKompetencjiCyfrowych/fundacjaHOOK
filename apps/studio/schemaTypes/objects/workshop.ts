@@ -1,17 +1,25 @@
+import { contentSeoGroups } from "../../utils/groups";
+import { seoField } from "../../utils/fields";
 import { defineField, defineType } from "sanity";
+import { DocumentIcon } from "@sanity/icons";
 
 export default defineType({
   name: "workshop",
   title: "Warsztaty",
   type: "document",
+  icon: DocumentIcon,
+  groups: contentSeoGroups,
   fields: [
+    seoField,
     defineField({
+      group: "content",
       name: "title",
       title: "Tytuł",
       type: "string",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      group: "content",
       name: "slug",
       title: "Slug",
       type: "slug",
@@ -22,12 +30,14 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      group: "content",
       name: "image",
       title: "Obraz",
       type: "img",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      group: "content",
       name: "description",
       title: "Opis",
       type: "text",
@@ -35,6 +45,7 @@ export default defineType({
     }),
 
     defineField({
+      group: "content",
       name: "datetime",
       title: "Data i godzina",
       type: "datetime",
@@ -45,6 +56,7 @@ export default defineType({
     }),
 
     defineField({
+      group: "content",
       name: "location",
       title: "Miejsce",
       type: "string",
@@ -52,6 +64,7 @@ export default defineType({
     }),
 
     defineField({
+      group: "content",
       name: "duration",
       title: "Czas trwania (godziny)",
       type: "number",
@@ -59,6 +72,7 @@ export default defineType({
     }),
 
     defineField({
+      group: "content",
       name: "group",
       title: "Grupa docelowa",
       type: "string",
@@ -74,6 +88,7 @@ export default defineType({
     }),
 
     defineField({
+      group: "content",
       name: "status",
       title: "Status",
       type: "string",
@@ -88,6 +103,7 @@ export default defineType({
     }),
 
     defineField({
+      group: "content",
       name: "locationMap",
       title: "Mapa lokalizacji",
       type: "img",
@@ -95,13 +111,15 @@ export default defineType({
     }),
 
     defineField({
+      group: "content",
       name: "signupFormUrl",
       title: "Link do formularza zapisów",
       type: "url",
-      description: "URL do Google Form lub innego formularza zapisów",
+      description: "Adres Formularzy Google lub innego formularza zapisów",
     }),
 
     defineField({
+      group: "content",
       name: "materials",
       title: "Materiały",
       type: "file",
@@ -109,6 +127,7 @@ export default defineType({
     }),
 
     defineField({
+      group: "content",
       name: "regulations",
       title: "Regulamin",
       type: "file",
@@ -116,14 +135,20 @@ export default defineType({
     }),
   ],
   preview: {
-    select: {
-      title: "title",
-      media: "image",
-    },
-    prepare({ title, media }) {
+    select: { title: "title", date: "datetime", status: "status" },
+    prepare({ title, date, status }) {
+      const statusLabels: Record<string, string> = {
+        inProgress: "W trakcie",
+        planned: "Planowane",
+        completed: "Zakończone",
+      };
       return {
-        title: title ?? "Warsztat",
-        media,
+        title: title?.trim() || "Bez tytułu",
+        subtitle:
+          [date?.slice(0, 10).split("-").reverse().join("."), statusLabels[status]]
+            .filter(Boolean)
+            .join(" • ") || undefined,
+        media: DocumentIcon,
       };
     },
   },

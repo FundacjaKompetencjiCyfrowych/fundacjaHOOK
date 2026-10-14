@@ -15,8 +15,6 @@ export const DOCUMENTS: DocumentConfig[] = [
   { _type: "supportUs", id: "supportUs", singleton: true, root: true },
   { _type: "aboutUs", id: "aboutUs", singleton: true, root: true },
   { _type: "contact", id: "contact", singleton: true, root: true },
-  { _type: "settings", id: "settings" },
+  { _type: "settings", id: "settings", singleton: true },
   { _type: "organizationDetails", id: "organizationDetails", singleton: true },
-  { _type: "post", path: "/post", slug: true },
-  { _type: "author" },
 ];

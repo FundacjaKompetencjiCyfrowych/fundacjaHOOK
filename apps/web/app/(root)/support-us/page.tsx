@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Breadcrumbs from "@/app/_components/Navigation/Breadcrumbs";
 import PageTitle from "@/app/_components/Navigation/PageTitle";
-import RedirectButton from "@/app/_components/Buttons/RedirectButton";
+import Link from "next/link";
+import { Button } from "@/app/_components/ui/button";
 import { mapMetadata } from "@/sanity/metadata/mapMetadata";
 import { supportUsQuery } from "@/sanity/queries/supportUs";
 import { organizationDetailsQuery } from "@/sanity/queries/organizationDetails";
@@ -21,8 +22,7 @@ const SupportUsPage = async () => {
   const description =
     supportUsData?.volunteerDescription ??
     "Opis możliwości wolontariatu w fundacji. Dołącz do naszego zespołu i wspieraj nasze działania.";
-  const buttonText = supportUsData?.volunteerButton?.text ?? "Zostań wolontariuszem";
-  const buttonHref = supportUsData?.volunteerButton?.href ?? "#";
+  const buttonHref = supportUsData?.volunteerFormUrl?.trim();
   const accountNumber = supportUsData?.accountNumber ?? "00 0000 0000 0000 0000 0000 0000";
   const transferTitle = supportUsData?.transferTitle ?? "DAROWIZNA";
   const krs = organizationDetailsData?.krs;
@@ -41,11 +41,16 @@ const SupportUsPage = async () => {
             <p className="max-w-3xl pb-2 text-base text-muted tracking-[-0.01em] leading-[1.1]">
               {description}
             </p>
-            <RedirectButton
-              href={buttonHref}
-              text={buttonText}
-              className="h-[38px] rounded-xl px-[18px] py-[10px] font-medium leading-[1.15]"
-            />
+            {buttonHref ? (
+              <Button
+                asChild
+                className="h-[38px] rounded-xl px-[18px] py-[10px] font-medium leading-[1.15]"
+              >
+                <Link href={buttonHref} target="_blank" rel="noopener noreferrer">
+                  Zostań wolontariuszem
+                </Link>
+              </Button>
+            ) : null}
           </div>
 
           <div className="flex flex-col items-start gap-2 pt-[41px]">

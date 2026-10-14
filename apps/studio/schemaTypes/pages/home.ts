@@ -38,7 +38,7 @@ export default defineType({
     seoField,
     defineField({
       name: "hero",
-      title: "1. Hero",
+      title: "Sekcja: Hero",
       type: "object",
       group: "content",
       options: { collapsible: true, collapsed: true },
@@ -47,7 +47,7 @@ export default defineType({
     }),
     defineField({
       name: "aboutUs",
-      title: "2. Co robimy",
+      title: "Sekcja: Co robimy",
       type: "object",
       group: "content",
       options: { collapsible: true, collapsed: true },
@@ -93,7 +93,7 @@ export default defineType({
     }),
     defineField({
       name: "workshops",
-      title: "3. Warsztaty",
+      title: "Sekcja: Warsztaty",
       type: "object",
       group: "content",
       options: { collapsible: true, collapsed: true },
@@ -117,7 +117,7 @@ export default defineType({
     }),
     defineField({
       name: "supportUs",
-      title: "4. Wesprzyj nas",
+      title: "Sekcja: Wesprzyj nas",
       type: "object",
       group: "content",
       options: { collapsible: true, collapsed: true },
@@ -126,7 +126,7 @@ export default defineType({
     }),
     defineField({
       name: "projects",
-      title: "5. Projekty",
+      title: "Sekcja: Projekty",
       type: "object",
       group: "content",
       options: { collapsible: true, collapsed: true },
@@ -150,7 +150,7 @@ export default defineType({
     }),
     defineField({
       name: "contact",
-      title: "6. Współpraca",
+      title: "Sekcja: Współpraca",
       type: "object",
       group: "content",
       options: { collapsible: true, collapsed: true },

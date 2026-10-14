@@ -18,12 +18,6 @@ export type Robots = {
   noFollow?: boolean;
 };
 
-export type SocialLinks = {
-  facebook?: string;
-  instagram?: string;
-  linkedin?: string;
-};
-
 export type LegalPage = {
   _id: string;
   _type: "legalPage";
@@ -105,6 +99,7 @@ export type Project = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  seo?: Seo;
   title?: string;
   slug?: Slug;
   image?: Img;
@@ -141,6 +136,7 @@ export type News = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  seo?: Seo;
   title?: string;
   slug?: Slug;
   image?: Img;
@@ -167,7 +163,9 @@ export type News = {
 
 export type Link = {
   _type: "link";
-  socialLinks?: SocialLinks;
+  facebook?: string;
+  instagram?: string;
+  linkedin?: string;
 };
 
 export type Logo = {
@@ -194,6 +192,7 @@ export type Workshop = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  seo?: Seo;
   title?: string;
   slug?: Slug;
   image?: Img;
@@ -217,131 +216,6 @@ export type Workshop = {
   };
 };
 
-export type CardWithRedirect = {
-  _id: string;
-  _type: "cardWithRedirect";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  image?: Img;
-  description?: string;
-  href?: string;
-  hrefText?: string;
-};
-
-export type CardLandingPage = {
-  _id: string;
-  _type: "cardLandingPage";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  image?: Img;
-  description?: string;
-};
-
-export type RedirectButtonReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "redirectButton";
-};
-
-export type CooperationSection = {
-  _type: "cooperationSection";
-  title?: string;
-  description?: string;
-  button?: RedirectButtonReference;
-};
-
-export type SupportSection = {
-  _type: "supportSection";
-  title?: string;
-  description?: string;
-  krsNumber?: string;
-  backgroundImage?: Img;
-  button?: RedirectButtonReference;
-};
-
-export type CardWithRedirectReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "cardWithRedirect";
-};
-
-export type Cardswithredirect = {
-  _type: "cardswithredirect";
-  title?: string;
-  subtitle?: string;
-  cards?: Array<
-    {
-      _key: string;
-    } & CardWithRedirectReference
-  >;
-  button?: RedirectButtonReference;
-};
-
-export type CardLandingPageReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "cardLandingPage";
-};
-
-export type Cardswithbackground = {
-  _type: "cardswithbackground";
-  title?: string;
-  subtitle?: string;
-  backgroundImage?: Img;
-  cards?: Array<
-    {
-      _key: string;
-    } & CardLandingPageReference
-  >;
-};
-
-export type HeroSection = {
-  _type: "heroSection";
-  image?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  title?: string;
-  subtitle?: string;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
-};
-
-export type PostsSection = {
-  _type: "postsSection";
-  displayNumber?: number;
-};
-
-export type LeadSection = {
-  _type: "leadSection";
-  title?: string;
-  subtitle?: string;
-};
-
 export type Seo = {
   _type: "seo";
   title?: string;
@@ -361,19 +235,9 @@ export type SupportUs = {
   seo?: Seo;
   documentName?: string;
   volunteerDescription?: string;
-  volunteerButton?: RedirectButtonReference;
+  volunteerFormUrl?: string;
   accountNumber?: string;
   transferTitle?: string;
-};
-
-export type RedirectButton = {
-  _id: string;
-  _type: "redirectButton";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  text?: string;
-  href?: string;
 };
 
 export type WorkshopReference = {
@@ -455,22 +319,20 @@ export type Settings = {
   link?: Link;
 };
 
-export type Category = {
-  _id: string;
-  _type: "category";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  description?: string;
-  icon?: IconPicker;
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
 };
 
-export type IconPicker = {
-  _type: "iconPicker";
-  provider?: string;
-  name?: string;
-  svg?: string;
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
 };
 
 export type Contact = {
@@ -559,67 +421,11 @@ export type Material = {
   placements?: Array<string>;
 };
 
-export type AuthorReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "author";
-};
-
-export type CategoryReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "category";
-};
-
-export type Post = {
-  _id: string;
-  _type: "post";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  seo?: Seo;
-  title?: string;
-  slug?: Slug;
-  author?: AuthorReference;
-  image?: Img;
-  categories?: Array<
-    {
-      _key: string;
-    } & CategoryReference
-  >;
-  publishedAt?: string;
-  body?: RichText;
-};
-
-export type Author = {
-  _id: string;
-  _type: "author";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
+export type IconPicker = {
+  _type: "iconPicker";
+  provider?: string;
   name?: string;
-  slug?: Slug;
-  img?: Img;
-  bio?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal";
-    listItem?: never;
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
+  svg?: string;
 };
 
 export type MediaTag = {
@@ -730,7 +536,6 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | Robots
-  | SocialLinks
   | LegalPage
   | RichText
   | Slug
@@ -746,36 +551,18 @@ export type AllSanitySchemaTypes =
   | Logo
   | SanityFileAssetReference
   | Workshop
-  | CardWithRedirect
-  | CardLandingPage
-  | RedirectButtonReference
-  | CooperationSection
-  | SupportSection
-  | CardWithRedirectReference
-  | Cardswithredirect
-  | CardLandingPageReference
-  | Cardswithbackground
-  | HeroSection
-  | SanityImageCrop
-  | SanityImageHotspot
-  | PostsSection
-  | LeadSection
   | Seo
   | SupportUs
-  | RedirectButton
   | WorkshopReference
   | ProjectReference
   | Home
   | Settings
-  | Category
-  | IconPicker
+  | SanityImageCrop
+  | SanityImageHotspot
   | Contact
   | AboutUs
   | Material
-  | AuthorReference
-  | CategoryReference
-  | Post
-  | Author
+  | IconPicker
   | MediaTag
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -824,6 +611,7 @@ export type HomeQueryResult = {
       _createdAt: string;
       _updatedAt: string;
       _rev: string;
+      seo?: Seo;
       title?: string;
       slug?: Slug;
       image?: Img;
@@ -866,6 +654,7 @@ export type HomeQueryResult = {
       _createdAt: string;
       _updatedAt: string;
       _rev: string;
+      seo?: Seo;
       title?: string;
       slug?: Slug;
       image?: Img;
@@ -983,7 +772,7 @@ export type AboutUsQueryResult = {
 
 // Source: ../web/sanity/queries/contact.ts
 // Variable: contactQuery
-// Query: {      "page": *[_type == "contact"][0]{        gdprClause,        departments[] {          name,          email,          phone        }      },      "orgDetails": *[_type == "organizationDetails" || _id == "organizationDetails"] | order(_updatedAt desc)[0]{        fullName,        address,        krs,        nip,        regon      }    }
+// Query: {      "page": *[_type == "contact"][0]{        gdprClause,        departments[] {          name,          email,          phone        }      },      "orgDetails": *[_id == "organizationDetails"][0]{        fullName,        address,        krs,        nip,        regon      }    }
 export type ContactQueryResult = {
   page: {
     gdprClause: string | null;
@@ -1010,21 +799,6 @@ export type ContactQueryResult = {
       }
     | null;
 };
-
-// Source: ../web/sanity/queries/groq.example.ts
-// Variable: postsQuery
-// Query: *[_type == "post"] | order(_createdAt desc) {    _id,    _createdAt,    title,    "slug": slug.current,    "author": author->name,    "image": mainImage.asset->url,    description,    "categories": categories[]->title,    body  }
-export type PostsQueryResult = Array<{
-  _id: string;
-  _createdAt: string;
-  title: string | null;
-  slug: string | null;
-  author: string | null;
-  image: null;
-  description: null;
-  categories: Array<string | null> | null;
-  body: RichText | null;
-}>;
 
 // Source: ../web/sanity/queries/legalPages.ts
 // Variable: legalPagesQuery
@@ -1092,6 +866,7 @@ export type NewsQueryResult = Array<{
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  seo?: Seo;
   title?: string;
   slug?: Slug;
   image?: Img;
@@ -1125,6 +900,7 @@ export type AllNewsQueryResult = Array<{
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  seo?: Seo;
   title?: string;
   slug?: Slug;
   image?: Img;
@@ -1224,6 +1000,7 @@ export type ProjectsNewestQueryResult = Array<{
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  seo?: Seo;
   title?: string;
   slug?: Slug;
   image?: Img;
@@ -1248,6 +1025,7 @@ export type ProjectsOldestQueryResult = Array<{
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  seo?: Seo;
   title?: string;
   slug?: Slug;
   image?: Img;
@@ -1282,6 +1060,7 @@ export type ProjectBySlugQueryResult = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  seo?: Seo;
   title?: string;
   slug?: Slug;
   image?: Img;
@@ -1300,7 +1079,7 @@ export type ProjectBySlugQueryResult = {
 
 // Source: ../web/sanity/queries/settings.ts
 // Variable: settingsQuery
-// Query: *[_type == "settings"][0] {    logoTop {      logo {        asset-> {          url        }      }    },    logoBottom {      logo {        asset-> {          url        }      }    },    link {      socialLinks {        facebook,        instagram,        linkedin      }    }  }
+// Query: *[_type == "settings"][0] {    logoTop {      logo {        asset-> {          url        }      }    },    logoBottom {      logo {        asset-> {          url        }      }    },    link {      "socialLinks": {        "facebook": coalesce(facebook, socialLinks.facebook),        "instagram": coalesce(instagram, socialLinks.instagram),        "linkedin": coalesce(linkedin, socialLinks.linkedin)      }    }  }
 export type SettingsQueryResult = {
   logoTop: {
     logo: {
@@ -1321,7 +1100,7 @@ export type SettingsQueryResult = {
       facebook: string | null;
       instagram: string | null;
       linkedin: string | null;
-    } | null;
+    };
   } | null;
 } | null;
 
@@ -1340,17 +1119,13 @@ export type LogoQueryResult = {
 
 // Source: ../web/sanity/queries/supportUs.ts
 // Variable: supportUsQuery
-// Query: *[_type == "supportUs"][0] {    seo,    volunteerDescription,    accountNumber,    transferTitle,    volunteerButton->{      _id,      text,      href    }  }
+// Query: *[_type == "supportUs"][0] {    seo,    volunteerDescription,    accountNumber,    transferTitle,    volunteerFormUrl  }
 export type SupportUsQueryResult = {
   seo: Seo | null;
   volunteerDescription: string | null;
   accountNumber: string | null;
   transferTitle: string | null;
-  volunteerButton: {
-    _id: string;
-    text: string | null;
-    href: string | null;
-  } | null;
+  volunteerFormUrl: string | null;
 } | null;
 
 // Source: ../web/sanity/queries/workshopDetails.ts
@@ -1433,6 +1208,7 @@ export type WorkshopsQueryResult = Array<{
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  seo?: Seo;
   title?: string;
   slug?: Slug;
   image?: Img;
@@ -1462,8 +1238,7 @@ declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_type == "home" && _id == "home"][0]{\n    _id,\n    hero,\n    aboutUs,\n    workshops { ..., "documents": items[]-> },\n    supportUs,\n    projects { ..., "documents": items[]-> },\n    contact,\n    "krs": *[_id == "organizationDetails"][0].krs\n  }\n': HomeQueryResult;
     '\n  *[_type == "aboutUs"][0] {\n    seo,\n    mission{\n      description,\n      image {\n        _type,\n        asset-> {\n          _id,\n          _ref,\n          url,\n          metadata {\n            lqip,\n            dimensions\n          },\n          altText,\n          title,\n          description,\n          extension\n        },\n        crop,\n        hotspot\n      }\n    },\n    meaningCards[]{\n      _key,\n      title,\n      image {\n        _type,\n        asset-> {\n          _id,\n          _ref,\n          url,\n          metadata {\n            lqip,\n            dimensions\n          },\n          altText,\n          title,\n          description,\n          extension\n        },\n        crop,\n        hotspot\n      },\n      description\n    },\n    galleryImages[]{\n      _key,\n      _type,\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description,\n        extension\n      },\n      crop,\n      hotspot\n    },\n    teamMembers[]{\n      _key,\n      name,\n      role,\n      photo {\n        _type,\n        asset-> {\n          _id,\n          _ref,\n          url,\n          metadata {\n            lqip,\n            dimensions\n          },\n          altText,\n          title,\n          description,\n          extension\n        },\n        crop,\n        hotspot\n      }\n    }\n  }\n': AboutUsQueryResult;
-    '\n    {\n      "page": *[_type == "contact"][0]{\n        gdprClause,\n        departments[] {\n          name,\n          email,\n          phone\n        }\n      },\n      "orgDetails": *[_type == "organizationDetails" || _id == "organizationDetails"] | order(_updatedAt desc)[0]{\n        fullName,\n        address,\n        krs,\n        nip,\n        regon\n      }\n    }\n  ': ContactQueryResult;
-    '\n  *[_type == "post"] | order(_createdAt desc) {\n    _id,\n    _createdAt,\n    title,\n    "slug": slug.current,\n    "author": author->name,\n    "image": mainImage.asset->url,\n    description,\n    "categories": categories[]->title,\n    body\n  }\n': PostsQueryResult;
+    '\n    {\n      "page": *[_type == "contact"][0]{\n        gdprClause,\n        departments[] {\n          name,\n          email,\n          phone\n        }\n      },\n      "orgDetails": *[_id == "organizationDetails"][0]{\n        fullName,\n        address,\n        krs,\n        nip,\n        regon\n      }\n    }\n  ': ContactQueryResult;
     '\n  *[_type == "legalPage" && defined(title) && defined(slug.current)] | order(_createdAt asc) {\n    _id,\n    title,\n    "slug": slug.current\n  }\n': LegalPagesQueryResult;
     '\n  *[_type == "legalPage" && slug.current == $slug][0] {\n    seo,\n    title,\n    "slug": slug.current,\n    body\n  }\n': LegalPageBySlugQueryResult;
     '\n  *[_type == "material"] | order(date desc) {\n    _id,\n    title,\n    description,\n    date,\n    event,\n    type,\n    area,\n    format,\n    size,\n    placements,\n    "fileAsset": file.asset->{\n      url,\n      extension,\n      size\n    }\n  }\n': MaterialsQueryResult;
@@ -1476,9 +1251,9 @@ declare module "@sanity/client" {
     '\n  *[_type == "project" && ($status == "all" || status == $status)]\n    | order(coalesce(startDate, _createdAt) asc, _id asc) [$start...$end]': ProjectsOldestQueryResult;
     '{\n  "all": count(*[_type == "project"]),\n  "inProgress": count(*[_type == "project" && status == "inProgress"]),\n  "planned": count(*[_type == "project" && status == "planned"]),\n  "completed": count(*[_type == "project" && status == "completed"])\n}': ProjectCountsQueryResult;
     '\n  *[_type == "project" && slug.current == $slug][0]{\n    ...,\n    events[]->{\n      _id,\n      title,\n      date,\n      location\n    }\n  }': ProjectBySlugQueryResult;
-    '\n  *[_type == "settings"][0] {\n    logoTop {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n    logoBottom {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n    link {\n      socialLinks {\n        facebook,\n        instagram,\n        linkedin\n      }\n    }\n  }\n': SettingsQueryResult;
+    '\n  *[_type == "settings"][0] {\n    logoTop {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n    logoBottom {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n    link {\n      "socialLinks": {\n        "facebook": coalesce(facebook, socialLinks.facebook),\n        "instagram": coalesce(instagram, socialLinks.instagram),\n        "linkedin": coalesce(linkedin, socialLinks.linkedin)\n      }\n    }\n  }\n': SettingsQueryResult;
     '\n  *[_type == "settings"][0] {\n    logoTop {\n      logo {\n        asset-> {\n          url\n        }\n      }\n    },\n  }\n': LogoQueryResult;
-    '\n  *[_type == "supportUs"][0] {\n    seo,\n    volunteerDescription,\n    accountNumber,\n    transferTitle,\n    volunteerButton->{\n      _id,\n      text,\n      href\n    }\n  }\n': SupportUsQueryResult;
+    '\n  *[_type == "supportUs"][0] {\n    seo,\n    volunteerDescription,\n    accountNumber,\n    transferTitle,\n    volunteerFormUrl\n  }\n': SupportUsQueryResult;
     '\n  *[_type == "workshop" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    description,\n    datetime,\n    location,\n    locationMap {\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description,\n        extension\n      },\n      crop,\n      hotspot\n    },\n    duration,\n    group,\n    status,\n    image {\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description\n      },\n      crop,\n      hotspot\n    },\n    signupFormUrl,\n    materials {\n      asset-> {\n        _ref,\n        url,\n        originalFilename\n      }\n    },\n    regulations {\n      asset-> {\n        _ref,\n        url,\n        originalFilename,\n        extension\n      }\n    },\n  }\n': WorkshopDetailsQueryResult;
     '\n  *[_type == "workshop"] {\n    "slug": slug.current\n  }\n': WorkshopSlugsQueryResult;
     '\n  *[_type == "workshop"] | order(_createdAt desc) [$start...$end]': WorkshopsQueryResult;

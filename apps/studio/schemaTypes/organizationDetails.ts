@@ -11,6 +11,11 @@ export const organizationDetails = defineType({
     defineField({ name: "nip", title: "NIP", type: "string" }),
     defineField({ name: "regon", title: "REGON", type: "string" }),
   ],
+  preview: {
+    prepare() {
+      return { title: "Dane Fundacji" };
+    },
+  },
 });
 
 export default organizationDetails;
