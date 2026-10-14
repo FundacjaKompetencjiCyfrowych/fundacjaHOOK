@@ -1,9 +1,11 @@
+import { DocumentIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export default defineType({
   name: "event",
-  title: "Event",
+  title: "Wydarzenie",
   type: "document",
+  icon: DocumentIcon,
   fields: [
     defineField({
       name: "title",
@@ -27,4 +29,17 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
   ],
+  preview: {
+    select: { title: "title", date: "date", location: "location" },
+    prepare({ title, date, location }) {
+      return {
+        title: title?.trim() || "Bez tytułu",
+        subtitle:
+          [date?.slice(0, 10).split("-").reverse().join("."), location]
+            .filter(Boolean)
+            .join(" • ") || undefined,
+        media: DocumentIcon,
+      };
+    },
+  },
 });

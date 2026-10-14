@@ -19,10 +19,9 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "volunteerButton",
-      title: "Przycisk wolontariatu",
-      type: "reference",
-      to: [{ type: "redirectButton" }],
+      name: "volunteerFormUrl",
+      title: "Adres formularza wolontariatu",
+      type: "string",
       group: "content",
       validation: (Rule) => Rule.required(),
     }),
@@ -42,13 +41,8 @@ export default defineType({
     }),
   ],
   preview: {
-    select: {
-      title: "documentName",
-    },
-    prepare({ title }) {
-      return {
-        title: title ?? "Wesprzyj nas",
-      };
+    prepare() {
+      return { title: "Wesprzyj nas" };
     },
   },
 });

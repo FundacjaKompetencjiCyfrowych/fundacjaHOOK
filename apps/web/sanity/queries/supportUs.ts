@@ -6,10 +6,6 @@ export const supportUsQuery = defineQuery(`
     volunteerDescription,
     accountNumber,
     transferTitle,
-    volunteerButton->{
-      _id,
-      text,
-      href
-    }
+    volunteerFormUrl
   }
 `);

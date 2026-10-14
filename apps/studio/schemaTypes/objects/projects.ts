@@ -1,17 +1,25 @@
+import { contentSeoGroups } from "../../utils/groups";
+import { seoField } from "../../utils/fields";
+import { DocumentIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export default defineType({
   name: "project",
   title: "Projekty",
   type: "document",
+  icon: DocumentIcon,
+  groups: contentSeoGroups,
   fields: [
+    seoField,
     defineField({
+      group: "content",
       name: "title",
       title: "Tytuł",
       type: "string",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      group: "content",
       name: "slug",
       title: "Slug",
       type: "slug",
@@ -22,24 +30,28 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      group: "content",
       name: "image",
       title: "Obraz",
       type: "img",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      group: "content",
       name: "description",
       title: "Opis",
       type: "text",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      group: "content",
       name: "article",
       title: "Artykuł",
       type: "text",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      group: "content",
       name: "status",
       title: "Status",
       type: "string",
@@ -53,6 +65,7 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      group: "content",
       name: "startDate",
       title: "Data rozpoczęcia",
       type: "datetime",
@@ -62,6 +75,7 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      group: "content",
       name: "endDate",
       title: "Data zakończenia",
       type: "datetime",
@@ -71,6 +85,7 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      group: "content",
       name: "events",
       title: "Wydarzenia",
       type: "array",
@@ -79,4 +94,19 @@ export default defineType({
         Rule.required().min(1).error("Projekt musi mieć przynajmniej jedno wydarzenie"),
     }),
   ],
+  preview: {
+    select: { title: "title", status: "status" },
+    prepare({ title, status }) {
+      const statusLabels: Record<string, string> = {
+        inProgress: "W trakcie",
+        planned: "Planowane",
+        completed: "Zakończone",
+      };
+      return {
+        title: title?.trim() || "Bez tytułu",
+        subtitle: statusLabels[status],
+        media: DocumentIcon,
+      };
+    },
+  },
 });

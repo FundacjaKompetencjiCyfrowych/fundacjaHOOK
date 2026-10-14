@@ -1,24 +1,16 @@
-import CardLandingPage from "@/app/_components/Cards/CardLandingPage";
-import { sanityFetch } from "@/sanity/live";
+import { Card } from "../../ui/card";
 import { SanityImage } from "@/sanity/image/SanityImage";
 import type { Img } from "@/sanity/typegen";
 import { Typography } from "../../ui/typography";
 
 type CardsLandingItem = {
-  _id?: string;
+  _key?: string;
   title?: string | null;
   description?: string | null;
   image?: Img | null;
 };
 
-type CardsLandingReference = {
-  _ref: string;
-  _type: "reference";
-};
-
-type CardsLandingInput = CardsLandingItem | CardsLandingReference;
-
-export default async function HomeAboutSection({
+export default function HomeAboutSection({
   title,
   subtitle,
   backgroundImage,
@@ -27,14 +19,9 @@ export default async function HomeAboutSection({
   title?: string | null;
   subtitle?: string | null;
   backgroundImage?: Img | null;
-  cards?: CardsLandingInput[] | null;
+  cards?: CardsLandingItem[] | null;
 }) {
   if (!cards?.length) return null;
-
-  const cardRefs = cards.filter((card): card is CardsLandingReference => "_ref" in card);
-  const resolvedCards = cardRefs.length
-    ? await resolveCards(cardRefs.map((card) => card._ref))
-    : (cards as CardsLandingItem[]);
 
   return (
     <section className="wire-section relative overflow-hidden border-y border-subtle px-4 py-12 sm:px-6 lg:pb-12 lg:pt-14">
@@ -66,31 +53,34 @@ export default async function HomeAboutSection({
         </Typography>
         {subtitle ? <p className="mb-6 text-sm text-muted">{subtitle}</p> : null}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {resolvedCards.map((card, index) => (
-            <CardLandingPage
-              key={`${card._id ?? card.title ?? "card"}-${index}`}
-              title={card.title}
-              image={card.image}
-              description={card.description}
-            />
+          {cards.map((card, index) => (
+            <Card
+              key={card._key ?? index}
+              className="gap-0 rounded-xl bg-gray-200 p-4 shadow-md ring-0 transition-all duration-150 hover:-translate-y-0.5 hover:shadow-lg lg:min-h-[166px]"
+            >
+              <div className="p-2 mb-3 h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-subtle bg-[#eae7e1] flex items-center justify-center">
+                <SanityImage
+                  image={card.image}
+                  width={1920}
+                  className="object-contain "
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    maxWidth: "100%",
+                    maxHeight: "100%",
+                  }}
+                />
+              </div>
+              <Typography variant="body" weight="medium" className="mb-1 ">
+                {card.title}
+              </Typography>
+              <Typography variant={"caption"} className="text-muted tracking-[0.02em]">
+                {card.description}
+              </Typography>
+            </Card>
           ))}
         </div>
       </div>
     </section>
   );
-}
-
-async function resolveCards(ids: string[]) {
-  const query = `*[_type == "cardLandingPage" && _id in $ids]{
-    _id,
-    title,
-    description,
-    image
-  }`;
-
-  const { data } = await sanityFetch({ query, params: { ids } });
-  const cards = (data ?? []) as CardsLandingItem[];
-  const byId = new Map(cards.map((card) => [card._id, card] as const));
-
-  return ids.map((id) => byId.get(id)).filter((card): card is CardsLandingItem => Boolean(card));
 }

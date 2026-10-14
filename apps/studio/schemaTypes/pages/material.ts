@@ -1,3 +1,4 @@
+import { DocumentIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 import { pageGroups } from "../../utils/groups";
 
@@ -5,6 +6,7 @@ export default defineType({
   name: "material",
   title: "Materiał",
   type: "document",
+  icon: DocumentIcon,
   groups: pageGroups,
   fields: [
     defineField({
@@ -133,15 +135,14 @@ export default defineType({
       title: "title",
       date: "date",
       type: "type",
-      media: "file",
     },
-    prepare({ title, date, type, media }) {
-      const dateLabel = typeof date === "string" ? date : "brak daty";
-      const typeLabel = typeof type === "string" ? type : "brak typu";
+    prepare({ title, date, type }) {
       return {
-        title: title ?? "Bez tytułu",
-        subtitle: `${dateLabel} • ${typeLabel}`,
-        media,
+        title: title?.trim() || "Bez tytułu",
+        subtitle:
+          [date?.slice(0, 10).split("-").reverse().join("."), type].filter(Boolean).join(" • ") ||
+          undefined,
+        media: DocumentIcon,
       };
     },
   },

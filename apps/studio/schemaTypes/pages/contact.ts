@@ -26,13 +26,8 @@ export default defineType({
     }),
   ],
   preview: {
-    select: {
-      title: "documentName",
-    },
-    prepare({ title }) {
-      return {
-        title: title ?? "Kontakt",
-      };
+    prepare() {
+      return { title: "Kontakt" };
     },
   },
 });
