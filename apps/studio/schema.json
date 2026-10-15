@@ -1171,6 +1171,29 @@
         },
         "optional": true
       },
+      "locationCoordinates": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "lat": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "number"
+              },
+              "optional": true
+            },
+            "lng": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "number"
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
+      },
       "duration": {
         "type": "objectAttribute",
         "value": {
@@ -1221,14 +1244,6 @@
               "value": "completed"
             }
           ]
-        },
-        "optional": true
-      },
-      "locationMap": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "img"
         },
         "optional": true
       },

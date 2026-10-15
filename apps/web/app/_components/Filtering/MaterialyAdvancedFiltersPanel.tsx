@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 
 import { formatDatePolish } from "@/lib/formatDate";
 import { pl } from "date-fns/locale/pl";
@@ -26,6 +26,7 @@ function FilterDropdown({
   onChange: (value: string) => void;
 }) {
   const [open, setOpen] = useState(false);
+  const listboxId = useId();
   const selectedOption = options.find((option) => option.value === value);
 
   return (
@@ -36,6 +37,7 @@ function FilterDropdown({
           variant="secondary"
           role="combobox"
           aria-expanded={open}
+          aria-controls={listboxId}
           className="justify-between bg-elevated hover:bg-elevated border-subtle hover:border-brand-primary text-foreground hover:text-foreground aria-expanded:border-subtle aria-expanded:hover:border-brand-primary aria-expanded:hover:bg-elevated w-full font-normal text-left focus-visible:ring-brand-focus"
         >
           {selectedOption?.label}
@@ -43,7 +45,7 @@ function FilterDropdown({
         </Button>
       </PopoverTrigger>
       <PopoverContent align="start" className="p-1 w-[var(--radix-popover-trigger-width)]">
-        <div role="listbox">
+        <div id={listboxId} role="listbox">
           {options.map((option) => (
             <Button
               key={option.value}

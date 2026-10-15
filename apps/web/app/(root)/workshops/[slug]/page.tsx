@@ -17,6 +17,7 @@ import Breadcrumbs from "@/app/_components/Navigation/Breadcrumbs";
 import PageTitle from "@/app/_components/Navigation/PageTitle";
 import { StatusBadge } from "@/app/_components/ui/status-badge";
 import ROUTES from "@/constants/routes";
+import { WorkshopMap } from "./_components/WorkshopMap";
 
 export async function generateMetadata({ params }: WorkshopPageProps): Promise<Metadata> {
   const { slug } = await params;
@@ -77,6 +78,16 @@ async function WorkshopContent({ slug }: { slug: string }) {
   const title = workshop.title ?? "Warsztat";
   const formattedDate = workshop.datetime ? getFormattedWorkshopDate(workshop.datetime) : null;
   const regulationFileType = workshop.regulations?.asset?.extension?.toUpperCase();
+  const coordinates = workshop.locationCoordinates;
+  const hasValidCoordinates =
+    typeof coordinates?.lat === "number" &&
+    Number.isFinite(coordinates.lat) &&
+    coordinates.lat >= -90 &&
+    coordinates.lat <= 90 &&
+    typeof coordinates.lng === "number" &&
+    Number.isFinite(coordinates.lng) &&
+    coordinates.lng >= -180 &&
+    coordinates.lng <= 180;
 
   return (
     <>
@@ -137,15 +148,22 @@ async function WorkshopContent({ slug }: { slug: string }) {
                 <MapPin size={20} className="text-brand-primary shrink-0" />
                 <span className="text-base">{workshop.location}</span>
               </div>
-              {workshop.locationMap?.asset && (
-                <div className="relative h-28 overflow-hidden rounded-lg bg-elevated sm:h-64">
-                  <SanityImage
-                    image={workshop.locationMap}
-                    fill
-                    className="object-cover"
-                    alt={`Mapa lokalizacji: ${workshop.location}`}
+              {hasValidCoordinates && coordinates && (
+                <>
+                  <WorkshopMap
+                    lat={coordinates.lat!}
+                    lng={coordinates.lng!}
+                    address={workshop.location}
                   />
-                </div>
+                  <a
+                    href={`https://www.openstreetmap.org/?mlat=${coordinates.lat!}&mlon=${coordinates.lng!}#map=17/${coordinates.lat!}/${coordinates.lng!}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-2 inline-block text-sm font-medium text-brand-primary hover:text-brand-onhover"
+                  >
+                    Otwórz lokalizację na mapie
+                  </a>
+                </>
               )}
             </div>
           )}

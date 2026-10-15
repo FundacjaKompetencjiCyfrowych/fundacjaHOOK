@@ -8,23 +8,7 @@ export const workshopDetailsQuery = defineQuery(`
     description,
     datetime,
     location,
-    locationMap {
-      asset-> {
-        _id,
-        _ref,
-        url,
-        metadata {
-          lqip,
-          dimensions
-        },
-        altText,
-        title,
-        description,
-        extension
-      },
-      crop,
-      hotspot
-    },
+    locationCoordinates { lat, lng },
     duration,
     group,
     status,
