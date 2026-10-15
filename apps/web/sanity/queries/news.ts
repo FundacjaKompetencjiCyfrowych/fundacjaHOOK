@@ -3,10 +3,20 @@ import { defineQuery } from "next-sanity";
 export const NEWS_PAGE_SIZE = 6;
 
 export const newsQuery = defineQuery(`
-  *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc, _id asc) [$start...$end]`);
+  *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc, _id asc) [$start...$end] {
+    _id,
+    _createdAt,
+    publishedAt,
+    title,
+    slug,
+    description,
+    image
+  }`);
 
 export const allNewsQuery = defineQuery(`
-  *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc, _id asc)`);
+  *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc, _id asc) {
+    "slug": slug.current
+  }`);
 
 export const newsBySlugQuery = defineQuery(`
   *[_type == "news" && slug.current == $slug][0] {

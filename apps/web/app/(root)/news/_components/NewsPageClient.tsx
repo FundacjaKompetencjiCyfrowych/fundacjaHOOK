@@ -1,7 +1,7 @@
 "use client";
 
 import NewsCard from "./NewsCard";
-import type { News } from "@/sanity/typegen";
+import type { NewsQueryResult } from "@/sanity/typegen";
 import PageTitle from "@/app/_components/Navigation/PageTitle";
 import LoadMoreButton from "@/app/_components/Buttons/LoadMoreButton";
 import { usePaginatedItems } from "@/lib/hooks/usePaginatedItems";
@@ -9,7 +9,7 @@ import { NEWS_PAGE_SIZE } from "@/sanity/queries/news";
 import { loadNewsPage } from "../_actions/loadNewsPage";
 
 interface Props {
-  initialNews: News[];
+  initialNews: NewsQueryResult;
 }
 
 const NewsPageClient = ({ initialNews }: Props) => {

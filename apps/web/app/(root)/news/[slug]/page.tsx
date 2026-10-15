@@ -39,11 +39,8 @@ export async function generateStaticParams() {
   }
 
   return news
-    .filter(
-      (item): item is (typeof news)[number] & { slug: { current: string } } =>
-        item.slug !== null && item.slug !== undefined && item.slug.current !== undefined
-    )
-    .map((item) => ({ slug: item.slug.current }));
+    .filter((item): item is { slug: string } => Boolean(item.slug))
+    .map(({ slug }) => ({ slug }));
 }
 
 interface NewsArticlePageProps {

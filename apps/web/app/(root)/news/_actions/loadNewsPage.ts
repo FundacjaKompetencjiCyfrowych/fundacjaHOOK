@@ -2,9 +2,9 @@
 
 import { sanityFetch } from "@/sanity/live";
 import { newsQuery } from "@/sanity/queries/news";
-import type { News } from "@/sanity/typegen";
+import type { NewsQueryResult } from "@/sanity/typegen";
 
-export async function loadNewsPage(start: number, limit: number): Promise<News[]> {
+export async function loadNewsPage(start: number, limit: number): Promise<NewsQueryResult> {
   const { data } = await sanityFetch({
     query: newsQuery,
     params: { start, end: start + limit },

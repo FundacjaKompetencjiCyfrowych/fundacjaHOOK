@@ -868,72 +868,22 @@ export type MaterialsQueryResult = Array<{
 
 // Source: ../web/sanity/queries/news.ts
 // Variable: newsQuery
-// Query: *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc, _id asc) [$start...$end]
+// Query: *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc, _id asc) [$start...$end] {    _id,    _createdAt,    publishedAt,    title,    slug,    description,    image  }
 export type NewsQueryResult = Array<{
   _id: string;
-  _type: "news";
   _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  seo?: Seo;
-  title?: string;
-  slug?: Slug;
-  image?: Img;
-  description?: string;
-  publishedAt?: string;
-  article?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
+  publishedAt: string | null;
+  title: string | null;
+  slug: Slug | null;
+  description: string | null;
+  image: Img | null;
 }>;
 
 // Source: ../web/sanity/queries/news.ts
 // Variable: allNewsQuery
-// Query: *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc, _id asc)
+// Query: *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc, _id asc) {    "slug": slug.current  }
 export type AllNewsQueryResult = Array<{
-  _id: string;
-  _type: "news";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  seo?: Seo;
-  title?: string;
-  slug?: Slug;
-  image?: Img;
-  description?: string;
-  publishedAt?: string;
-  article?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
+  slug: string | null;
 }>;
 
 // Source: ../web/sanity/queries/news.ts
@@ -1005,52 +955,26 @@ export type ProjectSlugsQueryResult = Array<{
 
 // Source: ../web/sanity/queries/projects.ts
 // Variable: projectsNewestQuery
-// Query: *[_type == "project" && ($status == "all" || status == $status)]    | order(coalesce(startDate, _createdAt) desc, _id asc) [$start...$end]
+// Query: *[_type == "project" && ($status == "all" || status == $status)]    | order(coalesce(startDate, _createdAt) desc, _id asc) [$start...$end] {      _id,      title,      slug,      image,      description,      status    }
 export type ProjectsNewestQueryResult = Array<{
   _id: string;
-  _type: "project";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  seo?: Seo;
-  title?: string;
-  slug?: Slug;
-  image?: Img;
-  description?: string;
-  article?: string;
-  status?: "completed" | "inProgress" | "planned";
-  startDate?: string;
-  endDate?: string;
-  events?: Array<
-    {
-      _key: string;
-    } & EventReference
-  >;
+  title: string | null;
+  slug: Slug | null;
+  image: Img | null;
+  description: string | null;
+  status: "completed" | "inProgress" | "planned" | null;
 }>;
 
 // Source: ../web/sanity/queries/projects.ts
 // Variable: projectsOldestQuery
-// Query: *[_type == "project" && ($status == "all" || status == $status)]    | order(coalesce(startDate, _createdAt) asc, _id asc) [$start...$end]
+// Query: *[_type == "project" && ($status == "all" || status == $status)]    | order(coalesce(startDate, _createdAt) asc, _id asc) [$start...$end] {      _id,      title,      slug,      image,      description,      status    }
 export type ProjectsOldestQueryResult = Array<{
   _id: string;
-  _type: "project";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  seo?: Seo;
-  title?: string;
-  slug?: Slug;
-  image?: Img;
-  description?: string;
-  article?: string;
-  status?: "completed" | "inProgress" | "planned";
-  startDate?: string;
-  endDate?: string;
-  events?: Array<
-    {
-      _key: string;
-    } & EventReference
-  >;
+  title: string | null;
+  slug: Slug | null;
+  image: Img | null;
+  description: string | null;
+  status: "completed" | "inProgress" | "planned" | null;
 }>;
 
 // Source: ../web/sanity/queries/projects.ts
@@ -1241,38 +1165,17 @@ export type WorkshopSlugsQueryResult = Array<{
 
 // Source: ../web/sanity/queries/workshops.ts
 // Variable: workshopsQuery
-// Query: *[_type == "workshop"] | order(datetime asc, _id asc) [$start...$end]
+// Query: *[_type == "workshop"] | order(datetime asc, _id asc) [$start...$end] {    _id,    title,    slug,    image,    status,    location,    datetime,    duration,    group  }
 export type WorkshopsQueryResult = Array<{
   _id: string;
-  _type: "workshop";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  seo?: Seo;
-  title?: string;
-  slug?: Slug;
-  image?: Img;
-  description?: string;
-  datetime?: string;
-  location?: string;
-  locationCoordinates?: {
-    lat?: number;
-    lng?: number;
-  };
-  duration?: number;
-  group?: "adult" | "children" | "family" | "teen";
-  status?: "completed" | "inProgress" | "planned";
-  signupFormUrl?: string;
-  materials?: {
-    asset?: SanityFileAssetReference;
-    media?: unknown;
-    _type: "file";
-  };
-  regulations?: {
-    asset?: SanityFileAssetReference;
-    media?: unknown;
-    _type: "file";
-  };
+  title: string | null;
+  slug: Slug | null;
+  image: Img | null;
+  status: "completed" | "inProgress" | "planned" | null;
+  location: string | null;
+  datetime: string | null;
+  duration: number | null;
+  group: "adult" | "children" | "family" | "teen" | null;
 }>;
 
 // Query TypeMap
@@ -1285,13 +1188,13 @@ declare module "@sanity/client" {
     '\n  *[_type == "legalPage" && defined(title) && defined(slug.current)] | order(_createdAt asc) {\n    _id,\n    title,\n    "slug": slug.current\n  }\n': LegalPagesQueryResult;
     '\n  *[_type == "legalPage" && slug.current == $slug][0] {\n    seo,\n    title,\n    "slug": slug.current,\n    body\n  }\n': LegalPageBySlugQueryResult;
     '\n  *[_type == "material"] | order(date desc) {\n    _id,\n    title,\n    description,\n    date,\n    event,\n    type,\n    area,\n    format,\n    linkUrl,\n    size,\n    placements,\n    "fileAsset": file.asset->{\n      url,\n      extension,\n      size\n    }\n  }\n': MaterialsQueryResult;
-    '\n  *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc, _id asc) [$start...$end]': NewsQueryResult;
-    '\n  *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc, _id asc)': AllNewsQueryResult;
+    '\n  *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc, _id asc) [$start...$end] {\n    _id,\n    _createdAt,\n    publishedAt,\n    title,\n    slug,\n    description,\n    image\n  }': NewsQueryResult;
+    '\n  *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc, _id asc) {\n    "slug": slug.current\n  }': AllNewsQueryResult;
     '\n  *[_type == "news" && slug.current == $slug][0] {\n    _id,\n    _createdAt,\n    publishedAt,\n    title,\n    slug,\n    description,\n    article,\n    image {\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description\n      },\n      crop,\n      hotspot\n    },\n  }\n': NewsBySlugQueryResult;
     '\n  *[_id == "organizationDetails"][0] {\n    address,\n    krs\n  }\n': OrganizationDetailsQueryResult;
     '\n  *[_type == "project" && defined(slug.current)]{\n    "slug": slug.current\n  }': ProjectSlugsQueryResult;
-    '\n  *[_type == "project" && ($status == "all" || status == $status)]\n    | order(coalesce(startDate, _createdAt) desc, _id asc) [$start...$end]': ProjectsNewestQueryResult;
-    '\n  *[_type == "project" && ($status == "all" || status == $status)]\n    | order(coalesce(startDate, _createdAt) asc, _id asc) [$start...$end]': ProjectsOldestQueryResult;
+    '\n  *[_type == "project" && ($status == "all" || status == $status)]\n    | order(coalesce(startDate, _createdAt) desc, _id asc) [$start...$end] {\n      _id,\n      title,\n      slug,\n      image,\n      description,\n      status\n    }': ProjectsNewestQueryResult;
+    '\n  *[_type == "project" && ($status == "all" || status == $status)]\n    | order(coalesce(startDate, _createdAt) asc, _id asc) [$start...$end] {\n      _id,\n      title,\n      slug,\n      image,\n      description,\n      status\n    }': ProjectsOldestQueryResult;
     '{\n  "all": count(*[_type == "project"]),\n  "inProgress": count(*[_type == "project" && status == "inProgress"]),\n  "planned": count(*[_type == "project" && status == "planned"]),\n  "completed": count(*[_type == "project" && status == "completed"])\n}': ProjectCountsQueryResult;
     '\n  *[_type == "project" && slug.current == $slug][0]{\n    ...,\n    events[]->{\n      _id,\n      title,\n      date,\n      location\n    }\n  }': ProjectBySlugQueryResult;
     '\n  {\n    "defaults": *[_type == "settings"][0].seo {\n      ...,\n      ogImage { asset-> { url } }\n    },\n    "page": *[\n      _type == $type &&\n      ($type != "home" || _id == "home") &&\n      ($slug == null || slug.current == $slug)\n    ][0] {\n      _id,\n      seo {\n        ...,\n        ogImage { asset-> { url } }\n      }\n    }\n  }\n': SeoMetadataQueryResult;
@@ -1300,6 +1203,6 @@ declare module "@sanity/client" {
     '\n  *[_type == "supportUs"][0] {\n    seo,\n    volunteerDescription,\n    accountNumber,\n    transferTitle,\n    volunteerFormUrl\n  }\n': SupportUsQueryResult;
     '\n  *[_type == "workshop" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    description,\n    datetime,\n    location,\n    locationCoordinates { lat, lng },\n    duration,\n    group,\n    status,\n    image {\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description\n      },\n      crop,\n      hotspot\n    },\n    signupFormUrl,\n    materials {\n      asset-> {\n        _ref,\n        url,\n        originalFilename\n      }\n    },\n    regulations {\n      asset-> {\n        _ref,\n        url,\n        originalFilename,\n        extension\n      }\n    },\n  }\n': WorkshopDetailsQueryResult;
     '\n  *[_type == "workshop"] {\n    "slug": slug.current\n  }\n': WorkshopSlugsQueryResult;
-    '\n  *[_type == "workshop"] | order(datetime asc, _id asc) [$start...$end]': WorkshopsQueryResult;
+    '\n  *[_type == "workshop"] | order(datetime asc, _id asc) [$start...$end] {\n    _id,\n    title,\n    slug,\n    image,\n    status,\n    location,\n    datetime,\n    duration,\n    group\n  }': WorkshopsQueryResult;
   }
 }

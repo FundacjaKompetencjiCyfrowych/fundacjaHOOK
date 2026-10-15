@@ -4,7 +4,6 @@ import { getSeoMetadata } from "@/sanity/metadata/getSeoMetadata";
 import Breadcrumbs from "@/app/_components/Navigation/Breadcrumbs";
 import { sanityFetch } from "@/sanity/live";
 import { WORKSHOPS_PAGE_SIZE, workshopsQuery } from "@/sanity/queries/workshops";
-import { Workshop } from "@/sanity/typegen";
 import WorkshopsPageClient from "./_components/WorkshopsPageClient";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -20,7 +19,7 @@ const WorkshopsPage = async () => {
   return (
     <>
       <Breadcrumbs segments={[{ label: "Warsztaty" }]} />
-      <WorkshopsPageClient initialWorkshops={workshops as Workshop[]} />
+      <WorkshopsPageClient initialWorkshops={workshops} />
     </>
   );
 };

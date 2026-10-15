@@ -9,11 +9,25 @@ export const projectSlugsQuery = defineQuery(`
 
 export const projectsNewestQuery = defineQuery(`
   *[_type == "project" && ($status == "all" || status == $status)]
-    | order(coalesce(startDate, _createdAt) desc, _id asc) [$start...$end]`);
+    | order(coalesce(startDate, _createdAt) desc, _id asc) [$start...$end] {
+      _id,
+      title,
+      slug,
+      image,
+      description,
+      status
+    }`);
 
 export const projectsOldestQuery = defineQuery(`
   *[_type == "project" && ($status == "all" || status == $status)]
-    | order(coalesce(startDate, _createdAt) asc, _id asc) [$start...$end]`);
+    | order(coalesce(startDate, _createdAt) asc, _id asc) [$start...$end] {
+      _id,
+      title,
+      slug,
+      image,
+      description,
+      status
+    }`);
 
 export const projectCountsQuery = defineQuery(`{
   "all": count(*[_type == "project"]),

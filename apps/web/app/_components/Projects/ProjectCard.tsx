@@ -6,7 +6,14 @@ import { SanityImage } from "@/sanity/image/SanityImage";
 import type { Project } from "@/sanity/typegen";
 
 interface ProjectCardProps {
-  project: Project;
+  project: {
+    _id: string;
+    title?: Project["title"] | null;
+    slug?: Project["slug"] | null;
+    image?: Project["image"] | null;
+    description?: Project["description"] | null;
+    status?: Project["status"] | null;
+  };
 }
 
 export default function ProjectCard({ project }: ProjectCardProps) {

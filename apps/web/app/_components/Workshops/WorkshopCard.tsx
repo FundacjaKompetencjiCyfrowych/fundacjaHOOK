@@ -7,13 +7,23 @@ import { Calendar1, MapPin, Timer, Users } from "lucide-react";
 import { getFormattedWorkshopDate, getHoursLabel, mapGroup } from "./workshop.helpers";
 
 interface WorkshopCardProps {
-  workshop: Workshop;
+  workshop: {
+    _id: string;
+    title?: Workshop["title"] | null;
+    slug?: Workshop["slug"] | null;
+    image?: Workshop["image"] | null;
+    status?: Workshop["status"] | null;
+    location?: Workshop["location"] | null;
+    datetime?: Workshop["datetime"] | null;
+    duration?: Workshop["duration"] | null;
+    group?: Workshop["group"] | null;
+  };
 }
 
 export default function WorkshopCard({ workshop }: WorkshopCardProps) {
   const { title, image, status, location } = workshop;
   const href = workshop.slug?.current ? `/workshops/${workshop.slug.current}` : undefined;
-  const date = getFormattedWorkshopDate(workshop.datetime);
+  const date = getFormattedWorkshopDate(workshop.datetime ?? undefined);
   const duration = workshop.duration
     ? `${workshop.duration} ${getHoursLabel(workshop.duration)}`
     : undefined;

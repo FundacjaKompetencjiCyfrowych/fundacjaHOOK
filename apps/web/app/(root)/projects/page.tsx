@@ -8,7 +8,6 @@ import {
   projectCountsQuery,
   projectsNewestQuery,
 } from "@/sanity/queries/projects";
-import type { Project } from "@/sanity/typegen";
 import type { ProjectCounts } from "./_constants/projects";
 import ProjectsPageClient from "./_components/ProjectsPageClient";
 
@@ -28,10 +27,7 @@ const ProjectsPage = async () => {
   return (
     <>
       <Breadcrumbs segments={[{ label: "Projekty" }]} />
-      <ProjectsPageClient
-        initialProjects={projects as Project[]}
-        counts={counts as ProjectCounts}
-      />
+      <ProjectsPageClient initialProjects={projects} counts={counts as ProjectCounts} />
     </>
   );
 };

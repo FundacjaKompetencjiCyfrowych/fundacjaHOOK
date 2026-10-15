@@ -1,11 +1,11 @@
-import { News } from "@/sanity/typegen";
+import type { NewsQueryResult } from "@/sanity/typegen";
 import Link from "next/link";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/app/_components/ui/card";
 import { SanityImage } from "@/sanity/image/SanityImage";
 import { formatDate } from "@/lib/formatDate";
 
 interface Props {
-  news: News;
+  news: NewsQueryResult[number];
 }
 
 const NewsCard = ({ news }: Props) => {
