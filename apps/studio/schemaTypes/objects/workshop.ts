@@ -2,6 +2,7 @@ import { contentSeoGroups } from "../../utils/groups";
 import { seoField } from "../../utils/fields";
 import { defineField, defineType } from "sanity";
 import { DocumentIcon } from "@sanity/icons";
+import { WorkshopCoordinatesInput } from "../../components/WorkshopCoordinatesInput";
 
 export default defineType({
   name: "workshop",
@@ -62,6 +63,28 @@ export default defineType({
       type: "string",
       validation: (Rule) => Rule.required(),
     }),
+    defineField({
+      group: "content",
+      name: "locationCoordinates",
+      title: "Współrzędne lokalizacji",
+      type: "object",
+      description: "Wyszukaj współrzędne na podstawie adresu lub wpisz je ręcznie.",
+      components: { input: WorkshopCoordinatesInput },
+      fields: [
+        defineField({
+          name: "lat",
+          title: "Szerokość geograficzna",
+          type: "number",
+          validation: (Rule) => Rule.min(-90).max(90),
+        }),
+        defineField({
+          name: "lng",
+          title: "Długość geograficzna",
+          type: "number",
+          validation: (Rule) => Rule.min(-180).max(180),
+        }),
+      ],
+    }),
 
     defineField({
       group: "content",
@@ -100,14 +123,6 @@ export default defineType({
         ],
       },
       validation: (Rule) => Rule.required(),
-    }),
-
-    defineField({
-      group: "content",
-      name: "locationMap",
-      title: "Mapa lokalizacji",
-      type: "img",
-      description: "Obraz mapy z zaznaczonym miejscem warsztatu.",
     }),
 
     defineField({

@@ -4,16 +4,16 @@ import LoadMoreButton from "@/app/_components/Buttons/LoadMoreButton";
 import PageTitle from "@/app/_components/Navigation/PageTitle";
 import { usePaginatedItems } from "@/lib/hooks/usePaginatedItems";
 import { PROJECTS_PAGE_SIZE } from "@/sanity/queries/projects";
-import type { Project } from "@/sanity/typegen";
+import type { ProjectsNewestQueryResult } from "@/sanity/typegen";
 import { useCallback, useState } from "react";
 import { loadProjectsPage } from "../_actions/loadProjectsPage";
 import type { ProjectCounts, ProjectFilter, ProjectSortOrder } from "../_constants/projects";
-import ProjectCard from "@/app/_components/Cards/ProjectCard";
+import ProjectCard from "@/app/_components/Projects/ProjectCard";
 import ProjectSortSelect from "./ProjectSortSelect";
 import ProjectStatusFilters from "./ProjectStatusFilters";
 
 interface ProjectsPageClientProps {
-  initialProjects: Project[];
+  initialProjects: ProjectsNewestQueryResult;
   counts: ProjectCounts;
 }
 

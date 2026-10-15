@@ -773,6 +773,13 @@
         },
         "optional": true
       },
+      "publishedAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "article": {
         "type": "objectAttribute",
         "value": {
@@ -1171,6 +1178,29 @@
         },
         "optional": true
       },
+      "locationCoordinates": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "lat": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "number"
+              },
+              "optional": true
+            },
+            "lng": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "number"
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
+      },
       "duration": {
         "type": "objectAttribute",
         "value": {
@@ -1221,14 +1251,6 @@
               "value": "completed"
             }
           ]
-        },
-        "optional": true
-      },
-      "locationMap": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "img"
         },
         "optional": true
       },
@@ -2409,6 +2431,42 @@
         },
         "optional": true
       },
+      "format": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "PDF"
+            },
+            {
+              "type": "string",
+              "value": "Zip"
+            },
+            {
+              "type": "string",
+              "value": "MP4"
+            },
+            {
+              "type": "string",
+              "value": "Link"
+            },
+            {
+              "type": "string",
+              "value": "Inne"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "linkUrl": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "file": {
         "type": "objectAttribute",
         "value": {
@@ -2437,35 +2495,6 @@
               }
             }
           }
-        },
-        "optional": true
-      },
-      "format": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "union",
-          "of": [
-            {
-              "type": "string",
-              "value": "PDF"
-            },
-            {
-              "type": "string",
-              "value": "Zip"
-            },
-            {
-              "type": "string",
-              "value": "MP4"
-            },
-            {
-              "type": "string",
-              "value": "Link"
-            },
-            {
-              "type": "string",
-              "value": "Inne"
-            }
-          ]
         },
         "optional": true
       },

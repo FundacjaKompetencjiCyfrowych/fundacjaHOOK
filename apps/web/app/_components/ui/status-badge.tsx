@@ -1,5 +1,5 @@
 import { Badge } from "./badge";
-import { mapStatus } from "@/lib/utils";
+import { mapStatus } from "@/lib/mappers/status";
 
 type Status = "inProgress" | "planned" | "completed";
 

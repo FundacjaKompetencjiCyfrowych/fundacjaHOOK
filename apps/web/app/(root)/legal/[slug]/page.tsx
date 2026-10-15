@@ -1,3 +1,5 @@
+import ROUTES from "@/constants/routes";
+import { getSeoMetadata } from "@/sanity/metadata/getSeoMetadata";
 import type { Metadata } from "next";
 import { cacheLife } from "next/cache";
 import { notFound } from "next/navigation";
@@ -7,7 +9,6 @@ import PageTitle from "@/app/_components/Navigation/PageTitle";
 import { SanityRichText } from "@/sanity/richText/SanityRichText";
 import { client } from "@/sanity/client";
 import { sanityFetch } from "@/sanity/live";
-import { mapMetadata } from "@/sanity/metadata/mapMetadata";
 import { legalPageBySlugQuery, legalPagesQuery } from "@/sanity/queries/legalPages";
 
 async function getLegalPages() {
@@ -39,13 +40,10 @@ type LegalPageRouteProps = {
 
 export async function generateMetadata({ params }: LegalPageRouteProps): Promise<Metadata> {
   const { slug } = await params;
-  const { data } = await sanityFetch({
-    query: legalPageBySlugQuery,
-    params: { slug },
-    stega: false,
+  return getSeoMetadata({
+    pathname: ROUTES.LEGAL_PAGE(slug),
+    document: { type: "legalPage", slug },
   });
-
-  return mapMetadata(data);
 }
 
 export default async function LegalPage({ params }: LegalPageRouteProps) {

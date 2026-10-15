@@ -3,14 +3,14 @@
 import type { ProjectFilter, ProjectSortOrder } from "../_constants/projects";
 import { sanityFetch } from "@/sanity/live";
 import { projectsNewestQuery, projectsOldestQuery } from "@/sanity/queries/projects";
-import type { Project } from "@/sanity/typegen";
+import type { ProjectsNewestQueryResult } from "@/sanity/typegen";
 
 export async function loadProjectsPage(
   start: number,
   filter: ProjectFilter,
   sortBy: ProjectSortOrder,
   limit: number
-): Promise<Project[]> {
+): Promise<ProjectsNewestQueryResult> {
   const query = sortBy === "Najstarsze" ? projectsOldestQuery : projectsNewestQuery;
   const { data } = await sanityFetch({
     query,
@@ -21,5 +21,5 @@ export async function loadProjectsPage(
     },
   });
 
-  return data as Project[];
+  return data;
 }
