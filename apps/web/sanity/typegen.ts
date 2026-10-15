@@ -141,6 +141,7 @@ export type News = {
   slug?: Slug;
   image?: Img;
   description?: string;
+  publishedAt?: string;
   article?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -867,7 +868,7 @@ export type MaterialsQueryResult = Array<{
 
 // Source: ../web/sanity/queries/news.ts
 // Variable: newsQuery
-// Query: *[_type == "news"] | order(_createdAt desc) [$start...$end]
+// Query: *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc, _id asc) [$start...$end]
 export type NewsQueryResult = Array<{
   _id: string;
   _type: "news";
@@ -879,6 +880,7 @@ export type NewsQueryResult = Array<{
   slug?: Slug;
   image?: Img;
   description?: string;
+  publishedAt?: string;
   article?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -901,7 +903,7 @@ export type NewsQueryResult = Array<{
 
 // Source: ../web/sanity/queries/news.ts
 // Variable: allNewsQuery
-// Query: *[_type == "news"] | order(_createdAt desc)
+// Query: *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc, _id asc)
 export type AllNewsQueryResult = Array<{
   _id: string;
   _type: "news";
@@ -913,6 +915,7 @@ export type AllNewsQueryResult = Array<{
   slug?: Slug;
   image?: Img;
   description?: string;
+  publishedAt?: string;
   article?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -935,10 +938,11 @@ export type AllNewsQueryResult = Array<{
 
 // Source: ../web/sanity/queries/news.ts
 // Variable: newsBySlugQuery
-// Query: *[_type == "news" && slug.current == $slug][0] {    _id,    _createdAt,    title,    slug,    description,    article,    image {      asset-> {        _id,        _ref,        url,        metadata {          lqip,          dimensions        },        altText,        title,        description      },      crop,      hotspot    },  }
+// Query: *[_type == "news" && slug.current == $slug][0] {    _id,    _createdAt,    publishedAt,    title,    slug,    description,    article,    image {      asset-> {        _id,        _ref,        url,        metadata {          lqip,          dimensions        },        altText,        title,        description      },      crop,      hotspot    },  }
 export type NewsBySlugQueryResult = {
   _id: string;
   _createdAt: string;
+  publishedAt: string | null;
   title: string | null;
   slug: Slug | null;
   description: string | null;
@@ -1237,7 +1241,7 @@ export type WorkshopSlugsQueryResult = Array<{
 
 // Source: ../web/sanity/queries/workshops.ts
 // Variable: workshopsQuery
-// Query: *[_type == "workshop"] | order(_createdAt desc) [$start...$end]
+// Query: *[_type == "workshop"] | order(datetime asc, _id asc) [$start...$end]
 export type WorkshopsQueryResult = Array<{
   _id: string;
   _type: "workshop";
@@ -1281,9 +1285,9 @@ declare module "@sanity/client" {
     '\n  *[_type == "legalPage" && defined(title) && defined(slug.current)] | order(_createdAt asc) {\n    _id,\n    title,\n    "slug": slug.current\n  }\n': LegalPagesQueryResult;
     '\n  *[_type == "legalPage" && slug.current == $slug][0] {\n    seo,\n    title,\n    "slug": slug.current,\n    body\n  }\n': LegalPageBySlugQueryResult;
     '\n  *[_type == "material"] | order(date desc) {\n    _id,\n    title,\n    description,\n    date,\n    event,\n    type,\n    area,\n    format,\n    linkUrl,\n    size,\n    placements,\n    "fileAsset": file.asset->{\n      url,\n      extension,\n      size\n    }\n  }\n': MaterialsQueryResult;
-    '\n  *[_type == "news"] | order(_createdAt desc) [$start...$end]': NewsQueryResult;
-    '\n  *[_type == "news"] | order(_createdAt desc)': AllNewsQueryResult;
-    '\n  *[_type == "news" && slug.current == $slug][0] {\n    _id,\n    _createdAt,\n    title,\n    slug,\n    description,\n    article,\n    image {\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description\n      },\n      crop,\n      hotspot\n    },\n  }\n': NewsBySlugQueryResult;
+    '\n  *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc, _id asc) [$start...$end]': NewsQueryResult;
+    '\n  *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc, _id asc)': AllNewsQueryResult;
+    '\n  *[_type == "news" && slug.current == $slug][0] {\n    _id,\n    _createdAt,\n    publishedAt,\n    title,\n    slug,\n    description,\n    article,\n    image {\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description\n      },\n      crop,\n      hotspot\n    },\n  }\n': NewsBySlugQueryResult;
     '\n  *[_id == "organizationDetails"][0] {\n    address,\n    krs\n  }\n': OrganizationDetailsQueryResult;
     '\n  *[_type == "project" && defined(slug.current)]{\n    "slug": slug.current\n  }': ProjectSlugsQueryResult;
     '\n  *[_type == "project" && ($status == "all" || status == $status)]\n    | order(coalesce(startDate, _createdAt) desc, _id asc) [$start...$end]': ProjectsNewestQueryResult;
@@ -1296,6 +1300,6 @@ declare module "@sanity/client" {
     '\n  *[_type == "supportUs"][0] {\n    seo,\n    volunteerDescription,\n    accountNumber,\n    transferTitle,\n    volunteerFormUrl\n  }\n': SupportUsQueryResult;
     '\n  *[_type == "workshop" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    description,\n    datetime,\n    location,\n    locationCoordinates { lat, lng },\n    duration,\n    group,\n    status,\n    image {\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description\n      },\n      crop,\n      hotspot\n    },\n    signupFormUrl,\n    materials {\n      asset-> {\n        _ref,\n        url,\n        originalFilename\n      }\n    },\n    regulations {\n      asset-> {\n        _ref,\n        url,\n        originalFilename,\n        extension\n      }\n    },\n  }\n': WorkshopDetailsQueryResult;
     '\n  *[_type == "workshop"] {\n    "slug": slug.current\n  }\n': WorkshopSlugsQueryResult;
-    '\n  *[_type == "workshop"] | order(_createdAt desc) [$start...$end]': WorkshopsQueryResult;
+    '\n  *[_type == "workshop"] | order(datetime asc, _id asc) [$start...$end]': WorkshopsQueryResult;
   }
 }

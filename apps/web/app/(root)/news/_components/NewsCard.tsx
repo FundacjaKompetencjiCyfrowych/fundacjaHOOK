@@ -2,12 +2,15 @@ import { News } from "@/sanity/typegen";
 import Link from "next/link";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/app/_components/ui/card";
 import { SanityImage } from "@/sanity/image/SanityImage";
+import { formatDate } from "@/lib/formatDate";
 
 interface Props {
   news: News;
 }
 
 const NewsCard = ({ news }: Props) => {
+  const publishedAt = news.publishedAt ?? news._createdAt;
+
   return (
     <Link href={`/news/${news.slug?.current || "not-found"}`} className="block h-full">
       <Card className="relative gap-2 shadow-md hover:shadow-lg mx-auto pt-0 w-full max-w-142 h-full transition-all hover:-translate-y-0.5 duration-150 cursor-pointer">
@@ -18,6 +21,9 @@ const NewsCard = ({ news }: Props) => {
           <CardTitle className="text-sm leading-[1.15]">
             <span className="block">{news.title}</span>
           </CardTitle>
+          <time dateTime={publishedAt} className="text-xs text-muted-foreground">
+            {formatDate(publishedAt)}
+          </time>
           <CardDescription className="text-xs leading-[1.4] tracking-[0.02em] text-muted">
             {news.description}
           </CardDescription>

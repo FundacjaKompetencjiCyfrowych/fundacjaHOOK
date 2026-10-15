@@ -773,6 +773,13 @@
         },
         "optional": true
       },
+      "publishedAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "article": {
         "type": "objectAttribute",
         "value": {

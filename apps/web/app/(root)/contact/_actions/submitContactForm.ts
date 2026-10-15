@@ -10,6 +10,19 @@ export type ContactState = {
   values?: Partial<ContactFormValues>;
 };
 
+function escapeHtml(value: string) {
+  return value.replace(/[&<>"']/g, (character) => {
+    const entities: Record<string, string> = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;",
+    };
+    return entities[character];
+  });
+}
+
 export async function submitContactForm(
   prevState: ContactState,
   formData: FormData
@@ -40,6 +53,10 @@ export async function submitContactForm(
 
   const fromEmail = process.env.RESEND_FROM_EMAIL?.trim() || "onboarding@resend.dev";
   const toEmail = process.env.RESEND_TO_EMAIL?.trim() || "szymongrysiewicz@gmail.com";
+  const safeName = escapeHtml(validated.data.name);
+  const safeSurname = escapeHtml(validated.data.surname);
+  const safeEmail = escapeHtml(validated.data.email);
+  const safeMessage = escapeHtml(validated.data.message).replace(/\n/g, "<br>");
 
   // Fake response for forms filled too fast (likely bots). Validate first so an
   // empty form never receives a success response.
@@ -56,11 +73,11 @@ export async function submitContactForm(
       replyTo: validated.data.email,
       html: `
         <h2>Nowa wiadomość z formularza kontaktowego</h2>
-        <p><strong>Imię i nazwisko:</strong> ${validated.data.name} ${validated.data.surname}</p>
-        <p><strong>Email nadawcy:</strong> ${validated.data.email}</p>
+        <p><strong>Imię i nazwisko:</strong> ${safeName} ${safeSurname}</p>
+        <p><strong>Email nadawcy:</strong> ${safeEmail}</p>
         <p><strong>Wiadomość:</strong></p>
         <blockquote style="background: #f4f4f4; padding: 12px; border-left: 4px solid #0091a5;">
-          ${validated.data.message.replace(/\n/g, "<br>")}
+          ${safeMessage}
         </blockquote>
       `,
     });

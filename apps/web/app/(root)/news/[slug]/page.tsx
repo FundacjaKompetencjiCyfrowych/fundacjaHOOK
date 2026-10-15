@@ -70,11 +70,11 @@ async function NewsArticlePageContent({ params }: NewsArticlePageProps) {
         <div className="mx-auto max-w-[1200px]">
           <PageTitle>{title}</PageTitle>
           <time
-            dateTime={item._createdAt}
+            dateTime={item.publishedAt ?? item._createdAt}
             className="mt-2 mb-2 flex items-center gap-1.5 text-xs text-muted-foreground"
           >
             <Calendar1 size={14} />
-            {formatDate(item._createdAt)}
+            {formatDate(item.publishedAt ?? item._createdAt)}
           </time>
           <Link
             href={ROUTES.NEWS}

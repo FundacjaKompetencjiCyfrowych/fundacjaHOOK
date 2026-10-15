@@ -45,6 +45,12 @@ export default defineType({
     }),
     defineField({
       group: "content",
+      name: "publishedAt",
+      title: "Data publikacji",
+      type: "date",
+    }),
+    defineField({
+      group: "content",
       name: "article",
       title: "Treść artykułu",
       type: "array",
@@ -53,11 +59,15 @@ export default defineType({
     }),
   ],
   preview: {
-    select: { title: "title", slug: "slug.current" },
-    prepare({ title, slug }) {
+    select: { title: "title", slug: "slug.current", publishedAt: "publishedAt" },
+    prepare({ title, slug, publishedAt }) {
+      const subtitle = [publishedAt, slug ? `/news/${slug}` : undefined]
+        .filter(Boolean)
+        .join(" • ");
+
       return {
         title: title?.trim() || "Bez tytułu",
-        subtitle: slug ? `/news/${slug}` : undefined,
+        subtitle: subtitle || undefined,
         media: DocumentIcon,
       };
     },
