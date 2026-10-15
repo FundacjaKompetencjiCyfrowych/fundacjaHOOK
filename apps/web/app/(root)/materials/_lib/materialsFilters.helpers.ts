@@ -1,6 +1,4 @@
-import type { MaterialFilterItem } from "./materialyFilters.types";
-
-export type { MaterialFilterItem } from "./materialyFilters.types";
+import type { MaterialFilterItem } from "@/lib/types/materials";
 
 export function toggleSet(current: Set<string>, value: string) {
   const next = new Set(current);

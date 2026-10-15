@@ -1,6 +1,6 @@
 "use client";
 
-import NewsCard from "@/app/_components/Cards/NewsCard";
+import NewsCard from "./NewsCard";
 import type { News } from "@/sanity/typegen";
 import PageTitle from "@/app/_components/Navigation/PageTitle";
 import LoadMoreButton from "@/app/_components/Buttons/LoadMoreButton";

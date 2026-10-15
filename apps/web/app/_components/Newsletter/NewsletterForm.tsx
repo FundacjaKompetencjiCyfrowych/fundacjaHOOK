@@ -1,7 +1,7 @@
 "use client";
 
 import SocialMediaLinks from "@/app/_components/SocialMediaLinks";
-import { NewsletterSignupForm } from "@/app/_components/NewsletterSignupForm";
+import { NewsletterSignupForm } from "./NewsletterSignupForm";
 
 interface NewsletterFormProps {
   SOCIAL_LINKS?: {

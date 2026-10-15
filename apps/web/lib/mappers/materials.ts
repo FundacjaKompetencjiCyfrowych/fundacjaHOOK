@@ -1,4 +1,4 @@
-import type { MaterialFilterItem } from "@/app/_components/Filtering/materialyFilters.types";
+import type { MaterialFilterItem } from "@/lib/types/materials";
 
 type MaterialAsset = {
   url?: string | null;

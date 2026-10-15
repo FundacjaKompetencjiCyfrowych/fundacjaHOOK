@@ -2,7 +2,7 @@
 
 import { X } from "lucide-react";
 import { useId, useState } from "react";
-import { NewsletterSignupForm } from "@/app/_components/NewsletterSignupForm";
+import { NewsletterSignupForm } from "./NewsletterSignupForm";
 import { Button } from "@/app/_components/ui/button";
 
 export default function NewsletterButton() {

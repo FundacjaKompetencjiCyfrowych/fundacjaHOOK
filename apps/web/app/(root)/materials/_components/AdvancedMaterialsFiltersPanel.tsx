@@ -1,6 +1,6 @@
 import { useId, useState } from "react";
 
-import { formatDatePolish } from "@/lib/formatDate";
+import { formatDate } from "@/lib/formatDate";
 import { pl } from "date-fns/locale/pl";
 import { CalendarIcon, Check, ChevronDown } from "lucide-react";
 
@@ -12,7 +12,7 @@ import { Label } from "@/app/_components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/app/_components/ui/popover";
 import { cn } from "@/lib/utils";
 
-import { FORMATY, OBSZARY, TYPY } from "./materialyFilters.types";
+import { AREAS, FORMATS, TYPES } from "../_lib/materialsFilters.constants";
 
 type FilterOption = { label: string; value: string };
 
@@ -69,7 +69,7 @@ function FilterDropdown({
   );
 }
 
-type MaterialyAdvancedFiltersPanelProps = {
+type AdvancedMaterialsFiltersPanelProps = {
   sort: "newest" | "oldest";
   selectedEvent: string;
   events: readonly string[];
@@ -88,7 +88,7 @@ type MaterialyAdvancedFiltersPanelProps = {
   onFormatToggle: (value: string) => void;
 };
 
-export default function MaterialyAdvancedFiltersPanel({
+export default function AdvancedMaterialsFiltersPanel({
   sort,
   selectedEvent,
   events,
@@ -105,7 +105,7 @@ export default function MaterialyAdvancedFiltersPanel({
   onTypeToggle,
   onAreaToggle,
   onFormatToggle,
-}: MaterialyAdvancedFiltersPanelProps) {
+}: AdvancedMaterialsFiltersPanelProps) {
   return (
     <CollapsibleContent>
       <div className="items-start gap-x-6 gap-y-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 bg-neutral-100 mb-6 p-4 rounded-2xl">
@@ -149,7 +149,7 @@ export default function MaterialyAdvancedFiltersPanel({
                   )}
                 >
                   <CalendarIcon className="mr-2 w-4 h-4" />
-                  {dateFrom ? formatDatePolish(dateFrom) : "Od"}
+                  {dateFrom ? formatDate(dateFrom) : "Od"}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="p-0 w-auto" align="start">
@@ -174,7 +174,7 @@ export default function MaterialyAdvancedFiltersPanel({
                   )}
                 >
                   <CalendarIcon className="mr-2 w-4 h-4" />
-                  {dateTo ? formatDatePolish(dateTo) : "Do"}
+                  {dateTo ? formatDate(dateTo) : "Do"}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="p-0 w-auto" align="start">
@@ -187,7 +187,7 @@ export default function MaterialyAdvancedFiltersPanel({
         <div>
           <p className="mb-2 font-bold text-sm">Typ materiału</p>
           <div className="space-y-1.5">
-            {TYPY.map((typeValue) => (
+            {TYPES.map((typeValue) => (
               <div key={typeValue} className="flex items-center gap-2">
                 <Checkbox
                   id={`typ-${typeValue}`}
@@ -208,7 +208,7 @@ export default function MaterialyAdvancedFiltersPanel({
         <div>
           <p className="mb-2 font-bold text-sm">Obszar tematyczny</p>
           <div className="space-y-1.5">
-            {OBSZARY.map((areaValue) => (
+            {AREAS.map((areaValue) => (
               <div key={areaValue} className="flex items-center gap-2">
                 <Checkbox
                   id={`obszar-${areaValue}`}
@@ -232,7 +232,7 @@ export default function MaterialyAdvancedFiltersPanel({
         <div>
           <p className="mb-2 font-bold text-sm">Format</p>
           <div className="space-y-1.5">
-            {FORMATY.map((formatValue) => (
+            {FORMATS.map((formatValue) => (
               <div key={formatValue} className="flex items-center gap-2">
                 <Checkbox
                   id={`format-${formatValue}`}

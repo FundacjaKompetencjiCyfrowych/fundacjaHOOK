@@ -8,9 +8,9 @@ import { getSeoMetadata } from "@/sanity/metadata/getSeoMetadata";
 
 import UtilityHeader from "@/app/_components/Navigation/UtilityHeader";
 import Navbar from "@/app/_components/Navigation/Navbar";
-import NewsletterButton from "@/app/_components/Buttons/NewsletterButton";
+import NewsletterButton from "@/app/_components/Newsletter/NewsletterButton";
 import UpArrowButton from "@/app/_components/Buttons/UpArrowButton";
-import Footer from "@/app/_components/Footer";
+import Footer from "@/app/_components/Footer/Footer";
 import { cn } from "@/lib/utils";
 import { settingsQuery } from "@/sanity/queries/settings";
 import { organizationDetailsQuery } from "@/sanity/queries/organizationDetails";

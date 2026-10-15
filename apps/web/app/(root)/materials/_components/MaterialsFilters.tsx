@@ -2,17 +2,22 @@
 
 import { useMemo, useState } from "react";
 
-import MaterialySection from "@/app/_components/Sections/MaterialyPage/MaterialySection";
+import MaterialResourceList from "@/app/_components/Materials/MaterialResourceList";
 import { Collapsible } from "@/app/_components/ui/collapsible";
 
-import MaterialyAdvancedFiltersPanel from "./MaterialyAdvancedFiltersPanel";
-import MaterialyFiltersReset from "./MaterialyFiltersReset";
-import MaterialyFiltersTopBar from "./MaterialyFiltersTopBar";
-import { WYDARZENIA, type MaterialFilterItem } from "./materialyFilters.types";
+import AdvancedMaterialsFiltersPanel from "./AdvancedMaterialsFiltersPanel";
+import MaterialsFiltersReset from "./MaterialsFiltersReset";
+import MaterialsFiltersTopBar from "./MaterialsFiltersTopBar";
+import { EVENTS } from "../_lib/materialsFilters.constants";
+import type { MaterialFilterItem } from "@/lib/types/materials";
 
-import { filterAndSortMaterials, getActiveFilterCount, toggleSet } from "./materialyFilters.utils";
+import {
+  filterAndSortMaterials,
+  getActiveFilterCount,
+  toggleSet,
+} from "../_lib/materialsFilters.helpers";
 
-interface MaterialyFiltersProps {
+interface MaterialsFiltersProps {
   materials: MaterialFilterItem[];
   counts: {
     eventCount: Map<string, number>;
@@ -22,7 +27,7 @@ interface MaterialyFiltersProps {
   };
 }
 
-export default function MaterialyFilters({ materials, counts }: MaterialyFiltersProps) {
+export default function MaterialsFilters({ materials, counts }: MaterialsFiltersProps) {
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState<"newest" | "oldest">("newest");
@@ -89,20 +94,20 @@ export default function MaterialyFilters({ materials, counts }: MaterialyFilters
   return (
     <section className="mt-6">
       <div className="w-full">
-        <MaterialyFiltersReset activeFilterCount={activeFilterCount} onReset={resetFilters} />
+        <MaterialsFiltersReset activeFilterCount={activeFilterCount} onReset={resetFilters} />
 
         <Collapsible open={filtersOpen} onOpenChange={setFiltersOpen}>
-          <MaterialyFiltersTopBar
+          <MaterialsFiltersTopBar
             search={search}
             filtersOpen={filtersOpen}
             activeFilterCount={activeFilterCount}
             onSearchChange={setSearch}
           />
 
-          <MaterialyAdvancedFiltersPanel
+          <AdvancedMaterialsFiltersPanel
             sort={sort}
             selectedEvent={selEvent}
-            events={WYDARZENIA}
+            events={EVENTS}
             dateFrom={dateFrom}
             dateTo={dateTo}
             selectedTypes={selTypes}
@@ -119,7 +124,7 @@ export default function MaterialyFilters({ materials, counts }: MaterialyFilters
           />
         </Collapsible>
 
-        <MaterialySection materials={filteredMaterials} />
+        <MaterialResourceList materials={filteredMaterials} />
       </div>
     </section>
   );

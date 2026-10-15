@@ -5,7 +5,7 @@ import { workshopDetailsQuery } from "@/sanity/queries/workshopDetails";
 import { sanityFetch } from "@/sanity/live";
 import { Button } from "@/app/_components/ui/button";
 import { Calendar1, MapPin, Download, LogIn } from "lucide-react";
-import { getFormattedWorkshopDate } from "@/lib/utils";
+import { getFormattedWorkshopDate } from "@/app/_components/Workshops/workshop.helpers";
 import { getDownloadUrl } from "@/lib/getDownloadUrl";
 import { notFound } from "next/navigation";
 import Link from "next/link";

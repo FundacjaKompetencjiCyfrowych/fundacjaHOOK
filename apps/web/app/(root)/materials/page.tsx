@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import ROUTES from "@/constants/routes";
 import { getSeoMetadata } from "@/sanity/metadata/getSeoMetadata";
-import MaterialyFilters from "@/app/_components/Filtering/MaterialyFilters";
+import MaterialsFilters from "./_components/MaterialsFilters";
 import Breadcrumbs from "@/app/_components/Navigation/Breadcrumbs";
 import PageTitle from "@/app/_components/Navigation/PageTitle";
 import { mapMaterialsToFilterItems } from "@/lib/mappers/materials";
 import { cacheLife } from "next/cache";
 import { sanityFetch } from "@/sanity/live";
 import { materialsQuery } from "@/sanity/queries/materials";
-import { countValues } from "@/app/_components/Filtering/materialyFilters.utils";
+import { countValues } from "./_lib/materialsFilters.helpers";
 
 export async function generateMetadata(): Promise<Metadata> {
   return getSeoMetadata({ pathname: ROUTES.MATERIALS });
@@ -39,7 +39,7 @@ const MaterialsPage = async () => {
       <section className="px-4 py-12 md:px-6 md:py-14">
         <div className="mx-auto max-w-[1200px]">
           <PageTitle>Materiały</PageTitle>
-          <MaterialyFilters
+          <MaterialsFilters
             materials={materials}
             counts={{ eventCount, typeCount, areaCount, formatCount }}
           />

@@ -3,7 +3,7 @@ import ROUTES from "@/constants/routes";
 import { getSeoMetadata } from "@/sanity/metadata/getSeoMetadata";
 import { defineQuery } from "next-sanity";
 import { sanityFetch } from "@/sanity/live";
-import { HomeSections } from "./_components/Sections/Home/HomeSections";
+import { HomeSections } from "./_home/_components/HomeSections";
 
 const homeQuery = defineQuery(`
   *[_type == "home" && _id == "home"][0]{

@@ -7,7 +7,7 @@ import PageTitle from "@/app/_components/Navigation/PageTitle";
 import { cn } from "@/lib/utils";
 import { MATERIAL_PLACEMENTS } from "@/lib/constants/materialPlacements";
 import { mapMaterialsToFilterItems } from "@/lib/mappers/materials";
-import MaterialySection from "@/app/_components/Sections/MaterialyPage/MaterialySection";
+import MaterialResourceList from "@/app/_components/Materials/MaterialResourceList";
 import { sanityFetch } from "@/sanity/live";
 import { aboutUsQuery } from "@/sanity/queries/aboutUs";
 import { materialsQuery } from "@/sanity/queries/materials";
@@ -108,14 +108,14 @@ export default async function AboutUsPage() {
           <section className="mt-12">
             <h2 className="font-bold text-main text-lg leading-7">Dla mediów i partnerów</h2>
             <div className="mt-3">
-              <MaterialySection materials={mediaMaterials} />
+              <MaterialResourceList materials={mediaMaterials} />
             </div>
           </section>
 
           <section className="mt-12">
             <h2 className="font-bold text-main text-lg leading-7">Dokumenty fundacji</h2>
             <div className="mt-3">
-              <MaterialySection materials={foundationMaterials} />
+              <MaterialResourceList materials={foundationMaterials} />
             </div>
           </section>
         </div>

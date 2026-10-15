@@ -1,11 +1,10 @@
 import type { Workshop } from "@/sanity/typegen";
 import Link from "next/link";
-import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/app/_components/ui/card";
 import { SanityImage } from "@/sanity/image/SanityImage";
-import { StatusBadge } from "../ui/status-badge";
+import { StatusBadge } from "@/app/_components/ui/status-badge";
 import { Calendar1, MapPin, Timer, Users } from "lucide-react";
-import { mapGroup } from "@/lib/mappers/workshop";
-import { getFormattedWorkshopDate, getHoursLabel } from "@/lib/utils";
+import { getFormattedWorkshopDate, getHoursLabel, mapGroup } from "./workshop.helpers";
 
 interface WorkshopCardProps {
   workshop: Workshop;

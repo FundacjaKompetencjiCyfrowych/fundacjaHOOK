@@ -1,5 +1,5 @@
 import { SanityImage } from "@/sanity/image/SanityImage";
-import { Typography } from "../../ui/typography";
+import { Typography } from "@/app/_components/ui/typography";
 import type { Img } from "@/sanity/typegen";
 
 export default function HomeHeroSection({

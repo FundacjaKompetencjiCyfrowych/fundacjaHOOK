@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import NewsletterForm from "./NewsletterForm";
+import NewsletterForm from "../Newsletter/NewsletterForm";
 import FooterYear from "./FooterYear";
 import ROUTES from "@/constants/routes";
 import { Suspense } from "react";

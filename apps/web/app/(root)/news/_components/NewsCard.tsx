@@ -1,6 +1,6 @@
 import { News } from "@/sanity/typegen";
 import Link from "next/link";
-import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/app/_components/ui/card";
 import { SanityImage } from "@/sanity/image/SanityImage";
 
 interface Props {

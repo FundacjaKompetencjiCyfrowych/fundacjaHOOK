@@ -579,7 +579,7 @@ export type AllSanitySchemaTypes =
 
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
-// Source: ../web/app/page.tsx
+// Source: ../web/app/(root)/page.tsx
 // Variable: homeQuery
 // Query: *[_type == "home" && _id == "home"][0]{    _id,    hero,    aboutUs,    workshops { ..., "documents": items[]-> },    supportUs,    projects { ..., "documents": items[]-> },    contact,    "krs": *[_id == "organizationDetails"][0].krs  }
 export type HomeQueryResult = {

@@ -1,7 +1,7 @@
-import { Card } from "../../ui/card";
+import { Card } from "@/app/_components/ui/card";
 import { SanityImage } from "@/sanity/image/SanityImage";
 import type { Img } from "@/sanity/typegen";
-import { Typography } from "../../ui/typography";
+import { Typography } from "@/app/_components/ui/typography";
 
 type CardsLandingItem = {
   _key?: string;

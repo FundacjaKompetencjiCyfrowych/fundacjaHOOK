@@ -1,23 +1,23 @@
 import Link from "next/link";
-import { Button } from "../../ui/button";
-import { Typography } from "../../ui/typography";
-import WorkshopCard from "../../Cards/WorkshopCard";
-import type { Workshop } from "@/sanity/typegen";
+import { Button } from "@/app/_components/ui/button";
+import { Typography } from "@/app/_components/ui/typography";
+import ProjectCard from "@/app/_components/Projects/ProjectCard";
+import type { Project } from "@/sanity/typegen";
 
-export function HomeWorkshopsSection({
+export function HomeProjectsSection({
   title,
   subtitle,
   items = [],
 }: {
   title?: string;
   subtitle?: string;
-  items?: Workshop[];
+  items?: Project[];
 } = {}) {
   if (!items.length) return null;
 
   return (
-    <section className="px-4 py-[38px] sm:px-6">
-      <div className="mx-auto max-w-[1200px]">
+    <section className="border-b border-subtle px-4 pb-20 pt-6 sm:px-6">
+      <div className="mx-auto max-w-[1152px]">
         <Typography
           as="h2"
           variant="h4"
@@ -31,14 +31,14 @@ export function HomeWorkshopsSection({
             {subtitle}
           </Typography>
         ) : null}
-        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
-          {items.map((workshop) => (
-            <WorkshopCard key={workshop._id} workshop={workshop} />
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {items.map((project) => (
+            <ProjectCard key={project._id} project={project} />
           ))}
         </div>
         <div className="mt-6 flex justify-center">
           <Button asChild>
-            <Link href="/workshops">Pokaż wszystkie</Link>
+            <Link href="/projects">Pokaż wszystkie</Link>
           </Button>
         </div>
       </div>

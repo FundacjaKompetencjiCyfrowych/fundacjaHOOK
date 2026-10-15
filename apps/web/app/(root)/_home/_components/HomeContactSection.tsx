@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { Button } from "../../ui/button";
-import { Typography } from "../../ui/typography";
+import { Button } from "@/app/_components/ui/button";
+import { Typography } from "@/app/_components/ui/typography";
 
 type ButtonData = {
   _id?: string;

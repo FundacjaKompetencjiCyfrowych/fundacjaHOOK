@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { Button } from "../../ui/button";
+import { Button } from "@/app/_components/ui/button";
 import { SanityImage } from "@/sanity/image/SanityImage";
 import type { Img } from "@/sanity/typegen";
-import { Typography } from "../../ui/typography";
+import { Typography } from "@/app/_components/ui/typography";
 
 type ButtonData = {
   _id?: string;

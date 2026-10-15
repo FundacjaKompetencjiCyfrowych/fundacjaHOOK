@@ -3,20 +3,8 @@ import { Download, ExternalLink, Eye } from "lucide-react";
 import { Button } from "@/app/_components/ui/button";
 import { formatDate } from "@/lib/formatDate";
 import { getDownloadUrl } from "@/lib/getDownloadUrl";
+import type { MaterialResource } from "@/lib/types/materials";
 import WirePlaceholder from "../WirePlaceholder";
-
-export type ContentItemType = {
-  title: string;
-  date: string;
-  description: string;
-  fileUrl?: string | null;
-  linkUrl?: string | null;
-  format: string;
-  size: string;
-  event?: string;
-  type?: string;
-  area?: string;
-};
 
 function isHttpUrl(value: string | null | undefined): value is string {
   if (!value || !/^https?:\/\//i.test(value)) return false;
@@ -28,7 +16,7 @@ function isHttpUrl(value: string | null | undefined): value is string {
   }
 }
 
-export default function ContentItem({ material }: { material: ContentItemType }) {
+export default function MaterialResourceCard({ material }: { material: MaterialResource }) {
   const isLink = material.format === "Link";
   const linkUrl = isHttpUrl(material.linkUrl) ? material.linkUrl : null;
   const fileUrl = isHttpUrl(material.fileUrl) ? material.fileUrl : null;

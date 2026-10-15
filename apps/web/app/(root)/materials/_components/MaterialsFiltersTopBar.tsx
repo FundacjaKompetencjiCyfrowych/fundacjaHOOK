@@ -6,19 +6,19 @@ import { CollapsibleTrigger } from "@/app/_components/ui/collapsible";
 import { Input } from "@/app/_components/ui/input";
 import { cn } from "@/lib/utils";
 
-type MaterialyFiltersTopBarProps = {
+type MaterialsFiltersTopBarProps = {
   search: string;
   filtersOpen: boolean;
   activeFilterCount: number;
   onSearchChange: (value: string) => void;
 };
 
-export default function MaterialyFiltersTopBar({
+export default function MaterialsFiltersTopBar({
   search,
   filtersOpen,
   activeFilterCount,
   onSearchChange,
-}: MaterialyFiltersTopBarProps) {
+}: MaterialsFiltersTopBarProps) {
   return (
     <div className="flex sm:flex-row flex-col gap-3 mb-3">
       <div className="relative flex-1">

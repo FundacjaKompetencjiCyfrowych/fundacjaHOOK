@@ -4,9 +4,9 @@ import {
   countValues,
   filterAndSortMaterials,
   getActiveFilterCount,
-  type MaterialFilterItem,
   toggleSet,
-} from "../../app/_components/Filtering/materialyFilters.utils";
+} from "../../app/(root)/materials/_lib/materialsFilters.helpers";
+import type { MaterialFilterItem } from "../../lib/types/materials";
 
 const makeMaterial = (overrides: Partial<MaterialFilterItem> = {}): MaterialFilterItem => ({
   title: "Test material",

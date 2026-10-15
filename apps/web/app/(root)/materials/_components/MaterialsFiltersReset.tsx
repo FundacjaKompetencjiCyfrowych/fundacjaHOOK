@@ -1,14 +1,14 @@
 import { X } from "lucide-react";
 
-type MaterialyFiltersResetProps = {
+type MaterialsFiltersResetProps = {
   activeFilterCount: number;
   onReset: () => void;
 };
 
-export default function MaterialyFiltersReset({
+export default function MaterialsFiltersReset({
   activeFilterCount,
   onReset,
-}: MaterialyFiltersResetProps) {
+}: MaterialsFiltersResetProps) {
   if (activeFilterCount === 0) {
     return null;
   }
