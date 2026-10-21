@@ -124,6 +124,7 @@ export default function MaterialsFilters({ materials, counts }: MaterialsFilters
           />
         </Collapsible>
 
+        <h2 className="mb-2 text-base font-medium leading-5 text-main">Baza wiedzy</h2>
         <MaterialResourceList materials={filteredMaterials} />
       </div>
     </section>
