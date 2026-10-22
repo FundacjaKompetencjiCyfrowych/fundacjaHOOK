@@ -866,6 +866,115 @@ export type MaterialsQueryResult = Array<{
   } | null;
 }>;
 
+// Source: ../web/sanity/queries/materials.ts
+// Variable: materialsFacetsQuery
+// Query: *[_type == "material"] {    _id,    event,    type,    area,    format,    "fileAsset": file.asset->{ extension }  }
+export type MaterialsFacetsQueryResult = Array<{
+  _id: string;
+  event: "Inne" | "Konferencja" | "Szkolenie" | "Warsztaty" | "Webinar" | null;
+  type:
+    | "Checklist"
+    | "Infografika"
+    | "Inne"
+    | "Nagranie wideo"
+    | "Poradnik"
+    | "Publikacja"
+    | "Szablon"
+    | "Workbook"
+    | null;
+  area:
+    | "Finanse"
+    | "Inne"
+    | "Kariera"
+    | "Prawo"
+    | "Rodzicielstwo"
+    | "Rozw\xF3j Osobisty"
+    | "Zdrowie"
+    | null;
+  format: "Inne" | "Link" | "MP4" | "PDF" | "Zip" | null;
+  fileAsset: {
+    extension: string | null;
+  } | null;
+}>;
+
+// Source: ../web/sanity/queries/materials.ts
+// Variable: materialsNewestPageQuery
+// Query: *[_type == "material"] {    ...,    "eventKey": lower(array::join(string::split(coalesce(event, ""), " ")[@ != ""], " ")),    "typeKey": lower(array::join(string::split(coalesce(type, ""), " ")[@ != ""], " ")),    "areaKey": lower(array::join(string::split(coalesce(area, ""), " ")[@ != ""], " ")),    "formatKey": lower(array::join(string::split(coalesce(format, ""), " ")[@ != ""], " ")),    "extensionKey": lower(coalesce(file.asset->extension, ""))  } {    ...,    "filterEvent": select(      eventKey in ["warsztaty", "konferencja", "webinar", "szkolenie"] => eventKey,      "inne"    ),    "filterType": select(      typeKey == "nagranie video" => "nagranie wideo",      typeKey in ["workbook", "checklist", "poradnik", "publikacja", "nagranie wideo",        "szablon", "infografika"] => typeKey,      "inne"    ),    "filterArea": select(      areaKey in ["zdrowie", "prawo", "finanse", "kariera", "rozwój osobisty",        "rodzicielstwo"] => areaKey,      "inne"    ),    "filterFormat": select(      formatKey != "" && formatKey in ["pdf", "zip", "mp4", "link"] => formatKey,      formatKey == "" && extensionKey in ["pdf", "zip", "mp4", "link"] => extensionKey,      "inne"    )  } [  ($search == ""    || count(string::split(lower(coalesce(title, "Brak danych")), $search)) > 1    || count(string::split(lower(coalesce(description, "Brak danych")), $search)) > 1)  && ($event == "all" || filterEvent == $event)  && (count($types) == 0 || filterType in $types)  && (count($areas) == 0 || filterArea in $areas)  && (count($formats) == 0 || filterFormat in $formats)  && ($dateFrom == null || coalesce(date, "1970-01-01") >= $dateFrom)  && ($dateTo == null || coalesce(date, "1970-01-01") <= $dateTo)]    | order(coalesce(date, "1970-01-01") desc, _id asc) [$start...$end] {    _id,    title,    description,    date,    event,    type,    area,    format,    linkUrl,    size,    placements,    "fileAsset": file.asset->{ url, extension, size }  }
+export type MaterialsNewestPageQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  description: string | null;
+  date: string | null;
+  event: "Inne" | "Konferencja" | "Szkolenie" | "Warsztaty" | "Webinar" | null;
+  type:
+    | "Checklist"
+    | "Infografika"
+    | "Inne"
+    | "Nagranie wideo"
+    | "Poradnik"
+    | "Publikacja"
+    | "Szablon"
+    | "Workbook"
+    | null;
+  area:
+    | "Finanse"
+    | "Inne"
+    | "Kariera"
+    | "Prawo"
+    | "Rodzicielstwo"
+    | "Rozw\xF3j Osobisty"
+    | "Zdrowie"
+    | null;
+  format: "Inne" | "Link" | "MP4" | "PDF" | "Zip" | null;
+  linkUrl: string | null;
+  size: string | null;
+  placements: Array<string> | null;
+  fileAsset: {
+    url: string | null;
+    extension: string | null;
+    size: number | null;
+  } | null;
+}>;
+
+// Source: ../web/sanity/queries/materials.ts
+// Variable: materialsOldestPageQuery
+// Query: *[_type == "material"] {    ...,    "eventKey": lower(array::join(string::split(coalesce(event, ""), " ")[@ != ""], " ")),    "typeKey": lower(array::join(string::split(coalesce(type, ""), " ")[@ != ""], " ")),    "areaKey": lower(array::join(string::split(coalesce(area, ""), " ")[@ != ""], " ")),    "formatKey": lower(array::join(string::split(coalesce(format, ""), " ")[@ != ""], " ")),    "extensionKey": lower(coalesce(file.asset->extension, ""))  } {    ...,    "filterEvent": select(      eventKey in ["warsztaty", "konferencja", "webinar", "szkolenie"] => eventKey,      "inne"    ),    "filterType": select(      typeKey == "nagranie video" => "nagranie wideo",      typeKey in ["workbook", "checklist", "poradnik", "publikacja", "nagranie wideo",        "szablon", "infografika"] => typeKey,      "inne"    ),    "filterArea": select(      areaKey in ["zdrowie", "prawo", "finanse", "kariera", "rozwój osobisty",        "rodzicielstwo"] => areaKey,      "inne"    ),    "filterFormat": select(      formatKey != "" && formatKey in ["pdf", "zip", "mp4", "link"] => formatKey,      formatKey == "" && extensionKey in ["pdf", "zip", "mp4", "link"] => extensionKey,      "inne"    )  } [  ($search == ""    || count(string::split(lower(coalesce(title, "Brak danych")), $search)) > 1    || count(string::split(lower(coalesce(description, "Brak danych")), $search)) > 1)  && ($event == "all" || filterEvent == $event)  && (count($types) == 0 || filterType in $types)  && (count($areas) == 0 || filterArea in $areas)  && (count($formats) == 0 || filterFormat in $formats)  && ($dateFrom == null || coalesce(date, "1970-01-01") >= $dateFrom)  && ($dateTo == null || coalesce(date, "1970-01-01") <= $dateTo)]    | order(coalesce(date, "1970-01-01") asc, _id asc) [$start...$end] {    _id,    title,    description,    date,    event,    type,    area,    format,    linkUrl,    size,    placements,    "fileAsset": file.asset->{ url, extension, size }  }
+export type MaterialsOldestPageQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  description: string | null;
+  date: string | null;
+  event: "Inne" | "Konferencja" | "Szkolenie" | "Warsztaty" | "Webinar" | null;
+  type:
+    | "Checklist"
+    | "Infografika"
+    | "Inne"
+    | "Nagranie wideo"
+    | "Poradnik"
+    | "Publikacja"
+    | "Szablon"
+    | "Workbook"
+    | null;
+  area:
+    | "Finanse"
+    | "Inne"
+    | "Kariera"
+    | "Prawo"
+    | "Rodzicielstwo"
+    | "Rozw\xF3j Osobisty"
+    | "Zdrowie"
+    | null;
+  format: "Inne" | "Link" | "MP4" | "PDF" | "Zip" | null;
+  linkUrl: string | null;
+  size: string | null;
+  placements: Array<string> | null;
+  fileAsset: {
+    url: string | null;
+    extension: string | null;
+    size: number | null;
+  } | null;
+}>;
+
 // Source: ../web/sanity/queries/news.ts
 // Variable: newsQuery
 // Query: *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc, _id asc) [$start...$end] {    _id,    _createdAt,    publishedAt,    title,    slug,    description,    image  }
@@ -1188,6 +1297,9 @@ declare module "@sanity/client" {
     '\n  *[_type == "legalPage" && defined(title) && defined(slug.current)] | order(_createdAt asc) {\n    _id,\n    title,\n    "slug": slug.current\n  }\n': LegalPagesQueryResult;
     '\n  *[_type == "legalPage" && slug.current == $slug][0] {\n    seo,\n    title,\n    "slug": slug.current,\n    body\n  }\n': LegalPageBySlugQueryResult;
     '\n  *[_type == "material"] | order(date desc) {\n    _id,\n    title,\n    description,\n    date,\n    event,\n    type,\n    area,\n    format,\n    linkUrl,\n    size,\n    placements,\n    "fileAsset": file.asset->{\n      url,\n      extension,\n      size\n    }\n  }\n': MaterialsQueryResult;
+    '\n  *[_type == "material"] {\n    _id,\n    event,\n    type,\n    area,\n    format,\n    "fileAsset": file.asset->{ extension }\n  }\n': MaterialsFacetsQueryResult;
+    '\n  \n  *[_type == "material"] {\n    ...,\n    "eventKey": lower(array::join(string::split(coalesce(event, ""), " ")[@ != ""], " ")),\n    "typeKey": lower(array::join(string::split(coalesce(type, ""), " ")[@ != ""], " ")),\n    "areaKey": lower(array::join(string::split(coalesce(area, ""), " ")[@ != ""], " ")),\n    "formatKey": lower(array::join(string::split(coalesce(format, ""), " ")[@ != ""], " ")),\n    "extensionKey": lower(coalesce(file.asset->extension, ""))\n  } {\n    ...,\n    "filterEvent": select(\n      eventKey in ["warsztaty", "konferencja", "webinar", "szkolenie"] => eventKey,\n      "inne"\n    ),\n    "filterType": select(\n      typeKey == "nagranie video" => "nagranie wideo",\n      typeKey in ["workbook", "checklist", "poradnik", "publikacja", "nagranie wideo",\n        "szablon", "infografika"] => typeKey,\n      "inne"\n    ),\n    "filterArea": select(\n      areaKey in ["zdrowie", "prawo", "finanse", "kariera", "rozw\xF3j osobisty",\n        "rodzicielstwo"] => areaKey,\n      "inne"\n    ),\n    "filterFormat": select(\n      formatKey != "" && formatKey in ["pdf", "zip", "mp4", "link"] => formatKey,\n      formatKey == "" && extensionKey in ["pdf", "zip", "mp4", "link"] => extensionKey,\n      "inne"\n    )\n  }\n [\n  ($search == ""\n    || count(string::split(lower(coalesce(title, "Brak danych")), $search)) > 1\n    || count(string::split(lower(coalesce(description, "Brak danych")), $search)) > 1)\n  && ($event == "all" || filterEvent == $event)\n  && (count($types) == 0 || filterType in $types)\n  && (count($areas) == 0 || filterArea in $areas)\n  && (count($formats) == 0 || filterFormat in $formats)\n  && ($dateFrom == null || coalesce(date, "1970-01-01") >= $dateFrom)\n  && ($dateTo == null || coalesce(date, "1970-01-01") <= $dateTo)\n]\n    | order(coalesce(date, "1970-01-01") desc, _id asc) [$start...$end] {\n    _id,\n    title,\n    description,\n    date,\n    event,\n    type,\n    area,\n    format,\n    linkUrl,\n    size,\n    placements,\n    "fileAsset": file.asset->{ url, extension, size }\n  }\n\n': MaterialsNewestPageQueryResult;
+    '\n  \n  *[_type == "material"] {\n    ...,\n    "eventKey": lower(array::join(string::split(coalesce(event, ""), " ")[@ != ""], " ")),\n    "typeKey": lower(array::join(string::split(coalesce(type, ""), " ")[@ != ""], " ")),\n    "areaKey": lower(array::join(string::split(coalesce(area, ""), " ")[@ != ""], " ")),\n    "formatKey": lower(array::join(string::split(coalesce(format, ""), " ")[@ != ""], " ")),\n    "extensionKey": lower(coalesce(file.asset->extension, ""))\n  } {\n    ...,\n    "filterEvent": select(\n      eventKey in ["warsztaty", "konferencja", "webinar", "szkolenie"] => eventKey,\n      "inne"\n    ),\n    "filterType": select(\n      typeKey == "nagranie video" => "nagranie wideo",\n      typeKey in ["workbook", "checklist", "poradnik", "publikacja", "nagranie wideo",\n        "szablon", "infografika"] => typeKey,\n      "inne"\n    ),\n    "filterArea": select(\n      areaKey in ["zdrowie", "prawo", "finanse", "kariera", "rozw\xF3j osobisty",\n        "rodzicielstwo"] => areaKey,\n      "inne"\n    ),\n    "filterFormat": select(\n      formatKey != "" && formatKey in ["pdf", "zip", "mp4", "link"] => formatKey,\n      formatKey == "" && extensionKey in ["pdf", "zip", "mp4", "link"] => extensionKey,\n      "inne"\n    )\n  }\n [\n  ($search == ""\n    || count(string::split(lower(coalesce(title, "Brak danych")), $search)) > 1\n    || count(string::split(lower(coalesce(description, "Brak danych")), $search)) > 1)\n  && ($event == "all" || filterEvent == $event)\n  && (count($types) == 0 || filterType in $types)\n  && (count($areas) == 0 || filterArea in $areas)\n  && (count($formats) == 0 || filterFormat in $formats)\n  && ($dateFrom == null || coalesce(date, "1970-01-01") >= $dateFrom)\n  && ($dateTo == null || coalesce(date, "1970-01-01") <= $dateTo)\n]\n    | order(coalesce(date, "1970-01-01") asc, _id asc) [$start...$end] {\n    _id,\n    title,\n    description,\n    date,\n    event,\n    type,\n    area,\n    format,\n    linkUrl,\n    size,\n    placements,\n    "fileAsset": file.asset->{ url, extension, size }\n  }\n\n': MaterialsOldestPageQueryResult;
     '\n  *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc, _id asc) [$start...$end] {\n    _id,\n    _createdAt,\n    publishedAt,\n    title,\n    slug,\n    description,\n    image\n  }': NewsQueryResult;
     '\n  *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc, _id asc) {\n    "slug": slug.current\n  }': AllNewsQueryResult;
     '\n  *[_type == "news" && slug.current == $slug][0] {\n    _id,\n    _createdAt,\n    publishedAt,\n    title,\n    slug,\n    description,\n    article,\n    image {\n      asset-> {\n        _id,\n        _ref,\n        url,\n        metadata {\n          lqip,\n          dimensions\n        },\n        altText,\n        title,\n        description\n      },\n      crop,\n      hotspot\n    },\n  }\n': NewsBySlugQueryResult;

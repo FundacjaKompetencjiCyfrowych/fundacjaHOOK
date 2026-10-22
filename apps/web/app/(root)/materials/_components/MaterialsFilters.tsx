@@ -1,24 +1,26 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
+import { format } from "date-fns";
 
 import MaterialResourceList from "@/app/_components/Materials/MaterialResourceList";
 import { Collapsible } from "@/app/_components/ui/collapsible";
+import LoadMoreButton from "@/app/_components/Buttons/LoadMoreButton";
+import { usePaginatedItems } from "@/lib/hooks/usePaginatedItems";
+import { MATERIALS_PAGE_SIZE } from "@/sanity/queries/materials";
 
 import AdvancedMaterialsFiltersPanel from "./AdvancedMaterialsFiltersPanel";
 import MaterialsFiltersReset from "./MaterialsFiltersReset";
 import MaterialsFiltersTopBar from "./MaterialsFiltersTopBar";
 import { EVENTS } from "../_lib/materialsFilters.constants";
 import type { MaterialFilterItem } from "@/lib/types/materials";
+import { loadMaterialsPage } from "../_actions/loadMaterialsPage";
+import type { MaterialsPageFilters } from "../_lib/materialsFilters.types";
 
-import {
-  filterAndSortMaterials,
-  getActiveFilterCount,
-  toggleSet,
-} from "../_lib/materialsFilters.helpers";
+import { getActiveFilterCount, toggleSet } from "../_lib/materialsFilters.helpers";
 
 interface MaterialsFiltersProps {
-  materials: MaterialFilterItem[];
+  initialMaterials: MaterialFilterItem[];
   counts: {
     eventCount: Map<string, number>;
     typeCount: Map<string, number>;
@@ -27,7 +29,7 @@ interface MaterialsFiltersProps {
   };
 }
 
-export default function MaterialsFilters({ materials, counts }: MaterialsFiltersProps) {
+export default function MaterialsFilters({ initialMaterials, counts }: MaterialsFiltersProps) {
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState<"newest" | "oldest">("newest");
@@ -43,19 +45,30 @@ export default function MaterialsFilters({ materials, counts }: MaterialsFilters
   const areaCounts = counts.areaCount;
   const formatCounts = counts.formatCount;
 
-  const filteredMaterials = useMemo(() => {
-    return filterAndSortMaterials({
-      materials,
+  const filters = useMemo<MaterialsPageFilters>(
+    () => ({
       search,
       sort,
-      selectedEvent: selEvent,
-      selectedTypes: selTypes,
-      selectedAreas: selAreas,
-      selectedFormats: selFormats,
-      dateFrom,
-      dateTo,
-    });
-  }, [materials, search, sort, selEvent, selTypes, selAreas, selFormats, dateFrom, dateTo]);
+      event: selEvent,
+      types: [...selTypes].sort(),
+      areas: [...selAreas].sort(),
+      formats: [...selFormats].sort(),
+      dateFrom: dateFrom ? format(dateFrom, "yyyy-MM-dd") : null,
+      dateTo: dateTo ? format(dateTo, "yyyy-MM-dd") : null,
+    }),
+    [search, sort, selEvent, selTypes, selAreas, selFormats, dateFrom, dateTo]
+  );
+  const resetKey = JSON.stringify(filters);
+  const loadFilteredMaterials = useCallback(
+    (start: number, limit: number) => loadMaterialsPage(start, filters, limit),
+    [filters]
+  );
+  const pagination = usePaginatedItems({
+    initialItems: initialMaterials,
+    pageSize: MATERIALS_PAGE_SIZE,
+    loadItemsAction: loadFilteredMaterials,
+    resetKey,
+  });
 
   const activeFilterCount = useMemo(() => {
     return getActiveFilterCount({
@@ -124,7 +137,9 @@ export default function MaterialsFilters({ materials, counts }: MaterialsFilters
           />
         </Collapsible>
 
-        <MaterialResourceList materials={filteredMaterials} />
+        <h2 className="mb-2 text-base font-medium leading-5 text-main">Baza wiedzy</h2>
+        <MaterialResourceList materials={pagination.items} />
+        <LoadMoreButton pagination={pagination} />
       </div>
     </section>
   );

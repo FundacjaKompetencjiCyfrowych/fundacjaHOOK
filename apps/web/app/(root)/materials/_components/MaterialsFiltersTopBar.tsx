@@ -20,24 +20,24 @@ export default function MaterialsFiltersTopBar({
   onSearchChange,
 }: MaterialsFiltersTopBarProps) {
   return (
-    <div className="flex sm:flex-row flex-col gap-3 mb-3">
+    <div className="flex sm:flex-row flex-col gap-3 mb-2">
       <div className="relative flex-1">
-        <Search className="top-1/2 left-3 absolute w-4 h-4 text-muted-foreground -translate-y-1/2" />
+        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#888]" />
         <Input
-          placeholder="Szukaj materiałów..."
+          placeholder="Szukaj materiałów"
           value={search}
           onChange={(event) => onSearchChange(event.target.value)}
-          className="bg-elevated pl-9 border-subtle hover:border-brand-primary rounded-xl h-11"
+          className="h-[42px] rounded-[13px] border-[#bdbdbd] bg-white pl-10 pr-3 text-base placeholder:text-[#aaa] hover:border-[#aaa] focus-visible:ring-1 focus-visible:ring-gray-300"
         />
       </div>
 
       <CollapsibleTrigger asChild>
         <Button
           variant="secondary"
-          className="justify-between gap-2 bg-elevated aria-expanded:bg-elevated aria-expanded:hover:bg-elevated hover:text-brand-primary border-subtle rounded-xl w-full sm:w-[200px] h-11 cursor-pointer"
+          className="h-[42px] w-full justify-between gap-2 rounded-[13px] border-[#bdbdbd] bg-white px-4 text-sm text-[#222] hover:border-[#aaa] hover:bg-white hover:text-[#222] aria-expanded:bg-white aria-expanded:hover:bg-white sm:w-[200px] cursor-pointer"
         >
-          <span className="flex items-center gap-2">
-            <SlidersHorizontal className="w-4 h-4" />
+          <span className="flex items-center gap-1.5">
+            <SlidersHorizontal className="w-3.5 h-3.5" />
             Więcej filtrów
             {activeFilterCount > 0 && (
               <Badge
@@ -49,7 +49,7 @@ export default function MaterialsFiltersTopBar({
             )}
           </span>
           <ChevronDown
-            className={cn("w-4 h-4 transition-transform", filtersOpen && "rotate-180")}
+            className={cn("w-3.5 h-3.5 transition-transform", filtersOpen && "rotate-180")}
           />
         </Button>
       </CollapsibleTrigger>

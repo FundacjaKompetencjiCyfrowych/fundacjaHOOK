@@ -7,22 +7,42 @@ import PageTitle from "@/app/_components/Navigation/PageTitle";
 import { mapMaterialsToFilterItems } from "@/lib/mappers/materials";
 import { cacheLife } from "next/cache";
 import { sanityFetch } from "@/sanity/live";
-import { materialsQuery } from "@/sanity/queries/materials";
+import {
+  MATERIALS_PAGE_SIZE,
+  materialsFacetsQuery,
+  materialsNewestPageQuery,
+} from "@/sanity/queries/materials";
 import { countValues } from "./_lib/materialsFilters.helpers";
 
 export async function generateMetadata(): Promise<Metadata> {
   return getSeoMetadata({ pathname: ROUTES.MATERIALS });
 }
 
-async function getCachedMaterials() {
+async function getCachedMaterialsPageData(pageSize: number) {
   "use cache";
   cacheLife("days");
 
-  const { data } = await sanityFetch({ query: materialsQuery });
+  const [{ data }, { data: initialData }] = await Promise.all([
+    sanityFetch({ query: materialsFacetsQuery }),
+    sanityFetch({
+      query: materialsNewestPageQuery,
+      params: {
+        search: "",
+        event: "all",
+        types: [],
+        areas: [],
+        formats: [],
+        dateFrom: null,
+        dateTo: null,
+        start: 0,
+        end: pageSize,
+      },
+    }),
+  ]);
   const materials = mapMaterialsToFilterItems(data ?? []);
 
   return {
-    materials,
+    initialMaterials: mapMaterialsToFilterItems(initialData),
     eventCount: countValues(materials, "event"),
     typeCount: countValues(materials, "type"),
     areaCount: countValues(materials, "area"),
@@ -31,7 +51,8 @@ async function getCachedMaterials() {
 }
 
 const MaterialsPage = async () => {
-  const { materials, eventCount, typeCount, areaCount, formatCount } = await getCachedMaterials();
+  const { initialMaterials, eventCount, typeCount, areaCount, formatCount } =
+    await getCachedMaterialsPageData(MATERIALS_PAGE_SIZE);
 
   return (
     <>
@@ -40,7 +61,7 @@ const MaterialsPage = async () => {
         <div className="mx-auto max-w-[1200px]">
           <PageTitle>Materiały</PageTitle>
           <MaterialsFilters
-            materials={materials}
+            initialMaterials={initialMaterials}
             counts={{ eventCount, typeCount, areaCount, formatCount }}
           />
         </div>
